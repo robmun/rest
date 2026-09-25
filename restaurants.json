@@ -1087,8 +1087,11 @@
    ],
    "url": "https://deblend.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Vleutensevaart 100, 3532 AD Utrecht"
+   "updatedAt": 1790349875155,
+   "address": "Vleutensevaart 100, 3532 AD Utrecht",
+   "lat": 52.09496,
+   "lng": 5.081222,
+   "geo": "adres"
   },
   {
    "id": "kan-fort-de-gagel",
@@ -1101,8 +1104,11 @@
    ],
    "url": "https://fortdegagel.nl/lunch/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Gageldijk 167, 3566 MJ Utrecht"
+   "updatedAt": 1790349875444,
+   "address": "Gageldijk 167, 3566 MJ Utrecht",
+   "lat": 52.129543,
+   "lng": 5.102418,
+   "geo": "adres"
   },
   {
    "id": "kan-roemer",
@@ -1115,8 +1121,11 @@
    ],
    "url": "https://www.roemer-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Berlijnplein 2, 3541 CM Utrecht"
+   "updatedAt": 1790349875746,
+   "address": "Berlijnplein 2, 3541 CM Utrecht",
+   "lat": 52.097891,
+   "lng": 5.068865,
+   "geo": "adres"
   },
   {
    "id": "kan-soia-beach-oog-in-al",
@@ -1129,8 +1138,11 @@
    ],
    "url": "https://www.soia.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Kanaalweg 199, 3533 HL Utrecht"
+   "updatedAt": 1790349876025,
+   "address": "Kanaalweg 199, 3533 HL Utrecht",
+   "lat": 52.094941,
+   "lng": 5.078798,
+   "geo": "adres"
   },
   {
    "id": "kan-balijepark",
@@ -1143,8 +1155,11 @@
    ],
    "url": "https://balijepark.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Augustusweg 32, 3453 KS De Meern"
+   "updatedAt": 1790349876389,
+   "address": "Augustusweg 32, 3453 KS De Meern",
+   "lat": 52.080447,
+   "lng": 5.022639,
+   "geo": "adres"
   },
   {
    "id": "kan-liemes",
@@ -1157,8 +1172,11 @@
    ],
    "url": "https://liemes.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Proostwetering 11, 3543 AB Utrecht"
+   "updatedAt": 1790349876665,
+   "address": "Proostwetering 11, 3543 AB Utrecht",
+   "lat": 52.107935,
+   "lng": 5.053581,
+   "geo": "adres"
   },
   {
    "id": "kan-zuiver",
@@ -1171,8 +1189,11 @@
    ],
    "url": "https://restaurantzuiver.nl/utrecht/",
    "visited": false,
-   "updatedAt": 1790347466407,
-   "address": "Krommewetering 51, 3543 AM Utrecht"
+   "updatedAt": 1790349876890,
+   "address": "Krommewetering 51, 3543 AM Utrecht",
+   "lat": 52.108951,
+   "lng": 5.045072,
+   "geo": "adres"
   }
  ]
 }
