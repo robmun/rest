@@ -435,8 +435,11 @@
    ],
    "url": "https://www.restaurantmontblanc.nl/",
    "visited": true,
-   "updatedAt": 1790347067470,
-   "address": "Govert Flinckstraat 308, Amsterdam"
+   "updatedAt": 1790347539706,
+   "address": "Govert Flinckstraat 308, Amsterdam",
+   "lat": 52.356326,
+   "lng": 4.898765,
+   "geo": "auto"
   },
   {
    "id": "ams-secret-garden",
@@ -449,8 +452,11 @@
    ],
    "url": "https://www.secretgardenamsterdam.com/",
    "visited": true,
-   "updatedAt": 1790347067470,
-   "address": "Reguliersdwarsstraat 38, 1017 BM Amsterdam"
+   "updatedAt": 1790347541045,
+   "address": "Reguliersdwarsstraat 38, 1017 BM Amsterdam",
+   "lat": 52.366265,
+   "lng": 4.8911,
+   "geo": "auto"
   },
   {
    "id": "ams-gent-aan-de-schinkel",
@@ -464,8 +470,11 @@
    ],
    "url": "https://www.gentaandeschinkel.nl/",
    "visited": true,
-   "updatedAt": 1790347067470,
-   "address": "Theophile de Bockstraat 1, 1058 TV Amsterdam"
+   "updatedAt": 1790348720864,
+   "address": "Theophile de Bockstraat 1, 1058 TV Amsterdam",
+   "lat": 52.354691,
+   "lng": 4.852942,
+   "geo": "auto"
   },
   {
    "id": "ams-pllek",
