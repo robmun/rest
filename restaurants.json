@@ -688,8 +688,8 @@
     "Italiaans"
    ],
    "url": "https://restauranttoscanini.nl/",
-   "visited": false,
-   "updatedAt": 1790350750580,
+   "visited": true,
+   "updatedAt": 1790350790150,
    "address": "Lindengracht 75, 1015 KD Amsterdam",
    "lat": 52.380178,
    "lng": 4.885372,
@@ -1231,11 +1231,14 @@
    ],
    "url": "https://fortdegagel.nl/lunch/",
    "visited": false,
-   "updatedAt": 1790349875444,
+   "updatedAt": 1790350788789,
    "address": "Gageldijk 167, 3566 MJ Utrecht",
    "lat": 52.129543,
    "lng": 5.102418,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 200 8788",
+   "hours": "Mo 10:00-16:00; Tu-Th 10:00-22:00; Fr-Sa 10:00-23:00; Su 10:00-22:00;PH off",
+   "osmChecked": 1790350788789
   },
   {
    "id": "kan-roemer",
@@ -1248,11 +1251,12 @@
    ],
    "url": "https://www.roemer-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790349875746,
+   "updatedAt": 1790350790311,
    "address": "Berlijnplein 2, 3541 CM Utrecht",
    "lat": 52.097891,
    "lng": 5.068865,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350790311
   },
   {
    "id": "kan-soia-beach-oog-in-al",
@@ -1265,11 +1269,14 @@
    ],
    "url": "https://www.soia.nl/",
    "visited": false,
-   "updatedAt": 1790349876025,
+   "updatedAt": 1790350791491,
    "address": "Kanaalweg 199, 3533 HL Utrecht",
    "lat": 52.094941,
    "lng": 5.078798,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 275 1011",
+   "hours": "Mo,We 11:00-23:00; Th 11:00-24:00; Fr 11:00-01:00; Sa 10:00-01:00; Su 10:00-23:00",
+   "osmChecked": 1790350791491
   },
   {
    "id": "kan-balijepark",
