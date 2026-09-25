@@ -574,7 +574,10 @@
    ],
    "url": "https://www.pianetaterra.nl/",
    "visited": false,
-   "updatedAt": 1790300000036
+   "updatedAt": 1790318034148,
+   "lat": 52.36802,
+   "lng": 4.887774,
+   "geo": "auto"
   },
   {
    "id": "ams-toscanini",
@@ -587,7 +590,10 @@
    ],
    "url": "https://restauranttoscanini.nl/",
    "visited": false,
-   "updatedAt": 1790300000037
+   "updatedAt": 1790318035368,
+   "lat": 52.380166,
+   "lng": 4.885282,
+   "geo": "auto"
   },
   {
    "id": "ams-palladio",
@@ -600,7 +606,10 @@
    ],
    "url": "https://www.restaurantpalladio.nl/",
    "visited": true,
-   "updatedAt": 1790300000038
+   "updatedAt": 1790318036592,
+   "lat": 52.369934,
+   "lng": 4.881157,
+   "geo": "auto"
   },
   {
    "id": "ams-assaggi",
@@ -613,7 +622,10 @@
    ],
    "url": "https://www.assaggi.nl/",
    "visited": true,
-   "updatedAt": 1790300000039
+   "updatedAt": 1790318037816,
+   "lat": 52.376825,
+   "lng": 4.881979,
+   "geo": "auto"
   },
   {
    "id": "ams-incanto",
@@ -628,7 +640,10 @@
    ],
    "url": "https://www.restaurant-incanto.nl/",
    "visited": false,
-   "updatedAt": 1790300000040
+   "updatedAt": 1790318039041,
+   "lat": 52.367017,
+   "lng": 4.89386,
+   "geo": "auto"
   },
   {
    "id": "utr-wilhelminapark",
