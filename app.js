@@ -16,7 +16,7 @@ const now = () => Date.now();
 
 /* ---------------- state ---------------- */
 let store = { data: emptyData(), sha: null, dirty: false };
-let settings = { owner: "", repo: "", branch: "main", path: "restaurants.json", token: "" };
+let settings = { owner: "robmun", repo: "rest", branch: "main", path: "restaurants.json", token: "" };
 let ui = { city: null, view: "list" };
 let query = "", activeTags = new Set(), visitFilter = null;
 let editing = null, formTags = new Set(), delArmed = false, draftPos = null;
@@ -30,6 +30,33 @@ const cached = lsGet(LS_DATA); if (cached && cached.data) store = cached;
 Object.assign(settings, lsGet(LS_SET) || {});
 Object.assign(ui, lsGet(LS_UI) || {});
 const connected = () => !!(settings.owner && settings.repo && settings.token);
+
+/* Koppeling dubbel bewaren (localStorage + IndexedDB), zodat iOS hem niet kwijtraakt */
+function idb() {
+  return new Promise((res, rej) => {
+    try {
+      const r = indexedDB.open("tafels", 1);
+      r.onupgradeneeded = () => r.result.createObjectStore("kv");
+      r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+    } catch (e) { rej(e); }
+  });
+}
+async function idbGet(key) {
+  try { const db = await idb(); return await new Promise(res => { const q = db.transaction("kv").objectStore("kv").get(key); q.onsuccess = () => res(q.result || null); q.onerror = () => res(null); }); }
+  catch (e) { return null; }
+}
+async function idbSet(key, val) {
+  try { const db = await idb(); await new Promise(res => { const t = db.transaction("kv", "readwrite"); t.objectStore("kv").put(val, key); t.oncomplete = res; t.onerror = res; }); } catch (e) {}
+}
+function saveSettings() {
+  lsSet(LS_SET, settings); idbSet("settings", settings);
+  try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (e) {}
+}
+async function restoreSettings() {
+  if (connected()) { idbSet("settings", settings); return; }
+  const s = await idbGet("settings");
+  if (s && s.token) { Object.assign(settings, s); lsSet(LS_SET, settings); }
+}
 
 function persist() { lsSet(LS_DATA, store); }
 function visible() { return store.data.items.filter(i => !i.deleted); }
@@ -510,7 +537,7 @@ $("setForm").addEventListener("submit", async e => {
   const prev = settings; settings = next;
   try {
     const remote = await ghGet();
-    lsSet(LS_SET, settings);
+    saveSettings();
     if (remote) {
       const merged = merge(remote.data, store.data);
       store.dirty = store.dirty || JSON.stringify(merged.items) !== JSON.stringify(remote.data.items);
@@ -525,7 +552,7 @@ $("setForm").addEventListener("submit", async e => {
   } finally { btn.disabled = false; btn.textContent = "Verbinden"; }
 });
 $("disconnectBtn").onclick = () => {
-  settings = { ...settings, token: "" }; lsSet(LS_SET, settings);
+  settings = { ...settings, token: "" }; saveSettings();
   setSync("local", "Alleen op dit toestel"); closeSheets(); render(); toast("Ontkoppeld. Je lijst blijft op dit toestel.");
 };
 $("exportBtn").onclick = () => {
@@ -546,6 +573,7 @@ $("importFile").onchange = async e => {
 
 /* ---------------- start ---------------- */
 async function boot() {
+  await restoreSettings();
   render();
   setView(ui.view === "map" ? "map" : "list");
   if (connected()) await sync();
