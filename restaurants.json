@@ -256,15 +256,8 @@
   },
   {
    "id": "ams-graphite",
-   "city": "Amsterdam",
-   "createdAt": 1790300000018,
-   "name": "Graphite",
-   "notes": "Heel speciaal. Moet je van houden.",
-   "tags": [],
-   "url": "https://graphite.amsterdam/home",
-   "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Paardenstraat 15, 1017 CX Amsterdam"
+   "deleted": true,
+   "updatedAt": 1790347466407
   },
   {
    "id": "ams-van-der-veen",
@@ -984,10 +977,10 @@
    "tags": [
     "Lunch"
    ],
-   "url": "https://restaurantzuiver.nl/",
+   "url": "https://restaurantzuiver.nl/utrecht/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Vlooswijkseweg 1, 3832 RG Leusden"
+   "updatedAt": 1790347466407,
+   "address": "Krommewetering 51, 3543 AM Utrecht"
   }
  ]
 }
