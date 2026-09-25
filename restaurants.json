@@ -925,8 +925,11 @@
    ],
    "url": "https://jasmijnenik.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Kanaalstraat 219, Utrecht"
+   "updatedAt": 1790349872351,
+   "address": "Kanaalstraat 219, Utrecht",
+   "lat": 52.09091,
+   "lng": 5.094927,
+   "geo": "adres"
   },
   {
    "id": "utr-stadsjochies",
@@ -937,8 +940,11 @@
    "tags": [],
    "url": "https://stadsjochies.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Rijndijk 14, 3585 LG Utrecht"
+   "updatedAt": 1790349872584,
+   "address": "Rijndijk 14, 3585 LG Utrecht",
+   "lat": 52.073263,
+   "lng": 5.141591,
+   "geo": "adres"
   },
   {
    "id": "utr-paloma",
@@ -949,8 +955,11 @@
    "tags": [],
    "url": "https://paloma-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Mariaplaats 11, Utrecht"
+   "updatedAt": 1790349873082,
+   "address": "Mariaplaats 11, Utrecht",
+   "lat": 52.090105,
+   "lng": 5.117167,
+   "geo": "adres"
   },
   {
    "id": "utr-de-rechtbank",
@@ -961,8 +970,11 @@
    "tags": [],
    "url": "https://www.derechtbank.com/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Korte Nieuwstraat 14, 3512 NM Utrecht"
+   "updatedAt": 1790349873349,
+   "address": "Korte Nieuwstraat 14, 3512 NM Utrecht",
+   "lat": 52.08908,
+   "lng": 5.122609,
+   "geo": "adres"
   },
   {
    "id": "utr-pastoe-foodbar",
@@ -975,8 +987,11 @@
    ],
    "url": "https://www.pastoe-foodbar.nl/",
    "visited": true,
-   "updatedAt": 1790347067470,
-   "address": "Rotsoord 7A, 3523 CL Utrecht"
+   "updatedAt": 1790349873575,
+   "address": "Rotsoord 7A, 3523 CL Utrecht",
+   "lat": 52.074363,
+   "lng": 5.120344,
+   "geo": "adres"
   },
   {
    "id": "utr-leen",
@@ -987,8 +1002,11 @@
    "tags": [],
    "url": "https://leen-restaurant.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Heuveloord 140, Utrecht"
+   "updatedAt": 1790349873871,
+   "address": "Heuveloord 140, Utrecht",
+   "lat": 52.07521,
+   "lng": 5.121432,
+   "geo": "adres"
   },
   {
    "id": "utr-restaurant-watertoren",
@@ -1001,8 +1019,11 @@
    ],
    "url": "https://watertorenutrecht.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Heuveloord 25A, 3523 CK Utrecht"
+   "updatedAt": 1790349874086,
+   "address": "Heuveloord 25A, 3523 CK Utrecht",
+   "lat": 52.07555,
+   "lng": 5.1208,
+   "geo": "adres"
   },
   {
    "id": "kan-dengh",
@@ -1015,8 +1036,11 @@
    ],
    "url": "https://dengh.nl/restaurant-utrecht/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Enghlaan 17, 3543 BD Utrecht"
+   "updatedAt": 1790349874395,
+   "address": "Enghlaan 17, 3543 BD Utrecht",
+   "lat": 52.108215,
+   "lng": 5.034767,
+   "geo": "adres"
   },
   {
    "id": "kan-vineyard-food-drinks",
@@ -1029,8 +1053,11 @@
    ],
    "url": "https://vineyardfoodanddrinks.nl/locaties/vineyard-food-drinks-utrecht/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Atoomweg 63, 3542 AA Utrecht"
+   "updatedAt": 1790349874618,
+   "address": "Atoomweg 63, 3542 AA Utrecht",
+   "lat": 52.116158,
+   "lng": 5.055132,
+   "geo": "adres"
   },
   {
    "id": "kan-buiten-bij-de-sluis",
@@ -1043,8 +1070,11 @@
    ],
    "url": "https://www.buitenbijdesluis.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Oude Vleutenseweg 2, 3541 BE Utrecht"
+   "updatedAt": 1790349874927,
+   "address": "Oude Vleutenseweg 2, 3541 BE Utrecht",
+   "lat": 52.096125,
+   "lng": 5.076328,
+   "geo": "adres"
   },
   {
    "id": "kan-bar-brasserie-de-blend",
