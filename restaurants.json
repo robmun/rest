@@ -221,11 +221,12 @@
    "name": "Rakang",
    "notes": "Heerlijke Thai op de Elandsgracht.",
    "tags": [
-    "Thais"
+    "Thais",
+    "Betaalbaar"
    ],
    "url": "http://www.rakang.nl/",
-   "visited": false,
-   "updatedAt": 1790350717616,
+   "visited": true,
+   "updatedAt": 1790350829210,
    "address": "Elandsgracht 29, Amsterdam",
    "lat": 52.369654,
    "lng": 4.881336,
