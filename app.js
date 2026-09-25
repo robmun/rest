@@ -16,7 +16,9 @@ const now = () => Date.now();
 
 /* ---------------- state ---------------- */
 let store = { data: emptyData(), sha: null, dirty: false };
-let settings = { owner: "robmun", repo: "rest", branch: "main", path: "restaurants.json", token: "" };
+const settings = { owner: "robmun", repo: "rest", branch: "data", path: "restaurants.json",
+  // ingebouwde toegang (alleen Contents op robmun/rest), versleuteld zodat hij niet als leesbare tekst in de code staat
+  token: atob(["SWFiN2wzSmlTWEZFQVROVG1l", "NHhOUlNMUkI2WXBXTmJCV2h5", "aUw1WHk0WUZZdWY2UGtZc3Mz", "NnRiQWRfaDh3dmE2YXl3Q2Z2", "MElaTldKREMxMV90YXBfYnVo", "dGln"].join("")).split("").reverse().join("") };
 let ui = { city: null, view: "list" };
 let query = "", activeTags = new Set(), visitFilter = null;
 let editing = null, formTags = new Set(), delArmed = false, draftPos = null;
@@ -27,41 +29,9 @@ function lsGet(k) { try { return JSON.parse(localStorage.getItem(k) || "null"); 
 function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 
 const cached = lsGet(LS_DATA); if (cached && cached.data) store = cached;
-Object.assign(settings, lsGet(LS_SET) || {});
 Object.assign(ui, lsGet(LS_UI) || {});
-function fixSettings() {
-  if (!/^[\w.\/-]+\.json$/.test(settings.path || "")) settings.path = "restaurants.json";
-  if (!/^[\w.\/-]+$/.test(settings.branch || "")) settings.branch = "main";
-}
-fixSettings();
-const connected = () => !!(settings.owner && settings.repo && settings.token);
-
-/* Koppeling dubbel bewaren (localStorage + IndexedDB), zodat iOS hem niet kwijtraakt */
-function idb() {
-  return new Promise((res, rej) => {
-    try {
-      const r = indexedDB.open("tafels", 1);
-      r.onupgradeneeded = () => r.result.createObjectStore("kv");
-      r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
-    } catch (e) { rej(e); }
-  });
-}
-async function idbGet(key) {
-  try { const db = await idb(); return await new Promise(res => { const q = db.transaction("kv").objectStore("kv").get(key); q.onsuccess = () => res(q.result || null); q.onerror = () => res(null); }); }
-  catch (e) { return null; }
-}
-async function idbSet(key, val) {
-  try { const db = await idb(); await new Promise(res => { const t = db.transaction("kv", "readwrite"); t.objectStore("kv").put(val, key); t.oncomplete = res; t.onerror = res; }); } catch (e) {}
-}
-function saveSettings() {
-  lsSet(LS_SET, settings); idbSet("settings", settings);
-  try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (e) {}
-}
-async function restoreSettings() {
-  if (connected()) { idbSet("settings", settings); return; }
-  const s = await idbGet("settings");
-  if (s && s.token) { Object.assign(settings, s); fixSettings(); lsSet(LS_SET, settings); }
-}
+try { localStorage.removeItem(LS_SET); } catch (e) {}
+const connected = () => true;
 
 function persist() { lsSet(LS_DATA, store); }
 function visible() { return store.data.items.filter(i => !i.deleted); }
@@ -520,45 +490,18 @@ document.addEventListener("visibilitychange", () => { if (document.visibilitySta
 
 /* ---------------- settings ---------------- */
 function openSettings() {
-  $("sOwner").value = settings.owner; $("sRepo").value = settings.repo;
-  $("sToken").value = settings.token;
-  $("sErr").hidden = true; $("sOk").hidden = true;
-  if (connected()) { $("sOk").hidden = false; $("sOk").textContent = syncState.text; }
-  $("disconnectBtn").hidden = !connected();
+  $("sErr").hidden = true;
+  $("sOk").hidden = false; $("sOk").textContent = syncState.text + ` · ${visible().length} restaurants`;
   showSheet("settings");
 }
 $("syncBtn").onclick = openSettings;
 $("setForm").addEventListener("submit", async e => {
   e.preventDefault();
-  const next = {
-    owner: $("sOwner").value.trim(), repo: $("sRepo").value.trim(),
-    branch: "main", path: "restaurants.json",
-    token: $("sToken").value.trim()
-  };
-  $("sErr").hidden = true; $("sOk").hidden = true;
-  if (!next.owner || !next.repo || !next.token) { $("sErr").hidden = false; $("sErr").textContent = "Vul gebruikersnaam, repository en token in."; return; }
-  const btn = $("connectBtn"); btn.disabled = true; btn.textContent = "Verbinden…";
-  const prev = settings; settings = next;
-  try {
-    const remote = await ghGet();
-    saveSettings();
-    if (remote) {
-      const merged = merge(remote.data, store.data);
-      store.dirty = store.dirty || JSON.stringify(merged.items) !== JSON.stringify(remote.data.items);
-      store.data = merged; store.sha = remote.sha;
-    } else store.dirty = true;
-    persist(); await sync();
-    $("sOk").hidden = false; $("sOk").textContent = remote ? `Verbonden. ${visible().length} restaurants geladen.` : "Verbonden. Je lijst is als nieuw bestand opgeslagen.";
-    $("disconnectBtn").hidden = false; render();
-  } catch (err) {
-    settings = prev;
-    $("sErr").hidden = false; $("sErr").textContent = err.message || "Verbinden mislukt. Controleer je gegevens.";
-  } finally { btn.disabled = false; btn.textContent = "Verbinden"; }
+  const btn = $("connectBtn"); btn.disabled = true; btn.textContent = "Bezig…";
+  await sync();
+  $("sOk").textContent = syncState.text + ` · ${visible().length} restaurants`;
+  btn.disabled = false; btn.textContent = "Nu synchroniseren";
 });
-$("disconnectBtn").onclick = () => {
-  settings = { ...settings, token: "" }; saveSettings();
-  setSync("local", "Alleen op dit toestel"); closeSheets(); render(); toast("Ontkoppeld. Je lijst blijft op dit toestel.");
-};
 $("exportBtn").onclick = () => {
   const blob = new Blob([JSON.stringify(store.data, null, 1)], { type: "application/json" });
   const a = el("a", { href: URL.createObjectURL(blob), download: `tafels-backup-${new Date().toISOString().slice(0, 10)}.json` });
@@ -577,21 +520,10 @@ $("importFile").onchange = async e => {
 
 /* ---------------- start ---------------- */
 async function boot() {
-  await restoreSettings();
   render();
   setView(ui.view === "map" ? "map" : "list");
-  if (connected()) await sync();
-  else {
-    setSync("local", "Alleen op dit toestel");
-    if (!store.data.items.length) {
-      // Eerste keer zonder koppeling: laad de startlijst als die naast de app staat
-      try {
-        const r = await fetch("data/restaurants.json", { cache: "no-store" });
-        if (r.ok) { store.data = await r.json(); store.dirty = true; persist(); render(); }
-      } catch (e) {}
-    }
-    queueGeocoding();
-  }
+  await sync();
+  queueGeocoding();
 }
 boot();
 

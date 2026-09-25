@@ -118,22 +118,17 @@
 <div class="sheet" id="settings" role="dialog" aria-modal="true" aria-labelledby="setTitle" hidden>
   <div class="grab"></div>
   <div class="sheet-head">
-    <h2 id="setTitle">Opslag &amp; sync</h2>
+    <h2 id="setTitle">Synchronisatie</h2>
     <button class="x" type="button" data-close aria-label="Sluiten">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
     </button>
   </div>
   <form id="setForm" novalidate>
-    <p class="hint">Je lijst wordt bewaard in een bestand in je eigen (privé) GitHub-repository. Zo heb je hem op al je apparaten.</p>
-    <label class="f">GitHub-gebruikersnaam<input id="sOwner" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
-    <label class="f">Repository met je lijst<input id="sRepo" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="tafels-data"></label>
-    <label class="f">Toegangstoken<input id="sToken" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…"></label>
-    <p class="hint">Maak een <em>fine-grained token</em> met alleen toegang tot deze ene repository en de permissie <strong>Contents: Read and write</strong>. Het token blijft op dit toestel.</p>
-    <p class="err" id="sErr" hidden></p>
+    <p class="hint">Je lijst wordt automatisch bewaard op GitHub en is hetzelfde op elk toestel waarop je de app gebruikt.</p>
     <p class="ok" id="sOk" hidden></p>
+    <p class="err" id="sErr" hidden></p>
     <div class="actions">
-      <button type="button" class="del" id="disconnectBtn">Ontkoppel</button>
-      <button type="submit" class="primary" id="connectBtn">Verbinden</button>
+      <button type="submit" class="primary" id="connectBtn">Nu synchroniseren</button>
     </div>
     <div class="group backup">
       <span class="lbl">Back-up</span>
