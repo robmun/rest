@@ -1289,11 +1289,12 @@
    ],
    "url": "https://balijepark.nl/",
    "visited": false,
-   "updatedAt": 1790349876389,
+   "updatedAt": 1790350792645,
    "address": "Augustusweg 32, 3453 KS De Meern",
    "lat": 52.080447,
    "lng": 5.022639,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350792645
   },
   {
    "id": "kan-liemes",
@@ -1306,11 +1307,13 @@
    ],
    "url": "https://liemes.nl/",
    "visited": false,
-   "updatedAt": 1790349876665,
+   "updatedAt": 1790350793877,
    "address": "Proostwetering 11, 3543 AB Utrecht",
    "lat": 52.107935,
    "lng": 5.053581,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 711 6909",
+   "osmChecked": 1790350793877
   },
   {
    "id": "kan-zuiver",
@@ -1323,11 +1326,14 @@
    ],
    "url": "https://restaurantzuiver.nl/utrecht/",
    "visited": false,
-   "updatedAt": 1790349876890,
+   "updatedAt": 1790350795199,
    "address": "Krommewetering 51, 3543 AM Utrecht",
    "lat": 52.108951,
    "lng": 5.045072,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 238 3233",
+   "hours": "Mo-Fr 09:00-22:00; Sa 17:00-22:00",
+   "osmChecked": 1790350795199
   }
  ]
 }
