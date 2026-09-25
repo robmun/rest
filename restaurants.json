@@ -1019,7 +1019,8 @@
    ],
    "url": "https://deblend.nl/",
    "visited": false,
-   "updatedAt": 1790310000024
+   "updatedAt": 1790318092163,
+   "geoFailed": true
   },
   {
    "id": "kan-fort-de-gagel",
@@ -1032,7 +1033,10 @@
    ],
    "url": "https://fortdegagel.nl/lunch/",
    "visited": false,
-   "updatedAt": 1790310000025
+   "updatedAt": 1790318094152,
+   "lat": 52.129572,
+   "lng": 5.102477,
+   "geo": "auto"
   },
   {
    "id": "kan-roemer",
@@ -1045,7 +1049,10 @@
    ],
    "url": "https://www.roemer-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790310000026
+   "updatedAt": 1790318096154,
+   "lat": 52.145562,
+   "lng": 5.039876,
+   "geo": "auto"
   },
   {
    "id": "kan-soia-beach-oog-in-al",
@@ -1058,7 +1065,10 @@
    ],
    "url": "https://www.soia.nl/",
    "visited": false,
-   "updatedAt": 1790310000027
+   "updatedAt": 1790318098169,
+   "lat": 52.094964,
+   "lng": 5.078841,
+   "geo": "auto"
   },
   {
    "id": "kan-balijepark",
@@ -1071,7 +1081,10 @@
    ],
    "url": "https://balijepark.nl/",
    "visited": false,
-   "updatedAt": 1790310000028
+   "updatedAt": 1790318100162,
+   "lat": 52.081589,
+   "lng": 5.020133,
+   "geo": "auto"
   },
   {
    "id": "kan-liemes",
@@ -1084,7 +1097,10 @@
    ],
    "url": "https://liemes.nl/",
    "visited": false,
-   "updatedAt": 1790310000029
+   "updatedAt": 1790318102161,
+   "lat": 52.108345,
+   "lng": 5.052516,
+   "geo": "auto"
   },
   {
    "id": "kan-zuiver",
