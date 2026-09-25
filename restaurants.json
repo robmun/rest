@@ -263,7 +263,10 @@
    "tags": [],
    "url": "https://the-duchess.com/",
    "visited": false,
-   "updatedAt": 1790300000016
+   "updatedAt": 1790318005189,
+   "lat": 52.372811,
+   "lng": 4.889353,
+   "geo": "auto"
   },
   {
    "id": "ams-brut-de-mer",
@@ -276,7 +279,10 @@
    ],
    "url": "http://brutdemer.nl",
    "visited": false,
-   "updatedAt": 1790300000017
+   "updatedAt": 1790318006834,
+   "lat": 52.355783,
+   "lng": 4.89255,
+   "geo": "auto"
   },
   {
    "id": "ams-graphite",
@@ -287,7 +293,10 @@
    "tags": [],
    "url": "https://graphite.amsterdam/home",
    "visited": false,
-   "updatedAt": 1790300000018
+   "updatedAt": 1790318008033,
+   "lat": 52.36649,
+   "lng": 4.898287,
+   "geo": "auto"
   },
   {
    "id": "ams-van-der-veen",
@@ -298,7 +307,10 @@
    "tags": [],
    "url": "https://www.vanderveenbarkitchen.nl/",
    "visited": false,
-   "updatedAt": 1790300000019
+   "updatedAt": 1790318009435,
+   "lat": 52.349074,
+   "lng": 4.881229,
+   "geo": "auto"
   },
   {
    "id": "ams-domenica",
@@ -309,7 +321,10 @@
    "tags": [],
    "url": "https://www.restaurantdomenica.com/",
    "visited": false,
-   "updatedAt": 1790300000020
+   "updatedAt": 1790318010645,
+   "lat": 52.380132,
+   "lng": 4.887435,
+   "geo": "auto"
   },
   {
    "id": "ams-bistrot-neuf",
