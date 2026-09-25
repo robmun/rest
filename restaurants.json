@@ -639,8 +639,11 @@
    ],
    "url": "https://www.restaurantpalladio.nl/",
    "visited": true,
-   "updatedAt": 1790347067470,
-   "address": "Elandsgracht 64, 1016 TX Amsterdam"
+   "updatedAt": 1790349867349,
+   "address": "Elandsgracht 64, 1016 TX Amsterdam",
+   "lat": 52.369941,
+   "lng": 4.881156,
+   "geo": "adres"
   },
   {
    "id": "ams-assaggi",
@@ -653,8 +656,11 @@
    ],
    "url": "https://www.assaggi.nl/",
    "visited": true,
-   "updatedAt": 1790347067470,
-   "address": "Tweede Egelantiersdwarsstraat 6, 1015 SC Amsterdam"
+   "updatedAt": 1790349867757,
+   "address": "Tweede Egelantiersdwarsstraat 6, 1015 SC Amsterdam",
+   "lat": 52.37682,
+   "lng": 4.881944,
+   "geo": "adres"
   },
   {
    "id": "ams-incanto",
@@ -669,8 +675,11 @@
    ],
    "url": "https://www.restaurant-incanto.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Amstel 2, 1017 AA Amsterdam"
+   "updatedAt": 1790349868168,
+   "address": "Amstel 2, 1017 AA Amsterdam",
+   "lat": 52.367002,
+   "lng": 4.893876,
+   "geo": "adres"
   },
   {
    "id": "utr-wilhelminapark",
@@ -683,8 +692,11 @@
    ],
    "url": "https://www.wilhelminapark.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Wilhelminapark 65, 3581 NP Utrecht"
+   "updatedAt": 1790349868386,
+   "address": "Wilhelminapark 65, 3581 NP Utrecht",
+   "lat": 52.087097,
+   "lng": 5.140937,
+   "geo": "adres"
   },
   {
    "id": "utr-concours",
@@ -697,8 +709,11 @@
    ],
    "url": "https://restaurantconcours.nl/restaurant",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Biltstraat 20, Utrecht"
+   "updatedAt": 1790349868733,
+   "address": "Biltstraat 20, Utrecht",
+   "lat": 52.095232,
+   "lng": 5.127543,
+   "geo": "adres"
   },
   {
    "id": "utr-goesting",
