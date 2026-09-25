@@ -175,7 +175,10 @@
    ],
    "url": "https://mosamsterdam.nl/",
    "visited": false,
-   "updatedAt": 1790300000010
+   "updatedAt": 1790317996580,
+   "lat": 52.383796,
+   "lng": 4.895503,
+   "geo": "auto"
   },
   {
    "id": "ams-rakang",
@@ -188,7 +191,10 @@
    ],
    "url": "http://www.rakang.nl/",
    "visited": false,
-   "updatedAt": 1790300000011
+   "updatedAt": 1790317997794,
+   "lat": 52.369655,
+   "lng": 4.881275,
+   "geo": "auto"
   },
   {
    "id": "ams-de-goudfazant",
