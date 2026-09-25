@@ -29,15 +29,22 @@
         <span class="dot" id="syncDot"></span><span id="syncText">Laden…</span>
       </button>
     </div>
-    <div class="seg" id="cities" role="group" aria-label="Lijst"></div>
     <div class="search-row">
       <label class="search">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
         <input id="q" type="search" placeholder="Zoek op naam of notitie" autocomplete="off" aria-label="Zoeken">
       </label>
       <span class="count" id="count"></span>
+      <button type="button" class="filter-btn" id="filterBtn" aria-expanded="false" aria-controls="filterPanel" aria-label="Filters">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+        <span class="badge" id="filterBadge" hidden></span>
+      </button>
     </div>
-    <div class="chips" id="filters" role="group" aria-label="Filter op kenmerk"></div>
+    <div class="filter-panel" id="filterPanel">
+      <div class="seg" id="cities" role="group" aria-label="Lijst"></div>
+      <div class="chips" id="filters" role="group" aria-label="Filter op kenmerk"></div>
+      <div class="legend" id="legend" aria-label="Kleuren op de kaart"></div>
+    </div>
     <div class="geo-progress" id="geoProgress" hidden></div>
   </header>
 
@@ -54,6 +61,7 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>
       </button>
       <div class="nopin" id="noPin" hidden></div>
+      <article class="place" id="place" hidden aria-live="polite"></article>
     </section>
   </main>
 
@@ -88,6 +96,8 @@
       <div class="suggest" id="suggest" role="listbox" aria-label="Suggesties" hidden></div>
     </div>
     <label class="f">Website<input id="fUrl" type="url" inputmode="url" autocomplete="off" placeholder="https://"></label>
+    <label class="f">Telefoon<input id="fPhone" type="tel" autocomplete="off" placeholder="Bijv. 020 123 4567"></label>
+    <label class="f">Openingstijden<input id="fHours" autocomplete="off" autocapitalize="off" placeholder="Bijv. di-za 17:30-22:00; zo 12:00-21:00"></label>
     <label class="f">Lijst<select id="fCity"></select></label>
     <label class="f" id="newCityWrap" hidden>Naam nieuwe lijst<input id="fNewCity" autocomplete="off" placeholder="Bijv. Den Haag"></label>
     <label class="f">Notities<textarea id="fNotes" placeholder="Met wie, wat je at, tips…"></textarea></label>

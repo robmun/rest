@@ -65,9 +65,97 @@ function el(tag, props = {}, ...kids) {
 const ARROW = () => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("width", "12"); s.setAttribute("height", "12"); s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("fill", "none"); s.setAttribute("stroke", "currentColor"); s.setAttribute("stroke-width", "2.5"); s.innerHTML = '<path d="M7 17 17 7M8 7h9v9"/>'; return s; };
 function toast(msg) { const t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => (t.hidden = true), 2400); }
 
+/* ---------------- openingstijden (OpenStreetMap-notatie, ook Nederlandse dagen) ---------------- */
+const DAY_KEYS = ["mo", "tu", "we", "th", "fr", "sa", "su"];
+const NL_DAYS = { ma: "mo", di: "tu", wo: "we", do: "th", vr: "fr", za: "sa", zo: "su" };
+const NL_SHORT = ["ma", "di", "wo", "do", "vr", "za", "zo"];
+const NL_LONG = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"];
+const ohCache = new Map();
+function parseHours(src) {
+  if (!src) return null;
+  if (ohCache.has(src)) return ohCache.get(src);
+  let res = null;
+  try { res = parseHoursRaw(src); } catch (e) { res = null; }
+  ohCache.set(src, res);
+  return res;
+}
+function parseHoursRaw(src) {
+  let s = src.trim().toLowerCase().replace(/[–—]/g, "-").replace(/\s*-\s*/g, "-").replace(/\./g, ":").replace(/\b(\d{1,2})u\b/g, "$1:00");
+  s = s.replace(/\b(ma|di|wo|do|vr|za|zo)\b/g, m => NL_DAYS[m]);
+  s = s.replace(/\b(gesloten|dicht)\b/g, "off");
+  if (s === "24/7") return { always: true, week: DAY_KEYS.map(() => [[0, 1440]]) };
+  const week = DAY_KEYS.map(() => null);
+  let any = false;
+  for (let rule of s.split(";")) {
+    rule = rule.trim(); if (!rule) continue;
+    if (/^ph\b/.test(rule)) continue;                 // feestdagen negeren
+    const m = /^((?:mo|tu|we|th|fr|sa|su)(?:-(?:mo|tu|we|th|fr|sa|su))?(?:\s*,\s*(?:mo|tu|we|th|fr|sa|su|ph)(?:-(?:mo|tu|we|th|fr|sa|su))?)*)?\s*(.*)$/.exec(rule);
+    if (!m) return null;
+    const days = new Set();
+    if (m[1]) {
+      for (const part of m[1].split(",")) {
+        const p = part.trim(); if (p === "ph") continue;
+        const [a, b] = p.split("-");
+        let x = DAY_KEYS.indexOf(a); const y = b ? DAY_KEYS.indexOf(b) : x;
+        if (x < 0 || y < 0) return null;
+        for (;;) { days.add(x); if (x === y) break; x = (x + 1) % 7; }
+      }
+    } else DAY_KEYS.forEach((_, i) => days.add(i));
+    const rest = m[2].trim();
+    let ranges;
+    if (rest === "off" || rest === "closed") ranges = [];
+    else {
+      ranges = [];
+      for (const t of rest.split(",")) {
+        const tm = /^(\d{1,2})(?::(\d{2}))?-(\d{1,2})(?::(\d{2}))?\+?$/.exec(t.trim());
+        if (!tm) return null;
+        const a = +tm[1] * 60 + +(tm[2] || 0); let b = +tm[3] * 60 + +(tm[4] || 0);
+        if (b <= a) b += 1440;
+        ranges.push([a, b]);
+      }
+    }
+    days.forEach(d => (week[d] = ranges));
+    any = true;
+  }
+  if (!any) return null;
+  return { week: week.map(r => r || []) };
+}
+const hhmm = m => { m = ((m % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"); };
+function hoursStatus(i, date = new Date()) {
+  const oh = parseHours(i.hours);
+  if (!oh) return null;
+  if (oh.always) return { open: true, text: "Altijd open" };
+  const d = (date.getDay() + 6) % 7, min = date.getHours() * 60 + date.getMinutes();
+  const today = oh.week[d], yest = oh.week[(d + 6) % 7];
+  for (const [a, b] of yest) if (b > 1440 && min + 1440 < b) return { open: true, text: `Open tot ${hhmm(b)}` };
+  for (const [a, b] of today) if (min >= a && min < b) return { open: true, text: `Open tot ${hhmm(b)}` };
+  const later = today.filter(([a]) => a > min).sort((x, y) => x[0] - y[0])[0];
+  if (later) return { open: false, text: `Gesloten · open om ${hhmm(later[0])}` };
+  for (let k = 1; k <= 7; k++) {
+    const nd = (d + k) % 7, r = oh.week[nd].slice().sort((x, y) => x[0] - y[0])[0];
+    if (r) return { open: false, text: `Gesloten · ${k === 1 ? "morgen" : NL_LONG[nd]} vanaf ${hhmm(r[0])}` };
+  }
+  return { open: false, text: "Gesloten" };
+}
+function hoursLines(i) {
+  const oh = parseHours(i.hours); if (!oh) return null;
+  return oh.week.map((r, d) => [NL_SHORT[d], r.length ? r.map(([a, b]) => `${hhmm(a)}–${hhmm(b)}`).join(", ") : "gesloten"]);
+}
+
+/* ---------------- categorie (kleur op de kaart) ---------------- */
+const CATS = [
+  ["it", "Italiaans", t => t.includes("Italiaans")],
+  ["fr", "Frans", t => t.includes("Frans")],
+  ["as", "Aziatisch", t => t.some(x => ["Aziatisch", "Thais", "Indonesisch"].includes(x))],
+  ["vis", "Vis", t => t.includes("Vis")],
+  ["fine", "Fine dining", t => t.includes("Fine dining")],
+  ["lunch", "Lunch", t => t.includes("Lunch")],
+];
+function catOf(i) { const t = i.tags || []; const c = CATS.find(([, , f]) => f(t)); return c ? c[0] : "x"; }
+
 /* ---------------- filtering & list ---------------- */
 const ALL = "Alles";
-let hereCity = null;
+let hereCity = null, openFilter = false;
 function inCityOf(i) { return ui.city === ALL || i.city === ui.city; }
 function markHere(c) {
   hereCity = c;
@@ -75,15 +163,18 @@ function markHere(c) {
 }
 function filtered() {
   const q = norm(query);
+  const nowD = new Date();
   return visible().filter(i => {
     if (!inCityOf(i)) return false;
     if (visitFilter === "yes" && !i.visited) return false;
     if (visitFilter === "no" && i.visited) return false;
+    if (openFilter) { const st = hoursStatus(i, nowD); if (!st || !st.open) return false; }
     for (const t of activeTags) if (!(i.tags || []).includes(t)) return false;
     if (q && !norm([i.name, i.notes, i.address, (i.tags || []).join(" ")].join(" ")).includes(q)) return false;
     return true;
   }).sort((a, b) => a.name.localeCompare(b.name, "nl", { sensitivity: "base" }));
 }
+function activeFilterCount() { return activeTags.size + (visitFilter ? 1 : 0) + (openFilter ? 1 : 0) + (ui.city !== ALL ? 1 : 0); }
 
 function render() {
   const cities = allCities();
@@ -92,24 +183,30 @@ function render() {
   $("cities").replaceChildren(...[ALL, ...cities].map(c => el("button", {
     type: "button", "aria-pressed": String(c === ui.city), "data-city": c,
     class: ui.city === ALL && c === hereCity ? "here" : null,
-    onclick: () => { ui.city = c; lsSet(LS_UI, ui); activeTags.clear(); render(); fitCity(); $("listView").scrollTop = 0; }
+    onclick: () => { ui.city = c; lsSet(LS_UI, ui); activeTags.clear(); closePlace(); render(); fitCity(); $("listView").scrollTop = 0; }
   }, c, el("span", { text: String(c === ALL ? vis.length : vis.filter(i => i.city === c).length) }))));
 
   const inCity = vis.filter(inCityOf);
   const used = new Map(); inCity.forEach(i => (i.tags || []).forEach(t => used.set(t, (used.get(t) || 0) + 1)));
   const tagList = [...used.keys()].sort((a, b) => used.get(b) - used.get(a) || a.localeCompare(b, "nl"));
   $("filters").replaceChildren(
+    el("button", { type: "button", class: "chip state", "aria-pressed": String(openFilter), onclick: () => { openFilter = !openFilter; render(); } }, "Nu open"),
     el("button", { type: "button", class: "chip state", "aria-pressed": String(visitFilter === "yes"), onclick: () => { visitFilter = visitFilter === "yes" ? null : "yes"; render(); } }, "Geweest"),
     el("button", { type: "button", class: "chip state", "aria-pressed": String(visitFilter === "no"), onclick: () => { visitFilter = visitFilter === "no" ? null : "no"; render(); } }, "Nog proberen"),
     ...tagList.map(t => el("button", { type: "button", class: "chip", "aria-pressed": String(activeTags.has(t)), onclick: () => { activeTags.has(t) ? activeTags.delete(t) : activeTags.add(t); render(); } }, t))
   );
+  $("legend").replaceChildren(
+    ...[...CATS.map(([k, label]) => [k, label]), ["x", "Overig"]].map(([k, label]) => el("span", { class: "lg" }, el("i", { class: "dot c-" + k }), label)),
+    el("span", { class: "lg" }, el("i", { class: "dot been-dot" }), "Geweest"));
+  const n = activeFilterCount();
+  $("filterBadge").hidden = !n; $("filterBadge").textContent = String(n);
 
   const shown = filtered();
   $("count").textContent = shown.length === inCity.length ? `${inCity.length}` : `${shown.length}/${inCity.length}`;
   $("list").replaceChildren(...shown.map(card));
   const empty = $("empty");
   empty.hidden = !!shown.length;
-  if (!shown.length) empty.textContent = inCity.length ? "Niets gevonden met deze filters." : (ui.city === ALL ? "Nog geen restaurants. Tik op + om er een toe te voegen." : `Nog geen restaurants in ${ui.city}. Tik op + om er een toe te voegen.`);
+  if (!shown.length) empty.textContent = inCity.length ? (openFilter ? "Geen restaurants die nu open zijn (van de restaurants met bekende openingstijden)." : "Niets gevonden met deze filters.") : (ui.city === ALL ? "Nog geen restaurants. Tik op + om er een toe te voegen." : `Nog geen restaurants in ${ui.city}. Tik op + om er een toe te voegen.`);
 
   const inspo = (store.data.inspiration || []).filter(x => (!x.city || ui.city === ALL || x.city === ui.city) && safeUrl(x.url));
   $("inspo").hidden = !inspo.length;
@@ -118,43 +215,112 @@ function render() {
   renderNotice();
   renderSync();
   if (map) renderMarkers();
+  if (placeId) { const p = byId(placeId); if (p && !p.deleted) renderPlace(p); else closePlace(); }
 }
 
-function linkRow(i, inPopup) {
+function linkRow(i) {
   const links = el("div", { class: "links" });
   const u = safeUrl(i.url);
   if (u) { const a = el("a", { href: u, target: "_blank", rel: "noopener" }, hostOf(u)); a.append(ARROW()); links.append(a); }
   const g = el("a", { href: mapsUrl(i), target: "_blank", rel: "noopener" }, "Google Maps"); g.append(ARROW()); links.append(g);
-  if (!inPopup) {
-    if (i.lat != null) links.append(el("button", { type: "button", onclick: () => showOnMap(i.id) }, "Op kaart"));
-    else links.append(el("span", { class: "nopos", text: geoQueue.includes(i.id) ? "Locatie zoeken…" : "Geen locatie" }));
-  } else {
-    links.append(el("button", { type: "button", onclick: () => openSheet(byId(i.id)) }, "Bewerken"));
-  }
+  if (i.lat != null) links.append(el("button", { type: "button", onclick: () => showOnMap(i.id) }, "Op kaart"));
+  else links.append(el("span", { class: "nopos", text: geoQueue.includes(i.id) ? "Locatie zoeken…" : "Geen locatie" }));
   return links;
 }
-
+function statusBadge(i) {
+  const st = hoursStatus(i);
+  return st ? el("span", { class: "open-badge " + (st.open ? "is-open" : "is-closed"), text: st.open ? "Open" : "Dicht" }) : null;
+}
 function card(i) {
   const main = el("button", { type: "button", class: "card-main", onclick: () => openSheet(i), "aria-label": "Bewerk " + i.name },
     ui.city === ALL ? el("span", { class: "where", text: i.city }) : null,
-    el("div", { class: "name-row" }, el("span", { class: "name", text: i.name }), i.visited ? el("span", { class: "been", text: "Geweest" }) : null),
+    el("div", { class: "name-row" }, el("i", { class: "dot c-" + catOf(i), "aria-hidden": "true" }), el("span", { class: "name", text: i.name }), i.visited ? el("span", { class: "been", text: "Geweest" }) : null, statusBadge(i)),
     i.notes ? el("p", { class: "notes", text: i.notes }) : null,
     (i.tags && i.tags.length) ? el("div", { class: "tags" }, i.tags.map(t => el("span", { class: "tag", text: t }))) : null
   );
-  return el("li", { class: "card" }, main, linkRow(i, false));
+  return el("li", { class: "card" }, main, linkRow(i));
 }
 
-function renderNotice() {
-  const n = $("notice");
-  if (!connected() && !lsGet("tafels.noticeDismissed")) {
-    n.hidden = false;
-    n.replaceChildren(
-      el("span", { text: "Je lijst staat nu alleen op dit toestel. Koppel je GitHub-repository om hem veilig te bewaren en op al je apparaten te hebben." }),
-      el("div", { class: "inline" },
-        el("button", { type: "button", class: "solid", onclick: openSettings }, "Koppel GitHub"),
-        el("button", { type: "button", onclick: () => { lsSet("tafels.noticeDismissed", true); renderNotice(); } }, "Later"))
-    );
-  } else n.hidden = true;
+function renderNotice() { $("notice").hidden = true; }
+
+/* ---------------- restaurantkaart onderin ---------------- */
+let placeId = null;
+const ICONS = {
+  route: '<path d="M3 11 21 3l-8 18-2-8-8-2Z"/>',
+  phone: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>',
+  web: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  share: '<path d="M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>',
+  edit: '<path d="M4 20h4L19 9l-4-4L4 16v4Z"/><path d="m13 7 4 4"/>',
+  close: '<path d="M6 6l12 12M18 6 6 18"/>',
+};
+function svgIcon(name, size = 22) {
+  const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  s.setAttribute("width", size); s.setAttribute("height", size); s.setAttribute("viewBox", "0 0 24 24");
+  s.setAttribute("fill", "none"); s.setAttribute("stroke", "currentColor"); s.setAttribute("stroke-width", "2");
+  s.setAttribute("stroke-linecap", "round"); s.setAttribute("stroke-linejoin", "round"); s.setAttribute("aria-hidden", "true");
+  s.innerHTML = ICONS[name]; return s;
+}
+function routeUrl(i) {
+  const dest = i.lat != null ? `${i.lat},${i.lng}` : (i.address || i.name + " " + area(i.city).search);
+  return `https://maps.apple.com/?daddr=${encodeURIComponent(dest)}&q=${encodeURIComponent(i.name)}`;
+}
+function telUrl(p) { return "tel:" + p.replace(/[^\d+]/g, ""); }
+async function sharePlace(i) {
+  const url = safeUrl(i.url) || mapsUrl(i);
+  const text = [i.name, i.address].filter(Boolean).join("\n");
+  if (navigator.share) { try { await navigator.share({ title: i.name, text, url }); } catch (e) {} return; }
+  try { await navigator.clipboard.writeText(text + "\n" + url); toast("Gekopieerd, plak het in je bericht"); }
+  catch (e) { toast("Delen lukt hier niet"); }
+}
+function actionBtn(icon, label, attrs) {
+  const tag = attrs.href ? "a" : "button";
+  const b = el(tag, { class: "act", ...(tag === "button" ? { type: "button" } : {}), ...attrs });
+  b.append(svgIcon(icon), el("span", { text: label }));
+  return b;
+}
+function renderPlace(i) {
+  placeId = i.id;
+  const st = hoursStatus(i);
+  const lines = hoursLines(i);
+  const box = $("place");
+  const acts = el("div", { class: "acts" },
+    actionBtn("route", "Route", { href: routeUrl(i), target: "_blank", rel: "noopener" }),
+    i.phone ? actionBtn("phone", "Bellen", { href: telUrl(i.phone) }) : null,
+    safeUrl(i.url) ? actionBtn("web", "Website", { href: safeUrl(i.url), target: "_blank", rel: "noopener" }) : null,
+    actionBtn("share", "Delen", { onclick: () => sharePlace(byId(i.id) || i) }),
+    actionBtn("edit", "Bewerken", { onclick: () => { const it = byId(i.id); closePlace(); openSheet(it); } }));
+  let hoursEl = null;
+  if (lines) {
+    const today = (new Date().getDay() + 6) % 7;
+    hoursEl = el("details", { class: "hours" },
+      el("summary", {}, el("span", { class: "open-text " + (st.open ? "is-open" : "is-closed"), text: st.text }), el("span", { class: "more", text: "Alle tijden" })),
+      el("table", {}, ...lines.map(([d, t], k) => el("tr", { class: k === today ? "today" : null }, el("th", { text: d }), el("td", { text: t })))));
+  } else if (i.hours) hoursEl = el("p", { class: "hours-raw", text: i.hours });
+  else hoursEl = el("p", { class: "hours-raw muted", text: "Openingstijden onbekend" });
+  box.replaceChildren(
+    el("div", { class: "place-head" },
+      el("div", { class: "place-title" },
+        el("span", { class: "where", text: i.city }),
+        el("h3", {}, el("i", { class: "dot c-" + catOf(i), "aria-hidden": "true" }), i.name, i.visited ? el("span", { class: "been", text: "Geweest" }) : null)),
+      el("button", { type: "button", class: "x", "aria-label": "Sluiten", onclick: closePlace }, svgIcon("close", 16))),
+    i.address ? el("p", { class: "addr", text: i.address }) : null,
+    hoursEl,
+    acts,
+    i.notes ? el("p", { class: "notes", text: i.notes }) : null,
+    (i.tags && i.tags.length) ? el("div", { class: "tags" }, i.tags.map(t => el("span", { class: "tag", text: t }))) : null);
+  box.hidden = false;
+  $("mapView").classList.add("card-open");
+}
+function openPlace(id) {
+  const i = byId(id); if (!i) return;
+  renderPlace(i); markHere(i.city);
+  markers.forEach((m, mid) => { const e = m.getElement(); if (e) e.classList.toggle("selected", mid === id); });
+}
+function closePlace() {
+  placeId = null;
+  $("place").hidden = true; $("mapView").classList.remove("card-open");
+  markers.forEach(m => { const e = m.getElement(); if (e) e.classList.remove("selected"); });
+  markHere(null);
 }
 
 /* ---------------- map ---------------- */
@@ -166,25 +332,24 @@ function tileLayer() {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   });
 }
-function pinIcon(cls) { return L.divIcon({ className: "", html: `<div class="pin ${cls}"><i></i></div>`, iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -26] }); }
+const CHECK = '<svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>';
+function pinIcon(cls, been) {
+  return L.divIcon({ className: "pin-wrap", html: `<div class="pin ${cls}"><i></i></div>${been ? `<b class="pin-been">${CHECK}</b>` : ""}`, iconSize: [28, 28], iconAnchor: [14, 28], tooltipAnchor: [12, -16] });
+}
+const LABEL_ZOOM = 15;
+function updateLabels() { if (map) map.getContainer().classList.toggle("labels", map.getZoom() >= LABEL_ZOOM); }
 
 function initMap() {
   if (map || typeof L === "undefined") return;
   const a = area(ui.city);
-  map = L.map("map", { zoomControl: true, attributionControl: true }).setView(a.center, a.zoom);
+  map = L.map("map", { zoomControl: false, attributionControl: true }).setView(a.center, a.zoom);
   tileLayer().addTo(map);
-    cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 40, spiderfyOnMaxZoom: true, disableClusteringAtZoom: 16 });
+  cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 40, spiderfyOnMaxZoom: true, disableClusteringAtZoom: 16 });
   map.addLayer(cluster);
+  map.on("zoomend", updateLabels);
+  map.on("click", () => { closePlace(); document.querySelector(".app").classList.remove("filters-open"); $("filterBtn").setAttribute("aria-expanded", "false"); });
+  updateLabels();
   renderMarkers();
-}
-function popupFor(i) {
-  return el("div", { class: "pop" },
-    el("span", { class: "where", text: i.city }),
-    el("h3", { text: i.name }),
-    i.address ? el("p", { class: "addr", text: i.address }) : null,
-    i.notes ? el("p", { text: i.notes }) : null,
-    (i.tags && i.tags.length) ? el("div", { class: "tags" }, i.tags.map(t => el("span", { class: "tag", text: t }))) : null,
-    linkRow(i, true));
 }
 function renderMarkers() {
   if (!map) return;
@@ -192,10 +357,10 @@ function renderMarkers() {
   const shown = filtered();
   const withPos = shown.filter(i => i.lat != null && i.lng != null);
   withPos.forEach(i => {
-    const m = L.marker([i.lat, i.lng], { icon: pinIcon(i.visited ? "been" : ""), title: i.name });
-    m.bindPopup(() => popupFor(byId(i.id) || i), { maxWidth: 280 });
-    m.on("popupopen", () => markHere(i.city));
-    m.on("popupclose", () => { if (hereCity === i.city) markHere(null); });
+    const m = L.marker([i.lat, i.lng], { icon: pinIcon("c-" + catOf(i), i.visited), title: i.name, riseOnHover: true });
+    m.bindTooltip(i.name, { permanent: true, direction: "right", className: "pin-label", interactive: false });
+    m.on("click", () => openPlace(i.id));
+    m.on("add", () => { if (i.id === placeId) { const e = m.getElement(); if (e) e.classList.add("selected"); } });
     markers.set(i.id, m); cluster.addLayer(m);
   });
   const missing = shown.length - withPos.length;
@@ -208,7 +373,7 @@ let lastFitCount = 0;
 function fitCity() {
   if (!map) return;
   const pts = visible().filter(i => inCityOf(i) && i.lat != null).map(i => [i.lat, i.lng]);
-  if (pts.length) map.fitBounds(pts, { padding: [40, 40], maxZoom: 15 });
+  if (pts.length) map.fitBounds(pts, { paddingTopLeft: [30, 90], paddingBottomRight: [30, 40], maxZoom: 15 });
   else { const a = area(ui.city); map.setView(a.center, a.zoom); }
   lastFitCity = ui.city; lastFitCount = pts.length;
 }
@@ -217,8 +382,9 @@ function showOnMap(id) {
   const i = byId(id); if (!i || i.lat == null) return;
   setTimeout(() => {
     const m = markers.get(id);
-    if (m) cluster.zoomToShowLayer(m, () => m.openPopup());
-    else map.setView([i.lat, i.lng], 16);
+    const done = () => { map.panTo([i.lat, i.lng]); openPlace(id); };
+    if (m) cluster.zoomToShowLayer(m, () => { if (map.getZoom() < LABEL_ZOOM) map.setView([i.lat, i.lng], LABEL_ZOOM); done(); });
+    else { map.setView([i.lat, i.lng], 16); done(); }
   }, 80);
 }
 $("locateBtn").onclick = () => {
@@ -232,16 +398,27 @@ function onLocated(e) {
 
 function setView(v) {
   ui.view = v; lsSet(LS_UI, ui);
+  const app = document.querySelector(".app");
+  app.classList.toggle("mapmode", v === "map");
+  app.classList.remove("filters-open"); $("filterBtn").setAttribute("aria-expanded", "false");
   $("listView").hidden = v !== "list"; $("mapView").hidden = v !== "map";
   $("tabList").setAttribute("aria-pressed", String(v === "list"));
   $("tabMap").setAttribute("aria-pressed", String(v === "map"));
   if (v === "map") {
     if (!map) { initMap(); map.on("locationfound", onLocated); map.on("locationerror", () => toast("Je locatie is niet beschikbaar. Sta locatie toe in je instellingen.")); }
     setTimeout(() => map && map.invalidateSize(), 30);
-  }
+  } else closePlace();
 }
 $("tabList").onclick = () => setView("list");
 $("tabMap").onclick = () => setView("map");
+$("filterBtn").onclick = () => {
+  const app = document.querySelector(".app");
+  const open = !app.classList.contains("filters-open");
+  app.classList.toggle("filters-open", open);
+  $("filterBtn").setAttribute("aria-expanded", String(open));
+  if (open) closePlace();
+};
+$("q").addEventListener("focus", () => closePlace());
 
 /* ---------------- data changes ---------------- */
 function byId(id) { return store.data.items.find(i => i.id === id); }
@@ -303,7 +480,8 @@ function queueGeocoding() {
   runGeo();
 }
 async function runGeo() {
-  if (geoRunning || !geoQueue.length) { updateGeoProgress(); return; }
+  if (geoRunning) return;
+  if (!geoQueue.length) { updateGeoProgress(); runEnrich(); return; }
   geoRunning = true;
   const total = geoQueue.length; let done = 0;
   while (geoQueue.length) {
@@ -326,6 +504,39 @@ async function runGeo() {
     if (done % 5 === 0 || !geoQueue.length) { render(); scheduleSync(); }
   }
   geoRunning = false; render(); updateGeoProgress(); scheduleSync();
+  runEnrich();
+}
+
+/* ---------------- telefoon en openingstijden aanvullen uit OpenStreetMap (eenmalig per restaurant) ---------------- */
+let enrichRunning = false;
+async function osmNear(i) {
+  const d = 0.0025;
+  const p = new URLSearchParams({ format: "jsonv2", extratags: "1", limit: "3", q: cleanName(i.name),
+    viewbox: `${i.lng - d},${i.lat + d},${i.lng + d},${i.lat - d}`, bounded: "1", "accept-language": "nl" });
+  const r = await fetch("https://nominatim.openstreetmap.org/search?" + p.toString(), { headers: { Accept: "application/json" } });
+  if (!r.ok) throw new Error("osm " + r.status);
+  const res = await r.json();
+  return (res.find(x => x.extratags && (x.extratags.opening_hours || x.extratags.phone || x.extratags["contact:phone"])) || res[0] || {}).extratags || null;
+}
+async function runEnrich() {
+  if (enrichRunning || geoRunning) return;
+  enrichRunning = true;
+  let changed = 0;
+  for (const item of visible().filter(i => i.lat != null && !i.osmChecked)) {
+    let x = null;
+    try { x = await osmNear(item); } catch (e) { break; }
+    await sleep(1100); // max 1 verzoek per seconde
+    const cur = byId(item.id); if (!cur || cur.deleted) continue;
+    if (x) {
+      const tel = x.phone || x["contact:phone"];
+      if (tel && !cur.phone) cur.phone = tel.split(";")[0].trim();
+      if (x.opening_hours && !cur.hours && parseHours(x.opening_hours)) cur.hours = x.opening_hours;
+    }
+    cur.osmChecked = now(); cur.updatedAt = now(); store.dirty = true; persist(); changed++;
+    if (changed % 8 === 0) { render(); scheduleSync(); }
+  }
+  enrichRunning = false;
+  if (changed) { render(); scheduleSync(); }
 }
 function updateGeoProgress() { if (!geoQueue.length) $("geoProgress").hidden = true; }
 
@@ -355,6 +566,8 @@ function openSheet(item) {
   $("sheetTitle").textContent = item ? "Bewerken" : "Restaurant toevoegen";
   $("fName").value = item ? item.name : "";
   $("fUrl").value = item ? item.url || "" : "";
+  $("fPhone").value = item ? item.phone || "" : "";
+  $("fHours").value = item ? item.hours || "" : "";
   $("fNotes").value = item ? item.notes || "" : "";
   $("fAddress").value = item ? item.address || "" : "";
   $("fVisited").checked = !!(item && item.visited);
@@ -463,6 +676,9 @@ async function pickSuggestion(f) {
     const x = ((await r.json())[0] || {}).extratags || {};
     const site = x.website || x["contact:website"];
     if (site && !$("fUrl").value.trim()) $("fUrl").value = site;
+    const tel = x.phone || x["contact:phone"];
+    if (tel && !$("fPhone").value.trim()) $("fPhone").value = tel.split(";")[0].trim();
+    if (x.opening_hours && !$("fHours").value.trim() && parseHours(x.opening_hours)) $("fHours").value = x.opening_hours;
     (x.cuisine || "").split(";").map(s => CUISINE[s.trim()]).filter(Boolean).forEach(t => formTags.add(t));
     renderTagPick();
   } catch (e) {}
@@ -488,11 +704,15 @@ $("form").addEventListener("submit", e => {
   if (c === "__new") { c = $("fNewCity").value.trim(); if (!c) { showErr("Geef de nieuwe lijst een naam."); return; } }
   if ($("fNewTag").value.trim()) addTagFromInput();
   const base = editing || { id: slug(name) + "-" + now().toString(36), createdAt: now() };
-  const item = { ...base, name, url: fixUrl($("fUrl").value), city: c, notes: $("fNotes").value.trim(), address: $("fAddress").value.trim(), tags: [...formTags], visited: $("fVisited").checked };
+  const item = { ...base, name, url: fixUrl($("fUrl").value), city: c, notes: $("fNotes").value.trim(), address: $("fAddress").value.trim(), phone: $("fPhone").value.trim(), hours: $("fHours").value.trim(), tags: [...formTags], visited: $("fVisited").checked };
+  const hoursText = item.hours;
+  if (hoursText && !parseHours(hoursText)) { showErr("Openingstijden niet begrepen. Schrijf ze zo: di-za 17:30-22:00; zo 12:00-21:00"); $("fHours").focus(); return; }
   delete item.geoFailed;
   if (draftPos) { item.lat = draftPos.lat; item.lng = draftPos.lng; item.geo = draftPos.manual ? "manual" : (draftPos.manual === false ? (draftPos.geo || "auto") : item.geo); }
   else { delete item.lat; delete item.lng; delete item.geo; }
   if (!item.address) delete item.address;
+  if (!item.phone) delete item.phone;
+  if (!item.hours) delete item.hours;
   if (!store.data.cities.includes(c)) store.data.cities.push(c);
   const isNew = !editing;
   if (ui.city !== ALL) { ui.city = c; lsSet(LS_UI, ui); }
@@ -585,7 +805,8 @@ async function sync() {
   }
 }
 window.addEventListener("online", () => scheduleSync());
-document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && connected()) sync(); });
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") { render(); if (connected()) sync(); } });
+setInterval(() => { if (document.visibilityState === "visible" && (openFilter || placeId)) render(); }, 60000);
 
 /* ---------------- settings ---------------- */
 function openSettings() {
