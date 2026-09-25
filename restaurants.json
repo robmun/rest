@@ -809,7 +809,8 @@
    ],
    "url": "https://tigermama.nl/",
    "visited": false,
-   "updatedAt": 1790310000010
+   "updatedAt": 1790318058256,
+   "geoFailed": true
   },
   {
    "id": "utr-streetfood-club",
@@ -820,7 +821,10 @@
    "tags": [],
    "url": "https://www.thestreetfoodclub.nl/",
    "visited": false,
-   "updatedAt": 1790310000011
+   "updatedAt": 1790318060158,
+   "lat": 52.092993,
+   "lng": 5.122153,
+   "geo": "auto"
   },
   {
    "id": "utr-djakarta",
@@ -833,7 +837,10 @@
    ],
    "url": "https://djakarta.nl/",
    "visited": false,
-   "updatedAt": 1790310000012
+   "updatedAt": 1790318062161,
+   "lat": 52.094264,
+   "lng": 5.12587,
+   "geo": "auto"
   },
   {
    "id": "utr-cafe-olivier",
@@ -846,7 +853,10 @@
    ],
    "url": "https://www.cafe-olivier.be/nl/",
    "visited": false,
-   "updatedAt": 1790310000013
+   "updatedAt": 1790318064157,
+   "lat": 52.090679,
+   "lng": 5.115781,
+   "geo": "auto"
   },
   {
    "id": "utr-jasmijn-ik",
@@ -859,7 +869,10 @@
    ],
    "url": "https://jasmijnenik.nl/",
    "visited": false,
-   "updatedAt": 1790310000014
+   "updatedAt": 1790318066160,
+   "lat": 52.090896,
+   "lng": 5.094875,
+   "geo": "auto"
   },
   {
    "id": "utr-stadsjochies",
