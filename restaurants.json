@@ -718,7 +718,8 @@
    ],
    "url": "https://www.madeleine-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790310000004
+   "updatedAt": 1790318047385,
+   "geoFailed": true
   },
   {
    "id": "utr-sea-salt-saloon",
@@ -731,7 +732,10 @@
    ],
    "url": "https://seasaltsaloon.nl/",
    "visited": false,
-   "updatedAt": 1790310000005
+   "updatedAt": 1790318048585,
+   "lat": 52.089832,
+   "lng": 5.121492,
+   "geo": "auto"
   },
   {
    "id": "utr-broadway",
@@ -745,7 +749,10 @@
    ],
    "url": "https://www.steaksandribs.nl/",
    "visited": false,
-   "updatedAt": 1790310000006
+   "updatedAt": 1790318050222,
+   "lat": 52.09159,
+   "lng": 5.117454,
+   "geo": "auto"
   },
   {
    "id": "utr-ruby-rose",
@@ -758,7 +765,10 @@
    ],
    "url": "https://rubyrose-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790310000007
+   "updatedAt": 1790318051511,
+   "lat": 52.092835,
+   "lng": 5.122039,
+   "geo": "auto"
   },
   {
    "id": "utr-humphreys",
@@ -769,7 +779,8 @@
    "tags": [],
    "url": "https://www.humphreys.nl/restaurants/humphreys-utrecht",
    "visited": false,
-   "updatedAt": 1790310000008
+   "updatedAt": 1790318054330,
+   "geoFailed": true
   },
   {
    "id": "utr-hemel-aarde",
@@ -782,7 +793,10 @@
    ],
    "url": "https://www.hemel-aarde.nl/",
    "visited": false,
-   "updatedAt": 1790310000009
+   "updatedAt": 1790318055569,
+   "lat": 52.092471,
+   "lng": 5.122959,
+   "geo": "auto"
   },
   {
    "id": "utr-tiger-mama",
