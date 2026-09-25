@@ -1113,7 +1113,10 @@
    ],
    "url": "https://restaurantzuiver.nl/",
    "visited": false,
-   "updatedAt": 1790310000030
+   "updatedAt": 1790318104163,
+   "lat": 52.109098,
+   "lng": 5.045082,
+   "geo": "auto"
   }
  ]
 }
