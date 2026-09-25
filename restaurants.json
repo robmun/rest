@@ -491,7 +491,10 @@
    "tags": [],
    "url": "https://badcuypamsterdam.nl/",
    "visited": false,
-   "updatedAt": 1790300000031
+   "updatedAt": 1790318027793,
+   "lat": 52.356592,
+   "lng": 4.897116,
+   "geo": "auto"
   },
   {
    "id": "ams-cafe-restaurant-amsterdam",
@@ -504,8 +507,11 @@
    ],
    "url": "https://cradam.nl/",
    "visited": false,
-   "updatedAt": 1790300000032,
-   "address": "Watertorenplein 6"
+   "updatedAt": 1790318028992,
+   "address": "Watertorenplein 6",
+   "lat": 52.38422,
+   "lng": 4.868214,
+   "geo": "auto"
   },
   {
    "id": "ams-george-marina",
@@ -518,7 +524,10 @@
    ],
    "url": "https://www.georgemarina.nl/",
    "visited": false,
-   "updatedAt": 1790300000033
+   "updatedAt": 1790318030178,
+   "lat": 52.34182,
+   "lng": 4.918827,
+   "geo": "auto"
   },
   {
    "id": "ams-bouillon-d-amsterdam",
@@ -533,7 +542,10 @@
    ],
    "url": "https://www.bouillondamsterdam.nl/",
    "visited": true,
-   "updatedAt": 1790300000034
+   "updatedAt": 1790318031427,
+   "lat": 52.374051,
+   "lng": 4.89071,
+   "geo": "auto"
   },
   {
    "id": "ams-helling-7",
@@ -546,7 +558,10 @@
    ],
    "url": "https://www.helling7.nl/",
    "visited": true,
-   "updatedAt": 1790300000035
+   "updatedAt": 1790318032800,
+   "lat": 52.40591,
+   "lng": 4.885003,
+   "geo": "auto"
   },
   {
    "id": "ams-pianeta-terra",
