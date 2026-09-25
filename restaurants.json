@@ -788,11 +788,12 @@
    "name": "Wilhelminapark",
    "notes": "Lekker in het park, met parkeren. Hebben ook een terras.",
    "tags": [
-    "Terras"
+    "Terras",
+    "Zakelijk"
    ],
    "url": "https://www.wilhelminapark.nl/",
-   "visited": false,
-   "updatedAt": 1790351480502,
+   "visited": true,
+   "updatedAt": 1790374520414,
    "address": "Wilhelminapark 65, 3581 NP Utrecht",
    "lat": 52.087097,
    "lng": 5.140937,
