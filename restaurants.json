@@ -89,8 +89,11 @@
    ],
    "url": "https://www.beulings.nl/en/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Beulingstraat 9, 1017 BA Amsterdam"
+   "updatedAt": 1790347509034,
+   "address": "Beulingstraat 9, 1017 BA Amsterdam",
+   "lat": 52.367986,
+   "lng": 4.887686,
+   "geo": "auto"
   },
   {
    "id": "ams-shaffy-voorheen-felix",
@@ -101,8 +104,11 @@
    "tags": [],
    "url": "https://www.shaffyrestobar.com/nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Keizersgracht 324, Amsterdam"
+   "updatedAt": 1790347510412,
+   "address": "Keizersgracht 324, Amsterdam",
+   "lat": 52.36999,
+   "lng": 4.884254,
+   "geo": "auto"
   },
   {
    "id": "ams-eetcafe-schiller",
