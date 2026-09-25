@@ -488,8 +488,11 @@
    ],
    "url": "https://pllek.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "TT. Neveritaweg 59, 1033 WB Amsterdam"
+   "updatedAt": 1790349864626,
+   "address": "TT. Neveritaweg 59, 1033 WB Amsterdam",
+   "lat": 52.399209,
+   "lng": 4.892851,
+   "geo": "adres"
   },
   {
    "id": "ams-scheepskameel",
@@ -500,8 +503,11 @@
    "tags": [],
    "url": "https://scheepskameel.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Kattenburgerstraat 5, 1018 JA Amsterdam"
+   "updatedAt": 1790349864964,
+   "address": "Kattenburgerstraat 5, 1018 JA Amsterdam",
+   "lat": 52.371804,
+   "lng": 4.916275,
+   "geo": "adres"
   },
   {
    "id": "ams-badcuyp",
@@ -512,8 +518,11 @@
    "tags": [],
    "url": "https://badcuypamsterdam.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Eerste Sweelinckstraat 10, 1073 CM Amsterdam"
+   "updatedAt": 1790349865225,
+   "address": "Eerste Sweelinckstraat 10, 1073 CM Amsterdam",
+   "lat": 52.356651,
+   "lng": 4.897102,
+   "geo": "adres"
   },
   {
    "id": "ams-cafe-restaurant-amsterdam",
@@ -526,8 +535,11 @@
    ],
    "url": "https://cradam.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Watertorenplein 6, 1051 PA Amsterdam"
+   "updatedAt": 1790349865485,
+   "address": "Watertorenplein 6, 1051 PA Amsterdam",
+   "lat": 52.38422,
+   "lng": 4.868215,
+   "geo": "adres"
   },
   {
    "id": "ams-george-marina",
@@ -540,8 +552,11 @@
    ],
    "url": "https://www.georgemarina.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Spaklerweg 10A, 1096 BA Amsterdam"
+   "updatedAt": 1790349865812,
+   "address": "Spaklerweg 10A, 1096 BA Amsterdam",
+   "lat": 52.341956,
+   "lng": 4.918839,
+   "geo": "adres"
   },
   {
    "id": "ams-bouillon-d-amsterdam",
@@ -556,8 +571,11 @@
    ],
    "url": "https://www.bouillondamsterdam.nl/",
    "visited": true,
-   "updatedAt": 1790347067470,
-   "address": "Nieuwezijds Voorburgwal 176, 1012 SJ Amsterdam"
+   "updatedAt": 1790349866120,
+   "address": "Nieuwezijds Voorburgwal 176, 1012 SJ Amsterdam",
+   "lat": 52.374125,
+   "lng": 4.890771,
+   "geo": "adres"
   },
   {
    "id": "ams-helling-7",
@@ -570,8 +588,11 @@
    ],
    "url": "https://www.helling7.nl/",
    "visited": true,
-   "updatedAt": 1790347067470,
-   "address": "TT. Melissaweg 57, 1033 SP Amsterdam"
+   "updatedAt": 1790349866425,
+   "address": "TT. Melissaweg 57, 1033 SP Amsterdam",
+   "lat": 52.40591,
+   "lng": 4.885003,
+   "geo": "adres"
   },
   {
    "id": "ams-pianeta-terra",
@@ -584,8 +605,11 @@
    ],
    "url": "https://www.pianetaterra.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Beulingstraat 7, 1017 BA Amsterdam"
+   "updatedAt": 1790349866733,
+   "address": "Beulingstraat 7, 1017 BA Amsterdam",
+   "lat": 52.36801,
+   "lng": 4.887771,
+   "geo": "adres"
   },
   {
    "id": "ams-toscanini",
@@ -598,8 +622,11 @@
    ],
    "url": "https://restauranttoscanini.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Lindengracht 75, 1015 KD Amsterdam"
+   "updatedAt": 1790349867055,
+   "address": "Lindengracht 75, 1015 KD Amsterdam",
+   "lat": 52.380178,
+   "lng": 4.885372,
+   "geo": "adres"
   },
   {
    "id": "ams-palladio",
