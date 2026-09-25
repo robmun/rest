@@ -1,0 +1,1122 @@
+{
+ "version": 1,
+ "cities": [
+  "Amsterdam",
+  "Utrecht",
+  "Kantoor"
+ ],
+ "inspiration": [
+  {
+   "city": "Amsterdam",
+   "label": "Your Little Black Book: nieuwe restaurants in Amsterdam",
+   "url": "https://www.yourlittleblackbook.me/nl/nieuwe-restaurants-in-amsterdam/"
+  },
+  {
+   "city": "Amsterdam",
+   "label": "Your Little Black Book: beste lunch & fine dining",
+   "url": "https://www.yourlittleblackbook.me/nl/beste-lunch-amsterdam-fine-dining/"
+  }
+ ],
+ "items": [
+  {
+   "id": "ams-westervilla",
+   "city": "Amsterdam",
+   "createdAt": 1790300000000,
+   "name": "Westervilla",
+   "notes": "",
+   "tags": [],
+   "url": "https://westervilla.nl/restaurant/",
+   "visited": false,
+   "updatedAt": 1790317979636,
+   "lat": 52.384541,
+   "lng": 4.861822,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-cafe-parlotte",
+   "city": "Amsterdam",
+   "createdAt": 1790300000001,
+   "name": "Café Parlotte",
+   "notes": "",
+   "tags": [],
+   "url": "https://www.parlotte.nl/",
+   "visited": false,
+   "updatedAt": 1790317981001,
+   "lat": 52.378256,
+   "lng": 4.881758,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-wils",
+   "city": "Amsterdam",
+   "createdAt": 1790300000002,
+   "name": "Wils",
+   "notes": "",
+   "tags": [],
+   "url": "https://www.restaurantwils.nl/homenl",
+   "visited": false,
+   "updatedAt": 1790317982456,
+   "lat": 52.343394,
+   "lng": 4.856157,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-auberge-jean-marie",
+   "city": "Amsterdam",
+   "createdAt": 1790300000003,
+   "name": "Auberge Jean & Marie",
+   "notes": "Met Colin gegeten. 3 gangen voor een vaste prijs, beperkte kaart, wel lekker.",
+   "tags": [],
+   "url": "http://www.aubergeamsterdam.nl/",
+   "visited": true,
+   "updatedAt": 1790317983681,
+   "lat": 52.354644,
+   "lng": 4.889264,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-beulings",
+   "city": "Amsterdam",
+   "createdAt": 1790300000004,
+   "name": "Beulings",
+   "notes": "Klein en wat 'keuriger'.",
+   "tags": [
+    "Knus"
+   ],
+   "url": "https://www.beulings.nl/en/",
+   "visited": false,
+   "updatedAt": 1790317984886,
+   "lat": 52.367986,
+   "lng": 4.887686,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-shaffy-voorheen-felix",
+   "city": "Amsterdam",
+   "createdAt": 1790300000005,
+   "name": "Shaffy (voorheen Felix)",
+   "notes": "Nieuwe naam van Felix, volgens mij.",
+   "tags": [],
+   "url": "https://www.shaffyrestobar.com/nl/",
+   "visited": false,
+   "updatedAt": 1790317987234,
+   "lat": 52.359867,
+   "lng": 4.891245,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-eetcafe-schiller",
+   "city": "Amsterdam",
+   "createdAt": 1790300000006,
+   "name": "Eetcafé Schiller",
+   "notes": "Centrum. Terug in de tijd, typisch A'dam.",
+   "tags": [],
+   "url": "https://cafeschiller.nl/",
+   "visited": false,
+   "updatedAt": 1790317990091,
+   "geoFailed": true
+  },
+  {
+   "id": "ams-cantine-de-caron",
+   "city": "Amsterdam",
+   "createdAt": 1790300000007,
+   "name": "Cantine de Caron",
+   "notes": "Beetje groot wel.",
+   "tags": [
+    "Frans",
+    "Groot"
+   ],
+   "url": "https://cantinedecaron.nl/",
+   "visited": false,
+   "updatedAt": 1790317991356,
+   "lat": 52.38629,
+   "lng": 4.872817,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-cantine-petit-caron",
+   "city": "Amsterdam",
+   "createdAt": 1790300000008,
+   "name": "Cantine Petit Caron",
+   "notes": "In de Pijp, het 'zusje' van Cantine de Caron. Lekker Frans eten, kleiner en knusser. Met Huib/Dennis/Dirk en dames geweest.",
+   "tags": [
+    "Frans",
+    "Knus"
+   ],
+   "url": "https://petitcaron.nl/",
+   "visited": true,
+   "updatedAt": 1790317993856,
+   "geoFailed": true
+  },
+  {
+   "id": "ams-cafe-restaurant-stork",
+   "city": "Amsterdam",
+   "createdAt": 1790300000009,
+   "name": "Café-Restaurant Stork",
+   "notes": "Aan het IJ.",
+   "tags": [
+    "Aan het water"
+   ],
+   "url": "https://restaurantstork.nl/",
+   "visited": false,
+   "updatedAt": 1790317995339,
+   "lat": 52.382062,
+   "lng": 4.920205,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-mos",
+   "city": "Amsterdam",
+   "createdAt": 1790300000010,
+   "name": "Mos",
+   "notes": "Heel goed, maar 3 maanden wachtlijst.",
+   "tags": [
+    "Wachtlijst"
+   ],
+   "url": "https://mosamsterdam.nl/",
+   "visited": false,
+   "updatedAt": 1790317996580,
+   "lat": 52.383796,
+   "lng": 4.895503,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-rakang",
+   "city": "Amsterdam",
+   "createdAt": 1790300000011,
+   "name": "Rakang",
+   "notes": "Heerlijke Thai op de Elandsgracht.",
+   "tags": [
+    "Thais"
+   ],
+   "url": "http://www.rakang.nl/",
+   "visited": false,
+   "updatedAt": 1790317997794,
+   "lat": 52.369655,
+   "lng": 4.881275,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-de-goudfazant",
+   "city": "Amsterdam",
+   "createdAt": 1790300000012,
+   "name": "De Goudfazant",
+   "notes": "Beetje groot.",
+   "tags": [
+    "Groot"
+   ],
+   "url": "https://hoteldegoudfazant.nl/",
+   "visited": false,
+   "updatedAt": 1790317999001,
+   "lat": 52.383763,
+   "lng": 4.93011,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-hangar",
+   "city": "Amsterdam",
+   "createdAt": 1790300000013,
+   "name": "Hangar",
+   "notes": "Van Tim Immers.",
+   "tags": [],
+   "url": "https://hangar.amsterdam/",
+   "visited": false,
+   "updatedAt": 1790318000215,
+   "lat": 52.383753,
+   "lng": 4.931042,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-yerba",
+   "city": "Amsterdam",
+   "createdAt": 1790300000014,
+   "name": "Yerba",
+   "notes": "Veganistisch, bijzondere ervaring. Met Jeroen/Marina geweest.",
+   "tags": [
+    "Vegan"
+   ],
+   "url": "https://www.yerbabar.com/",
+   "visited": true,
+   "updatedAt": 1790318002769,
+   "geoFailed": true
+  },
+  {
+   "id": "ams-taiko-conservatorium-hotel",
+   "city": "Amsterdam",
+   "createdAt": 1790300000015,
+   "name": "Taiko (Conservatorium Hotel)",
+   "notes": "In het Conservatorium hotel.",
+   "tags": [],
+   "url": "https://www.taikocuisine.com/nl/restaurant/",
+   "visited": false,
+   "updatedAt": 1790318003981,
+   "lat": 52.358563,
+   "lng": 4.87924,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-the-duchess",
+   "city": "Amsterdam",
+   "createdAt": 1790300000016,
+   "name": "The Duchess",
+   "notes": "Spuistraat.",
+   "tags": [],
+   "url": "https://the-duchess.com/",
+   "visited": false,
+   "updatedAt": 1790318005189,
+   "lat": 52.372811,
+   "lng": 4.889353,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-brut-de-mer",
+   "city": "Amsterdam",
+   "createdAt": 1790300000017,
+   "name": "Brut de Mer",
+   "notes": "Tip van Martijn.",
+   "tags": [
+    "Tip"
+   ],
+   "url": "http://brutdemer.nl",
+   "visited": false,
+   "updatedAt": 1790318006834,
+   "lat": 52.355783,
+   "lng": 4.89255,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-graphite",
+   "city": "Amsterdam",
+   "createdAt": 1790300000018,
+   "name": "Graphite",
+   "notes": "Heel speciaal. Moet je van houden.",
+   "tags": [],
+   "url": "https://graphite.amsterdam/home",
+   "visited": false,
+   "updatedAt": 1790318008033,
+   "lat": 52.36649,
+   "lng": 4.898287,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-van-der-veen",
+   "city": "Amsterdam",
+   "createdAt": 1790300000019,
+   "name": "Van der Veen",
+   "notes": "",
+   "tags": [],
+   "url": "https://www.vanderveenbarkitchen.nl/",
+   "visited": false,
+   "updatedAt": 1790318009435,
+   "lat": 52.349074,
+   "lng": 4.881229,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-domenica",
+   "city": "Amsterdam",
+   "createdAt": 1790300000020,
+   "name": "Domenica",
+   "notes": "Noordermarkt.",
+   "tags": [],
+   "url": "https://www.restaurantdomenica.com/",
+   "visited": false,
+   "updatedAt": 1790318010645,
+   "lat": 52.380132,
+   "lng": 4.887435,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-bistrot-neuf",
+   "city": "Amsterdam",
+   "createdAt": 1790300000021,
+   "name": "Bistrot Neuf",
+   "notes": "Haarlemmerstraat.",
+   "tags": [],
+   "url": "https://bistrotneuf.nl/",
+   "visited": false,
+   "updatedAt": 1790318012000,
+   "lat": 52.379378,
+   "lng": 4.893771,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-de-juwelier",
+   "city": "Amsterdam",
+   "createdAt": 1790300000022,
+   "name": "De Juwelier",
+   "notes": "Utrechtsestraat.",
+   "tags": [],
+   "url": "https://www.restaurant-dejuwelier.nl/restaurantdejuwelier",
+   "visited": false,
+   "updatedAt": 1790318013225,
+   "lat": 52.364256,
+   "lng": 4.898276,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-212",
+   "city": "Amsterdam",
+   "createdAt": 1790300000023,
+   "name": "212",
+   "notes": "Amstel 212 (had net brand).",
+   "tags": [],
+   "url": "https://212.amsterdam/",
+   "visited": false,
+   "updatedAt": 1790318014724,
+   "address": "Amstel 212",
+   "lat": 52.365878,
+   "lng": 4.90026,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-de-plantage",
+   "city": "Amsterdam",
+   "createdAt": 1790300000024,
+   "name": "De Plantage",
+   "notes": "Bij Artis. Ook terras, en gereduceerd parkeren bij Artis.",
+   "tags": [
+    "Terras"
+   ],
+   "url": "https://www.caferestaurantdeplantage.nl/",
+   "visited": false,
+   "updatedAt": 1790318015931,
+   "lat": 52.366585,
+   "lng": 4.912559,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-gebr-hartering",
+   "city": "Amsterdam",
+   "createdAt": 1790300000025,
+   "name": "Gebr. Hartering",
+   "notes": "Tip van Walter Hendriks.",
+   "tags": [
+    "Tip"
+   ],
+   "url": "https://www.gebr-hartering.nl/",
+   "visited": false,
+   "updatedAt": 1790318017149,
+   "lat": 52.371644,
+   "lng": 4.907476,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-mont-blanc",
+   "city": "Amsterdam",
+   "createdAt": 1790300000026,
+   "name": "Mont Blanc",
+   "notes": "Zakelijk gegeten. Top maar niet goedkoop, Michelin-waardig. In de Pijp.",
+   "tags": [
+    "Zakelijk",
+    "Prijzig",
+    "Fine dining"
+   ],
+   "url": "https://www.restaurantmontblanc.nl/",
+   "visited": true,
+   "updatedAt": 1790318018516,
+   "lat": 52.293406,
+   "lng": 4.868092,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-secret-garden",
+   "city": "Amsterdam",
+   "createdAt": 1790300000027,
+   "name": "Secret Garden",
+   "notes": "Peruaanse stijl, erg instagrammable. Reguliersdwarsstraat. Met Heleen geweest.",
+   "tags": [
+    "Peruaans"
+   ],
+   "url": "https://www.secretgardenamsterdam.com/",
+   "visited": true,
+   "updatedAt": 1790318020276,
+   "lat": 52.366262,
+   "lng": 4.891168,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-gent-aan-de-schinkel",
+   "city": "Amsterdam",
+   "createdAt": 1790300000028,
+   "name": "Gent aan de Schinkel",
+   "notes": "Mooi hip & happening terras in Zuid. Niet goedkoop, wel lekker en goede vibe. Met Mark & Iris gegeten.",
+   "tags": [
+    "Terras",
+    "Prijzig"
+   ],
+   "url": "https://www.gentaandeschinkel.nl/",
+   "visited": true,
+   "updatedAt": 1790318024055,
+   "geoFailed": true
+  },
+  {
+   "id": "ams-pllek",
+   "city": "Amsterdam",
+   "createdAt": 1790300000029,
+   "name": "Pllek",
+   "notes": "Noord, KNSM-gebied. Industriële uitstraling, met strand, terras en top uitzicht.",
+   "tags": [
+    "Terras",
+    "Aan het water"
+   ],
+   "url": "https://pllek.nl/",
+   "visited": false,
+   "updatedAt": 1790318025297,
+   "lat": 52.398863,
+   "lng": 4.892902,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-scheepskameel",
+   "city": "Amsterdam",
+   "createdAt": 1790300000030,
+   "name": "Scheepskameel",
+   "notes": "Kattenburgerstraat 5, 1018 JA Amsterdam.",
+   "tags": [],
+   "url": "https://scheepskameel.nl/",
+   "visited": false,
+   "updatedAt": 1790318026593,
+   "address": "Kattenburgerstraat 5",
+   "lat": 52.375501,
+   "lng": 4.914274,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-badcuyp",
+   "city": "Amsterdam",
+   "createdAt": 1790300000031,
+   "name": "Badcuyp",
+   "notes": "In de Pijp.",
+   "tags": [],
+   "url": "https://badcuypamsterdam.nl/",
+   "visited": false,
+   "updatedAt": 1790318027793,
+   "lat": 52.356592,
+   "lng": 4.897116,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-cafe-restaurant-amsterdam",
+   "city": "Amsterdam",
+   "createdAt": 1790300000032,
+   "name": "Café Restaurant Amsterdam",
+   "notes": "Groot, in een oude fabriek. Watertorenplein 6, 1051 PA Amsterdam.",
+   "tags": [
+    "Groot"
+   ],
+   "url": "https://cradam.nl/",
+   "visited": false,
+   "updatedAt": 1790318028992,
+   "address": "Watertorenplein 6",
+   "lat": 52.38422,
+   "lng": 4.868214,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-george-marina",
+   "city": "Amsterdam",
+   "createdAt": 1790300000033,
+   "name": "George Marina",
+   "notes": "Haven bij station Amstel. Boot Cedric.",
+   "tags": [
+    "Aan het water"
+   ],
+   "url": "https://www.georgemarina.nl/",
+   "visited": false,
+   "updatedAt": 1790318030178,
+   "lat": 52.34182,
+   "lng": 4.918827,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-bouillon-d-amsterdam",
+   "city": "Amsterdam",
+   "createdAt": 1790300000034,
+   "name": "Bouillon d'Amsterdam",
+   "notes": "Goedkoop en snel Frans. Lekker. Geluncht op Heleen's verjaardag. Ver vooruit reserveren.",
+   "tags": [
+    "Frans",
+    "Lunch",
+    "Betaalbaar"
+   ],
+   "url": "https://www.bouillondamsterdam.nl/",
+   "visited": true,
+   "updatedAt": 1790318031427,
+   "lat": 52.374051,
+   "lng": 4.89071,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-helling-7",
+   "city": "Amsterdam",
+   "createdAt": 1790300000035,
+   "name": "Helling 7",
+   "notes": "Oude scheepswerf aan het IJ. Erg lekker, met verjaardag gegeten.",
+   "tags": [
+    "Aan het water"
+   ],
+   "url": "https://www.helling7.nl/",
+   "visited": true,
+   "updatedAt": 1790318032800,
+   "lat": 52.40591,
+   "lng": 4.885003,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-pianeta-terra",
+   "city": "Amsterdam",
+   "createdAt": 1790300000036,
+   "name": "Pianeta Terra",
+   "notes": "Genomineerd beste Italiaan (Italia magazine).",
+   "tags": [
+    "Italiaans"
+   ],
+   "url": "https://www.pianetaterra.nl/",
+   "visited": false,
+   "updatedAt": 1790318034148,
+   "lat": 52.36802,
+   "lng": 4.887774,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-toscanini",
+   "city": "Amsterdam",
+   "createdAt": 1790300000037,
+   "name": "Toscanini",
+   "notes": "",
+   "tags": [
+    "Italiaans"
+   ],
+   "url": "https://restauranttoscanini.nl/",
+   "visited": false,
+   "updatedAt": 1790318035368,
+   "lat": 52.380166,
+   "lng": 4.885282,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-palladio",
+   "city": "Amsterdam",
+   "createdAt": 1790300000038,
+   "name": "Palladio",
+   "notes": "Elandsgracht. Genomineerd beste Italiaan (Italia magazine). Met Maura's verjaardag gegeten.",
+   "tags": [
+    "Italiaans"
+   ],
+   "url": "https://www.restaurantpalladio.nl/",
+   "visited": true,
+   "updatedAt": 1790318036592,
+   "lat": 52.369934,
+   "lng": 4.881157,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-assaggi",
+   "city": "Amsterdam",
+   "createdAt": 1790300000039,
+   "name": "Assaggi",
+   "notes": "Lekker gegeten met Heiko/Ninette.",
+   "tags": [
+    "Italiaans"
+   ],
+   "url": "https://www.assaggi.nl/",
+   "visited": true,
+   "updatedAt": 1790318037816,
+   "lat": 52.376825,
+   "lng": 4.881979,
+   "geo": "auto"
+  },
+  {
+   "id": "ams-incanto",
+   "city": "Amsterdam",
+   "createdAt": 1790300000040,
+   "name": "Incanto",
+   "notes": "Tip van Walter, wel prijzig.",
+   "tags": [
+    "Italiaans",
+    "Prijzig",
+    "Tip"
+   ],
+   "url": "https://www.restaurant-incanto.nl/",
+   "visited": false,
+   "updatedAt": 1790318039041,
+   "lat": 52.367017,
+   "lng": 4.89386,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-wilhelminapark",
+   "city": "Utrecht",
+   "createdAt": 1790310000000,
+   "name": "Wilhelminapark",
+   "notes": "Lekker in het park, met parkeren. Hebben ook een terras.",
+   "tags": [
+    "Terras"
+   ],
+   "url": "https://www.wilhelminapark.nl/",
+   "visited": false,
+   "updatedAt": 1790318040787,
+   "lat": 52.088341,
+   "lng": 5.140572,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-concours",
+   "city": "Utrecht",
+   "createdAt": 1790310000001,
+   "name": "Concours",
+   "notes": "Als het wat mag kosten.",
+   "tags": [
+    "Prijzig"
+   ],
+   "url": "https://restaurantconcours.nl/restaurant",
+   "visited": false,
+   "updatedAt": 1790318042054,
+   "lat": 52.094979,
+   "lng": 5.127497,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-goesting",
+   "city": "Utrecht",
+   "createdAt": 1790310000002,
+   "name": "Goesting",
+   "notes": "Beetje uit het centrum.",
+   "tags": [],
+   "url": "https://www.restaurantgoesting.nl/",
+   "visited": false,
+   "updatedAt": 1790318043382,
+   "lat": 52.098498,
+   "lng": 5.137371,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-cantina-di-david",
+   "city": "Utrecht",
+   "createdAt": 1790310000003,
+   "name": "Cantina di David",
+   "notes": "Goede Italiaan.",
+   "tags": [
+    "Italiaans"
+   ],
+   "url": "https://cantinadidavid.nl/",
+   "visited": false,
+   "updatedAt": 1790318044704,
+   "lat": 52.093941,
+   "lng": 5.116807,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-bistro-madeleine",
+   "city": "Utrecht",
+   "createdAt": 1790310000004,
+   "name": "Bistro Madeleine",
+   "notes": "Franse keuken.",
+   "tags": [
+    "Frans"
+   ],
+   "url": "https://www.madeleine-utrecht.nl/",
+   "visited": false,
+   "updatedAt": 1790318047385,
+   "geoFailed": true
+  },
+  {
+   "id": "utr-sea-salt-saloon",
+   "city": "Utrecht",
+   "createdAt": 1790310000005,
+   "name": "SEA Salt Saloon",
+   "notes": "Hele lekkere vis.",
+   "tags": [
+    "Vis"
+   ],
+   "url": "https://seasaltsaloon.nl/",
+   "visited": false,
+   "updatedAt": 1790318048585,
+   "lat": 52.089832,
+   "lng": 5.121492,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-broadway",
+   "city": "Utrecht",
+   "createdAt": 1790310000006,
+   "name": "Broadway",
+   "notes": "Aan de gracht, met lekkere steak!",
+   "tags": [
+    "Steak",
+    "Aan het water"
+   ],
+   "url": "https://www.steaksandribs.nl/",
+   "visited": false,
+   "updatedAt": 1790318050222,
+   "lat": 52.09159,
+   "lng": 5.117454,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-ruby-rose",
+   "city": "Utrecht",
+   "createdAt": 1790310000007,
+   "name": "Ruby Rose",
+   "notes": "Heel gezellig.",
+   "tags": [
+    "Knus"
+   ],
+   "url": "https://rubyrose-utrecht.nl/",
+   "visited": false,
+   "updatedAt": 1790318051511,
+   "lat": 52.092835,
+   "lng": 5.122039,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-humphreys",
+   "city": "Utrecht",
+   "createdAt": 1790310000008,
+   "name": "Humphreys",
+   "notes": "",
+   "tags": [],
+   "url": "https://www.humphreys.nl/restaurants/humphreys-utrecht",
+   "visited": false,
+   "updatedAt": 1790318054330,
+   "geoFailed": true
+  },
+  {
+   "id": "utr-hemel-aarde",
+   "city": "Utrecht",
+   "createdAt": 1790310000009,
+   "name": "Hemel & Aarde",
+   "notes": "Fine dining.",
+   "tags": [
+    "Fine dining"
+   ],
+   "url": "https://www.hemel-aarde.nl/",
+   "visited": false,
+   "updatedAt": 1790318055569,
+   "lat": 52.092471,
+   "lng": 5.122959,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-tiger-mama",
+   "city": "Utrecht",
+   "createdAt": 1790310000010,
+   "name": "Tiger Mama",
+   "notes": "Aziatisch.",
+   "tags": [
+    "Aziatisch"
+   ],
+   "url": "https://tigermama.nl/",
+   "visited": false,
+   "updatedAt": 1790318058256,
+   "geoFailed": true
+  },
+  {
+   "id": "utr-streetfood-club",
+   "city": "Utrecht",
+   "createdAt": 1790310000011,
+   "name": "Streetfood Club",
+   "notes": "Op het Janskerkhof.",
+   "tags": [],
+   "url": "https://www.thestreetfoodclub.nl/",
+   "visited": false,
+   "updatedAt": 1790318060158,
+   "lat": 52.092993,
+   "lng": 5.122153,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-djakarta",
+   "city": "Utrecht",
+   "createdAt": 1790310000012,
+   "name": "Djakarta",
+   "notes": "Indonesisch, hele lekkere rijsttafel.",
+   "tags": [
+    "Indonesisch"
+   ],
+   "url": "https://djakarta.nl/",
+   "visited": false,
+   "updatedAt": 1790318062161,
+   "lat": 52.094264,
+   "lng": 5.12587,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-cafe-olivier",
+   "city": "Utrecht",
+   "createdAt": 1790310000013,
+   "name": "Café Olivier",
+   "notes": "Belgisch biercafé in een oude kerk.",
+   "tags": [
+    "Belgisch"
+   ],
+   "url": "https://www.cafe-olivier.be/nl/",
+   "visited": false,
+   "updatedAt": 1790318064157,
+   "lat": 52.090679,
+   "lng": 5.115781,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-jasmijn-ik",
+   "city": "Utrecht",
+   "createdAt": 1790310000014,
+   "name": "Jasmijn & Ik",
+   "notes": "Aziaat.",
+   "tags": [
+    "Aziatisch"
+   ],
+   "url": "https://jasmijnenik.nl/",
+   "visited": false,
+   "updatedAt": 1790318066160,
+   "lat": 52.090896,
+   "lng": 5.094875,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-stadsjochies",
+   "city": "Utrecht",
+   "createdAt": 1790310000015,
+   "name": "Stadsjochies",
+   "notes": "",
+   "tags": [],
+   "url": "https://stadsjochies.nl/",
+   "visited": false,
+   "updatedAt": 1790318068156,
+   "lat": 52.07376,
+   "lng": 5.141518,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-paloma",
+   "city": "Utrecht",
+   "createdAt": 1790310000016,
+   "name": "Paloma",
+   "notes": "",
+   "tags": [],
+   "url": "https://paloma-utrecht.nl/",
+   "visited": false,
+   "updatedAt": 1790318070160,
+   "lat": 52.09008,
+   "lng": 5.117084,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-de-rechtbank",
+   "city": "Utrecht",
+   "createdAt": 1790310000017,
+   "name": "De Rechtbank",
+   "notes": "",
+   "tags": [],
+   "url": "https://www.derechtbank.com/",
+   "visited": false,
+   "updatedAt": 1790318072164,
+   "lat": 52.089046,
+   "lng": 5.122645,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-pastoe-foodbar",
+   "city": "Utrecht",
+   "createdAt": 1790310000018,
+   "name": "Pastoe Foodbar",
+   "notes": "Aan het water, inclusief parkeren. Met Jasmijn's verjaardag geweest. Ligt bij Leen en de Watertoren.",
+   "tags": [
+    "Aan het water"
+   ],
+   "url": "https://www.pastoe-foodbar.nl/",
+   "visited": true,
+   "updatedAt": 1790318075167,
+   "lat": 52.074363,
+   "lng": 5.120344,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-leen",
+   "city": "Utrecht",
+   "createdAt": 1790310000019,
+   "name": "Leen",
+   "notes": "Ligt bij Pastoe en de Watertoren.",
+   "tags": [],
+   "url": "https://leen-restaurant.nl/",
+   "visited": false,
+   "updatedAt": 1790318077158,
+   "lat": 52.123235,
+   "lng": 5.08963,
+   "geo": "auto"
+  },
+  {
+   "id": "utr-restaurant-watertoren",
+   "city": "Utrecht",
+   "createdAt": 1790310000020,
+   "name": "Restaurant Watertoren",
+   "notes": "Top, maar ver vooruit boeken. Ligt bij Pastoe en Leen.",
+   "tags": [
+    "Wachtlijst"
+   ],
+   "url": "https://watertorenutrecht.nl/",
+   "visited": false,
+   "updatedAt": 1790318081155,
+   "geoFailed": true
+  },
+  {
+   "id": "kan-dengh",
+   "city": "Kantoor",
+   "createdAt": 1790310000021,
+   "name": "Dengh",
+   "notes": "",
+   "tags": [
+    "Lunch"
+   ],
+   "url": "https://dengh.nl/restaurant-utrecht/",
+   "visited": false,
+   "updatedAt": 1790318083165,
+   "lat": 52.108215,
+   "lng": 5.034767,
+   "geo": "auto"
+  },
+  {
+   "id": "kan-vineyard-food-drinks",
+   "city": "Kantoor",
+   "createdAt": 1790310000022,
+   "name": "Vineyard Food & Drinks",
+   "notes": "",
+   "tags": [
+    "Lunch"
+   ],
+   "url": "https://vineyardfoodanddrinks.nl/locaties/vineyard-food-drinks-utrecht/",
+   "visited": false,
+   "updatedAt": 1790318085161,
+   "lat": 52.116163,
+   "lng": 5.055365,
+   "geo": "auto"
+  },
+  {
+   "id": "kan-buiten-bij-de-sluis",
+   "city": "Kantoor",
+   "createdAt": 1790310000023,
+   "name": "Buiten bij de Sluis",
+   "notes": "",
+   "tags": [
+    "Lunch"
+   ],
+   "url": "https://www.buitenbijdesluis.nl/",
+   "visited": false,
+   "updatedAt": 1790318087162,
+   "lat": 52.096125,
+   "lng": 5.076328,
+   "geo": "auto"
+  },
+  {
+   "id": "kan-bar-brasserie-de-blend",
+   "city": "Kantoor",
+   "createdAt": 1790310000024,
+   "name": "Bar Brasserie De Blend",
+   "notes": "",
+   "tags": [
+    "Lunch"
+   ],
+   "url": "https://deblend.nl/",
+   "visited": false,
+   "updatedAt": 1790318092163,
+   "geoFailed": true
+  },
+  {
+   "id": "kan-fort-de-gagel",
+   "city": "Kantoor",
+   "createdAt": 1790310000025,
+   "name": "Fort de Gagel",
+   "notes": "",
+   "tags": [
+    "Lunch"
+   ],
+   "url": "https://fortdegagel.nl/lunch/",
+   "visited": false,
+   "updatedAt": 1790318094152,
+   "lat": 52.129572,
+   "lng": 5.102477,
+   "geo": "auto"
+  },
+  {
+   "id": "kan-roemer",
+   "city": "Kantoor",
+   "createdAt": 1790310000026,
+   "name": "Roemer",
+   "notes": "",
+   "tags": [
+    "Lunch"
+   ],
+   "url": "https://www.roemer-utrecht.nl/",
+   "visited": false,
+   "updatedAt": 1790318096154,
+   "lat": 52.145562,
+   "lng": 5.039876,
+   "geo": "auto"
+  },
+  {
+   "id": "kan-soia-beach-oog-in-al",
+   "city": "Kantoor",
+   "createdAt": 1790310000027,
+   "name": "Soia – Beach Oog in Al",
+   "notes": "",
+   "tags": [
+    "Lunch"
+   ],
+   "url": "https://www.soia.nl/",
+   "visited": false,
+   "updatedAt": 1790318098169,
+   "lat": 52.094964,
+   "lng": 5.078841,
+   "geo": "auto"
+  },
+  {
+   "id": "kan-balijepark",
+   "city": "Kantoor",
+   "createdAt": 1790310000028,
+   "name": "Balijepark",
+   "notes": "",
+   "tags": [
+    "Lunch"
+   ],
+   "url": "https://balijepark.nl/",
+   "visited": false,
+   "updatedAt": 1790318100162,
+   "lat": 52.081589,
+   "lng": 5.020133,
+   "geo": "auto"
+  },
+  {
+   "id": "kan-liemes",
+   "city": "Kantoor",
+   "createdAt": 1790310000029,
+   "name": "Liemes",
+   "notes": "",
+   "tags": [
+    "Lunch"
+   ],
+   "url": "https://liemes.nl/",
+   "visited": false,
+   "updatedAt": 1790318102161,
+   "lat": 52.108345,
+   "lng": 5.052516,
+   "geo": "auto"
+  },
+  {
+   "id": "kan-zuiver",
+   "city": "Kantoor",
+   "createdAt": 1790310000030,
+   "name": "Zuiver",
+   "notes": "",
+   "tags": [
+    "Lunch"
+   ],
+   "url": "https://restaurantzuiver.nl/",
+   "visited": false,
+   "updatedAt": 1790318104163,
+   "lat": 52.109098,
+   "lng": 5.045082,
+   "geo": "auto"
+  }
+ ]
+}
