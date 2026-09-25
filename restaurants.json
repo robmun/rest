@@ -335,7 +335,10 @@
    "tags": [],
    "url": "https://bistrotneuf.nl/",
    "visited": false,
-   "updatedAt": 1790300000021
+   "updatedAt": 1790318012000,
+   "lat": 52.379378,
+   "lng": 4.893771,
+   "geo": "auto"
   },
   {
    "id": "ams-de-juwelier",
@@ -346,7 +349,10 @@
    "tags": [],
    "url": "https://www.restaurant-dejuwelier.nl/restaurantdejuwelier",
    "visited": false,
-   "updatedAt": 1790300000022
+   "updatedAt": 1790318013225,
+   "lat": 52.364256,
+   "lng": 4.898276,
+   "geo": "auto"
   },
   {
    "id": "ams-212",
@@ -357,8 +363,11 @@
    "tags": [],
    "url": "https://212.amsterdam/",
    "visited": false,
-   "updatedAt": 1790300000023,
-   "address": "Amstel 212"
+   "updatedAt": 1790318014724,
+   "address": "Amstel 212",
+   "lat": 52.365878,
+   "lng": 4.90026,
+   "geo": "auto"
   },
   {
    "id": "ams-de-plantage",
@@ -371,7 +380,10 @@
    ],
    "url": "https://www.caferestaurantdeplantage.nl/",
    "visited": false,
-   "updatedAt": 1790300000024
+   "updatedAt": 1790318015931,
+   "lat": 52.366585,
+   "lng": 4.912559,
+   "geo": "auto"
   },
   {
    "id": "ams-gebr-hartering",
@@ -384,7 +396,10 @@
    ],
    "url": "https://www.gebr-hartering.nl/",
    "visited": false,
-   "updatedAt": 1790300000025
+   "updatedAt": 1790318017149,
+   "lat": 52.371644,
+   "lng": 4.907476,
+   "geo": "auto"
   },
   {
    "id": "ams-mont-blanc",
