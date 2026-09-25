@@ -181,6 +181,7 @@ function popupFor(i) {
   return el("div", { class: "pop" },
     el("span", { class: "where", text: i.city }),
     el("h3", { text: i.name }),
+    i.address ? el("p", { class: "addr", text: i.address }) : null,
     i.notes ? el("p", { text: i.notes }) : null,
     (i.tags && i.tags.length) ? el("div", { class: "tags" }, i.tags.map(t => el("span", { class: "tag", text: t }))) : null,
     linkRow(i, true));
@@ -257,7 +258,7 @@ function removeItem(id) {
   store.dirty = true; persist(); render(); scheduleSync();
 }
 
-/* ---------------- geocoding (OpenStreetMap Nominatim) ---------------- */
+/* ---------------- geocoding: adres via PDOK (officieel NL-adressenregister), anders OpenStreetMap ---------------- */
 let geoQueue = [], geoRunning = false;
 function cleanName(n) { return n.replace(/\(.*?\)/g, "").replace(/[–—-]\s.*$/, "").trim(); }
 async function nominatim(q, viewbox) {
@@ -269,8 +270,23 @@ async function nominatim(q, viewbox) {
   return j && j[0] ? { lat: +(+j[0].lat).toFixed(6), lng: +(+j[0].lon).toFixed(6) } : null;
 }
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+async function pdok(address) {
+  const p = new URLSearchParams({ q: address, fq: "type:adres", rows: "1", fl: "centroide_ll,weergavenaam" });
+  const r = await fetch("https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?" + p.toString());
+  if (!r.ok) throw new Error("pdok " + r.status);
+  const d = (await r.json()).response.docs[0];
+  const m = d && /POINT\(([-\d.]+) ([-\d.]+)\)/.exec(d.centroide_ll || "");
+  return m ? { lat: +(+m[2]).toFixed(6), lng: +(+m[1]).toFixed(6), via: "adres" } : null;
+}
 async function geocode(i) {
   const a = area(i.city);
+  if (i.address && /\d/.test(i.address)) {
+    try {
+      const res = await pdok(/,/.test(i.address) ? i.address : `${i.address}, ${a.search}`);
+      await sleep(150);
+      if (res) return res;
+    } catch (e) {}
+  }
   const tries = [];
   if (i.address) tries.push([`${i.address}, ${a.search}`, null]);
   tries.push([cleanName(i.name), a.viewbox]);
@@ -300,7 +316,7 @@ async function runGeo() {
         const res = await geocode(i);
         const cur = byId(id);
         if (cur && !cur.deleted && cur.lat == null) {
-          if (res) { cur.lat = res.lat; cur.lng = res.lng; cur.geo = "auto"; }
+          if (res) { cur.lat = res.lat; cur.lng = res.lng; cur.geo = res.via || "auto"; }
           else cur.geoFailed = true;
           cur.updatedAt = now(); store.dirty = true; persist();
         }
@@ -349,7 +365,11 @@ function openSheet(item) {
   renderTagPick();
   const d = $("delBtn"); d.hidden = !item; d.textContent = "Verwijderen"; d.classList.remove("confirm"); d.disabled = false;
   $("fErr").hidden = true;
-  $("pinHint").textContent = item && item.geo === "auto" ? "Locatie automatisch gevonden. Klopt hij niet? Tik op de juiste plek op de kaart." : "Tik op de kaart om de pin te zetten of te verplaatsen.";
+  $("pinHint").textContent = !item || item.lat == null ? "Tik op de kaart om de pin te zetten of te verplaatsen."
+    : item.geo === "manual" ? "Pin zelf gezet. Tik op de kaart om hem te verplaatsen."
+    : item.geo === "adres" || item.geo === "osm" ? "Pin op basis van het adres. Klopt hij niet? Tik op de juiste plek."
+    : "Locatie automatisch gevonden. Klopt hij niet? Tik op de juiste plek op de kaart.";
+  hideSuggest();
   showSheet("sheet");
   if (typeof L !== "undefined") {
     if (!miniMap) {
@@ -384,11 +404,79 @@ $("findBtn").onclick = async () => {
   const b = $("findBtn"); b.disabled = true; b.textContent = "Zoeken…";
   try {
     const res = await geocode({ name: name || address, address, city: c });
-    if (res) { setDraftPin({ ...res, manual: false }, true); $("pinHint").textContent = "Gevonden. Klopt het niet? Tik op de juiste plek."; }
+    if (res) { setDraftPin({ ...res, manual: false, geo: res.via || "auto" }, true); $("pinHint").textContent = "Gevonden. Klopt het niet? Tik op de juiste plek."; }
     else $("pinHint").textContent = "Niet gevonden. Probeer een adres, of tik zelf op de kaart.";
   } catch (e) { $("pinHint").textContent = "Zoeken lukt nu niet. Tik zelf op de kaart."; }
   b.disabled = false; b.textContent = "Zoek";
 };
+/* ---------------- suggesties bij het typen van een naam (OpenStreetMap via Photon) ---------------- */
+const CUISINE = { italian: "Italiaans", pizza: "Italiaans", french: "Frans", thai: "Thais", asian: "Aziatisch", chinese: "Aziatisch",
+  japanese: "Aziatisch", sushi: "Aziatisch", vietnamese: "Aziatisch", korean: "Aziatisch", indonesian: "Indonesisch",
+  peruvian: "Peruaans", steak_house: "Steak", seafood: "Vis", fish: "Vis", vegan: "Vegan", belgian: "Belgisch" };
+const FOOD = /^(restaurant|cafe|bar|pub|fast_food|biergarten|food_court|ice_cream|bistro)$/;
+let sugTimer = null, sugSeq = 0;
+function hideSuggest() { clearTimeout(sugTimer); sugSeq++; $("suggest").hidden = true; $("suggest").replaceChildren(); }
+function fmtAddress(p) {
+  const street = [p.street, p.housenumber].filter(Boolean).join(" ");
+  const place = [p.postcode, p.city || p.town || p.village].filter(Boolean).join(" ");
+  return [street, place].filter(Boolean).join(", ");
+}
+async function suggest(q) {
+  const seq = ++sugSeq;
+  let c = $("fCity").value; if (c === "__new") c = ui.city === ALL ? "Amsterdam" : ui.city;
+  const center = area(c).center;
+  const p = new URLSearchParams({ q, limit: "12", lat: String(center[0]), lon: String(center[1]) });
+  let feats = [];
+  try {
+    const r = await fetch("https://photon.komoot.io/api/?" + p.toString());
+    if (!r.ok) return;
+    feats = (await r.json()).features || [];
+  } catch (e) { return; }
+  if (seq !== sugSeq) return;
+  feats = feats.filter(f => f.properties && f.properties.name && f.geometry)
+    .sort((a, b) => (FOOD.test(b.properties.osm_value) ? 1 : 0) - (FOOD.test(a.properties.osm_value) ? 1 : 0))
+    .slice(0, 6);
+  const box = $("suggest");
+  if (!feats.length) { box.hidden = true; return; }
+  box.replaceChildren(...feats.map(f => {
+    const pr = f.properties;
+    return el("button", { type: "button", class: "sug", onmousedown: e => e.preventDefault(), onclick: () => pickSuggestion(f) },
+      el("span", { class: "sug-name", text: pr.name }),
+      el("span", { class: "sug-sub", text: fmtAddress(pr) || pr.osm_value || "" }));
+  }));
+  box.hidden = false;
+}
+async function pickSuggestion(f) {
+  const pr = f.properties, [lng, lat] = f.geometry.coordinates;
+  hideSuggest();
+  $("fName").value = pr.name;
+  const addr = fmtAddress(pr); if (addr) $("fAddress").value = addr;
+  const town = pr.city || pr.town || pr.village || "";
+  const sel = $("fCity");
+  if (sel.value !== "Kantoor" && [...sel.options].some(o => o.value === town)) sel.value = town;
+  setDraftPin({ lat: +lat.toFixed(6), lng: +lng.toFixed(6), manual: false, geo: "osm" }, true);
+  $("pinHint").textContent = "Adres en locatie ingevuld. Klopt de pin niet? Tik op de juiste plek.";
+  // Website en keuken ophalen uit OpenStreetMap
+  if (!pr.osm_type || !pr.osm_id) return;
+  try {
+    const r = await fetch(`https://nominatim.openstreetmap.org/lookup?format=json&extratags=1&osm_ids=${pr.osm_type}${pr.osm_id}`);
+    const x = ((await r.json())[0] || {}).extratags || {};
+    const site = x.website || x["contact:website"];
+    if (site && !$("fUrl").value.trim()) $("fUrl").value = site;
+    (x.cuisine || "").split(";").map(s => CUISINE[s.trim()]).filter(Boolean).forEach(t => formTags.add(t));
+    renderTagPick();
+  } catch (e) {}
+}
+$("fName").addEventListener("input", () => {
+  if (editing) return;
+  clearTimeout(sugTimer);
+  const q = $("fName").value.trim();
+  if (q.length < 3) { hideSuggest(); return; }
+  sugTimer = setTimeout(() => suggest(q), 300);
+});
+$("fName").addEventListener("blur", () => setTimeout(() => { $("suggest").hidden = true; }, 200));
+$("fName").addEventListener("focus", () => { if ($("suggest").children.length && !editing) $("suggest").hidden = false; });
+
 function showErr(m) { const e = $("fErr"); e.textContent = m; e.hidden = false; }
 function fixUrl(u) { u = u.trim(); if (!u) return ""; if (!/^https?:\/\//i.test(u)) u = "https://" + u; return u; }
 
@@ -402,7 +490,7 @@ $("form").addEventListener("submit", e => {
   const base = editing || { id: slug(name) + "-" + now().toString(36), createdAt: now() };
   const item = { ...base, name, url: fixUrl($("fUrl").value), city: c, notes: $("fNotes").value.trim(), address: $("fAddress").value.trim(), tags: [...formTags], visited: $("fVisited").checked };
   delete item.geoFailed;
-  if (draftPos) { item.lat = draftPos.lat; item.lng = draftPos.lng; item.geo = draftPos.manual ? "manual" : (draftPos.manual === false ? "auto" : item.geo); }
+  if (draftPos) { item.lat = draftPos.lat; item.lng = draftPos.lng; item.geo = draftPos.manual ? "manual" : (draftPos.manual === false ? (draftPos.geo || "auto") : item.geo); }
   else { delete item.lat; delete item.lng; delete item.geo; }
   if (!item.address) delete item.address;
   if (!store.data.cities.includes(c)) store.data.cities.push(c);

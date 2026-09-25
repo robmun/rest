@@ -155,3 +155,12 @@ label.f{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:60
 @media (prefers-color-scheme: dark){
   .osm-tiles{filter:invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) saturate(.6)}
 }
+
+/* Suggesties bij toevoegen */
+.suggest{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.sug{display:flex;flex-direction:column;gap:1px;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;padding:10px 12px}
+.sug:last-child{border-bottom:0}
+.sug:hover,.sug:focus-visible{background:var(--accent-soft)}
+.sug-name{font-weight:600}
+.sug-sub{font-size:13px;color:var(--muted)}
+.pop p.addr{font-size:13px;margin-bottom:4px}

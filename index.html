@@ -24,7 +24,7 @@
 <div class="app">
   <header class="top">
     <div class="title-row">
-      <h1>Tafels</h1>
+      <h1>my fav rest's</h1>
       <button class="sync" id="syncBtn" type="button" aria-label="Synchronisatie en instellingen">
         <span class="dot" id="syncDot"></span><span id="syncText">Laden…</span>
       </button>
@@ -83,7 +83,10 @@
     </button>
   </div>
   <form id="form" novalidate>
-    <label class="f">Naam<input id="fName" required autocomplete="off" placeholder="Bijv. Rakang"></label>
+    <div class="group">
+      <label class="f">Naam<input id="fName" required autocomplete="off" autocorrect="off" placeholder="Typ een naam, bijv. Rakang"></label>
+      <div class="suggest" id="suggest" role="listbox" aria-label="Suggesties" hidden></div>
+    </div>
     <label class="f">Website<input id="fUrl" type="url" inputmode="url" autocomplete="off" placeholder="https://"></label>
     <label class="f">Lijst<select id="fCity"></select></label>
     <label class="f" id="newCityWrap" hidden>Naam nieuwe lijst<input id="fNewCity" autocomplete="off" placeholder="Bijv. Den Haag"></label>
