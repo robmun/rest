@@ -206,8 +206,11 @@
    ],
    "url": "http://www.rakang.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Elandsgracht 29, Amsterdam"
+   "updatedAt": 1790347518803,
+   "address": "Elandsgracht 29, Amsterdam",
+   "lat": 52.369654,
+   "lng": 4.881336,
+   "geo": "auto"
   },
   {
    "id": "ams-de-goudfazant",
@@ -220,8 +223,11 @@
    ],
    "url": "https://hoteldegoudfazant.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Aambeeldstraat 30, 1021 KB Amsterdam"
+   "updatedAt": 1790347520047,
+   "address": "Aambeeldstraat 30, 1021 KB Amsterdam",
+   "lat": 52.383721,
+   "lng": 4.930144,
+   "geo": "auto"
   },
   {
    "id": "ams-hangar",
@@ -232,8 +238,11 @@
    "tags": [],
    "url": "https://hangar.amsterdam/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Aambeeldstraat 36, 1021 KB Amsterdam"
+   "updatedAt": 1790347521481,
+   "address": "Aambeeldstraat 36, 1021 KB Amsterdam",
+   "lat": 52.383726,
+   "lng": 4.930925,
+   "geo": "auto"
   },
   {
    "id": "ams-yerba",
@@ -246,8 +255,11 @@
    ],
    "url": "https://www.yerbabar.com/",
    "visited": true,
-   "updatedAt": 1790347067470,
-   "address": "Ruysdaelstraat 48, 1071 XE Amsterdam"
+   "updatedAt": 1790347522812,
+   "address": "Ruysdaelstraat 48, 1071 XE Amsterdam",
+   "lat": 52.354095,
+   "lng": 4.883216,
+   "geo": "auto"
   },
   {
    "id": "ams-taiko-conservatorium-hotel",
@@ -258,8 +270,11 @@
    "tags": [],
    "url": "https://www.taikocuisine.com/nl/restaurant/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Paulus Potterstraat 50, 1071 DB Amsterdam"
+   "updatedAt": 1790347524230,
+   "address": "Paulus Potterstraat 50, 1071 DB Amsterdam",
+   "lat": 52.358605,
+   "lng": 4.878529,
+   "geo": "auto"
   },
   {
    "id": "ams-the-duchess",
