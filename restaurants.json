@@ -311,11 +311,12 @@
    "tags": [],
    "url": "https://the-duchess.com/",
    "visited": false,
-   "updatedAt": 1790347525795,
+   "updatedAt": 1790350724876,
    "address": "Spuistraat 172, 1012 VT Amsterdam",
    "lat": 52.372811,
    "lng": 4.889353,
-   "geo": "auto"
+   "geo": "auto",
+   "osmChecked": 1790350724875
   },
   {
    "id": "ams-brut-de-mer",
@@ -328,11 +329,14 @@
    ],
    "url": "http://brutdemer.nl",
    "visited": false,
-   "updatedAt": 1790347527518,
+   "updatedAt": 1790350726246,
    "address": "Gerard Douplein 8H, 1072 VE Amsterdam",
    "lat": 52.355783,
    "lng": 4.89255,
-   "geo": "auto"
+   "geo": "auto",
+   "phone": "+31 20 471 4099",
+   "hours": "Mo-Th 16:00-24:00; Fr-Su 12:00-24:00",
+   "osmChecked": 1790350726246
   },
   {
    "id": "ams-graphite",
@@ -348,11 +352,12 @@
    "tags": [],
    "url": "https://www.vanderveenbarkitchen.nl/",
    "visited": false,
-   "updatedAt": 1790347528970,
+   "updatedAt": 1790350727539,
    "address": "Beethovenstraat 27A, 1077 HM Amsterdam",
    "lat": 52.349075,
    "lng": 4.877681,
-   "geo": "auto"
+   "geo": "auto",
+   "osmChecked": 1790350727539
   },
   {
    "id": "ams-domenica",
@@ -363,11 +368,12 @@
    "tags": [],
    "url": "https://www.restaurantdomenica.com/",
    "visited": false,
-   "updatedAt": 1790347530506,
+   "updatedAt": 1790350728717,
    "address": "Noordermarkt 7, 1015 MV Amsterdam",
    "lat": 52.380142,
    "lng": 4.887429,
-   "geo": "auto"
+   "geo": "auto",
+   "osmChecked": 1790350728717
   },
   {
    "id": "ams-bistrot-neuf",
@@ -378,11 +384,14 @@
    "tags": [],
    "url": "https://bistrotneuf.nl/",
    "visited": false,
-   "updatedAt": 1790347532336,
+   "updatedAt": 1790350730099,
    "address": "Haarlemmerstraat 9, 1013 JG Amsterdam",
    "lat": 52.379378,
    "lng": 4.893771,
-   "geo": "auto"
+   "geo": "auto",
+   "phone": "+31 20 400 3210",
+   "hours": "Mo-Th 16:00-24:00; Fr-Su 12:00-24:00",
+   "osmChecked": 1790350730099
   },
   {
    "id": "ams-de-juwelier",
@@ -393,11 +402,14 @@
    "tags": [],
    "url": "https://www.restaurant-dejuwelier.nl/restaurantdejuwelier",
    "visited": false,
-   "updatedAt": 1790347533827,
+   "updatedAt": 1790350731279,
    "address": "Utrechtsestraat 51, 1017 VJ Amsterdam",
    "lat": 52.364256,
    "lng": 4.898276,
-   "geo": "auto"
+   "geo": "auto",
+   "phone": "+31 20 247 1007",
+   "hours": "Mo-Su 12:00-13:30, 18:00-22:00",
+   "osmChecked": 1790350731279
   },
   {
    "id": "ams-212",
@@ -408,11 +420,14 @@
    "tags": [],
    "url": "https://212.amsterdam/",
    "visited": false,
-   "updatedAt": 1790347535726,
+   "updatedAt": 1790350732536,
    "address": "Amstel 212, 1017 AH Amsterdam",
    "lat": 52.365878,
    "lng": 4.90026,
-   "geo": "auto"
+   "geo": "auto",
+   "phone": "+31 20 334 8685",
+   "hours": "Tu-Th 18:30-21:00; Fr-Sa 12:00-13:30,18:30-21:00",
+   "osmChecked": 1790350732536
   },
   {
    "id": "ams-de-plantage",
@@ -425,11 +440,14 @@
    ],
    "url": "https://www.caferestaurantdeplantage.nl/",
    "visited": false,
-   "updatedAt": 1790347537059,
+   "updatedAt": 1790350733715,
    "address": "Plantage Kerklaan 36, 1018 CZ Amsterdam",
    "lat": 52.366585,
    "lng": 4.912559,
-   "geo": "auto"
+   "geo": "auto",
+   "phone": "+31 20 760 6800",
+   "hours": "Mo 10:00-21:00; Tu-Su 10:00-24:00",
+   "osmChecked": 1790350733715
   },
   {
    "id": "ams-gebr-hartering",
@@ -442,11 +460,14 @@
    ],
    "url": "https://www.gebr-hartering.nl/",
    "visited": false,
-   "updatedAt": 1790347538355,
+   "updatedAt": 1790350735166,
    "address": "Peperstraat 10, Amsterdam",
    "lat": 52.371644,
    "lng": 4.907476,
-   "geo": "auto"
+   "geo": "auto",
+   "phone": "+31 20 421 0699",
+   "hours": "Mo-Su 18:00-22:00",
+   "osmChecked": 1790350735166
   },
   {
    "id": "ams-mont-blanc",
