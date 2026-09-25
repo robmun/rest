@@ -207,7 +207,10 @@
    ],
    "url": "https://hoteldegoudfazant.nl/",
    "visited": false,
-   "updatedAt": 1790300000012
+   "updatedAt": 1790317999001,
+   "lat": 52.383763,
+   "lng": 4.93011,
+   "geo": "auto"
   },
   {
    "id": "ams-hangar",
@@ -218,7 +221,10 @@
    "tags": [],
    "url": "https://hangar.amsterdam/",
    "visited": false,
-   "updatedAt": 1790300000013
+   "updatedAt": 1790318000215,
+   "lat": 52.383753,
+   "lng": 4.931042,
+   "geo": "auto"
   },
   {
    "id": "ams-yerba",
@@ -231,7 +237,8 @@
    ],
    "url": "https://www.yerbabar.com/",
    "visited": true,
-   "updatedAt": 1790300000014
+   "updatedAt": 1790318002769,
+   "geoFailed": true
   },
   {
    "id": "ams-taiko-conservatorium-hotel",
@@ -242,7 +249,10 @@
    "tags": [],
    "url": "https://www.taikocuisine.com/nl/restaurant/",
    "visited": false,
-   "updatedAt": 1790300000015
+   "updatedAt": 1790318003981,
+   "lat": 52.358563,
+   "lng": 4.87924,
+   "geo": "auto"
   },
   {
    "id": "ams-the-duchess",
