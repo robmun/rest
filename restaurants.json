@@ -285,8 +285,11 @@
    "tags": [],
    "url": "https://the-duchess.com/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Spuistraat 172, 1012 VT Amsterdam"
+   "updatedAt": 1790347525795,
+   "address": "Spuistraat 172, 1012 VT Amsterdam",
+   "lat": 52.372811,
+   "lng": 4.889353,
+   "geo": "auto"
   },
   {
    "id": "ams-brut-de-mer",
@@ -299,8 +302,11 @@
    ],
    "url": "http://brutdemer.nl",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Gerard Douplein 8H, 1072 VE Amsterdam"
+   "updatedAt": 1790347527518,
+   "address": "Gerard Douplein 8H, 1072 VE Amsterdam",
+   "lat": 52.355783,
+   "lng": 4.89255,
+   "geo": "auto"
   },
   {
    "id": "ams-graphite",
@@ -316,8 +322,11 @@
    "tags": [],
    "url": "https://www.vanderveenbarkitchen.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Beethovenstraat 27A, 1077 HM Amsterdam"
+   "updatedAt": 1790347528970,
+   "address": "Beethovenstraat 27A, 1077 HM Amsterdam",
+   "lat": 52.349075,
+   "lng": 4.877681,
+   "geo": "auto"
   },
   {
    "id": "ams-domenica",
@@ -328,8 +337,11 @@
    "tags": [],
    "url": "https://www.restaurantdomenica.com/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Noordermarkt 7, 1015 MV Amsterdam"
+   "updatedAt": 1790347530506,
+   "address": "Noordermarkt 7, 1015 MV Amsterdam",
+   "lat": 52.380142,
+   "lng": 4.887429,
+   "geo": "auto"
   },
   {
    "id": "ams-bistrot-neuf",
