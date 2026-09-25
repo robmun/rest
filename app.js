@@ -208,7 +208,8 @@ function render() {
 
   const shown = filtered();
   $("count").textContent = shown.length === inCity.length ? `${inCity.length}` : `${shown.length}/${inCity.length}`;
-  $("list").replaceChildren(...shown.map(card));
+  $("list").replaceChildren(...listRows(shown));
+  $("sortSel").value = ui.sort || "az";
   const empty = $("empty");
   empty.hidden = !!shown.length;
   if (!shown.length) empty.textContent = inCity.length ? (openFilter ? "Geen restaurants die nu open zijn (van de restaurants met bekende openingstijden)." : "Niets gevonden met deze filters.") : (ui.city === ALL ? "Nog geen restaurants. Tik op + om er een toe te voegen." : `Nog geen restaurants in ${ui.city}. Tik op + om er een toe te voegen.`);
@@ -236,14 +237,41 @@ function statusBadge(i) {
   const st = hoursStatus(i);
   return st ? el("span", { class: "open-badge " + (st.open ? "is-open" : "is-closed"), text: st.open ? "Open" : "Dicht" }) : null;
 }
-function card(i) {
-  const main = el("button", { type: "button", class: "card-main", onclick: () => READONLY ? (i.lat != null && showOnMap(i.id)) : openSheet(i), "aria-label": (READONLY ? "Toon " : "Bewerk ") + i.name },
-    ui.city === ALL ? el("span", { class: "where", text: i.city }) : null,
-    el("div", { class: "name-row" }, el("i", { class: "dot c-" + catOf(i), "aria-hidden": "true" }), el("span", { class: "name", text: i.name }), i.visited ? el("span", { class: "been", text: "Geweest" }) : null, statusBadge(i)),
-    i.notes ? el("p", { class: "notes", text: i.notes }) : null,
-    (i.tags && i.tags.length) ? el("div", { class: "tags" }, i.tags.map(t => el("span", { class: "tag", text: t }))) : null
-  );
-  return el("li", { class: "card" }, main, linkRow(i));
+function sortItems(arr) {
+  const mode = ui.sort || "az", d = new Date();
+  const byName = (a, b) => a.name.localeCompare(b.name, "nl", { sensitivity: "base" });
+  if (mode === "new") return arr.slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0) || byName(a, b));
+  if (mode === "open") {
+    const rank = i => { const st = hoursStatus(i, d); return st ? (st.open ? 0 : 1) : 2; };
+    return arr.slice().sort((a, b) => rank(a) - rank(b) || byName(a, b));
+  }
+  return arr.slice().sort(byName);
+}
+function listRows(shown) {
+  if (ui.city !== ALL) return sortItems(shown).map(row);
+  const out = [];
+  for (const c of allCities()) {
+    const g = shown.filter(i => i.city === c);
+    if (!g.length) continue;
+    out.push(el("li", { class: "group-head" }, el("span", { text: c }), el("span", { class: "n", text: String(g.length) })));
+    out.push(...sortItems(g).map(row));
+  }
+  return out;
+}
+function row(i) {
+  const st = hoursStatus(i);
+  const kinds = (i.tags || []).slice(0, 2).join(" · ");
+  const sub = el("div", { class: "row-sub" },
+    kinds ? el("span", { text: kinds }) : null,
+    st ? el("span", { class: "open-text " + (st.open ? "is-open" : "is-closed"), text: st.text }) : null);
+  return el("li", { class: "row" + (i.id === placeId ? " active" : ""), "data-id": i.id },
+    el("button", { type: "button", class: "row-main", onclick: () => openPlace(i.id), "aria-label": i.name },
+      el("div", { class: "row-top" },
+        el("i", { class: "dot c-" + catOf(i), "aria-hidden": "true" }),
+        el("span", { class: "name", text: i.name }),
+        i.visited ? el("b", { class: "been-mark", title: "Geweest", "aria-label": "Geweest" }) : null),
+      sub.children.length ? sub : null,
+      i.notes ? el("p", { class: "row-note", text: i.notes }) : null));
 }
 
 function renderNotice() { $("notice").hidden = true; }
@@ -257,6 +285,7 @@ const ICONS = {
   share: '<path d="M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>',
   edit: '<path d="M4 20h4L19 9l-4-4L4 16v4Z"/><path d="m13 7 4 4"/>',
   close: '<path d="M6 6l12 12M18 6 6 18"/>',
+  map: '<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/>',
 };
 function svgIcon(name, size = 22) {
   const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -292,6 +321,7 @@ function renderPlace(i) {
     actionBtn("route", "Route", { href: routeUrl(i), target: "_blank", rel: "noopener" }),
     i.phone ? actionBtn("phone", "Bellen", { href: telUrl(i.phone) }) : null,
     safeUrl(i.url) ? actionBtn("web", "Website", { href: safeUrl(i.url), target: "_blank", rel: "noopener" }) : null,
+    ui.view === "list" && i.lat != null ? actionBtn("map", "Kaart", { onclick: () => showOnMap(i.id) }) : null,
     actionBtn("share", "Delen", { onclick: () => sharePlace(byId(i.id) || i) }),
     READONLY ? null : actionBtn("edit", "Bewerken", { onclick: () => { const it = byId(i.id); closePlace(); openSheet(it); } }));
   let hoursEl = null;
@@ -302,7 +332,7 @@ function renderPlace(i) {
       el("table", {}, ...lines.map(([d, t], k) => el("tr", { class: k === today ? "today" : null }, el("th", { text: d }), el("td", { text: t })))));
   } else if (i.hours) hoursEl = el("p", { class: "hours-raw", text: i.hours });
   else hoursEl = el("p", { class: "hours-raw muted", text: "Openingstijden onbekend" });
-  box.replaceChildren(
+  box.replaceChildren(...[
     el("div", { class: "place-head" },
       el("div", { class: "place-title" },
         el("span", { class: "where", text: i.city }),
@@ -312,18 +342,20 @@ function renderPlace(i) {
     hoursEl,
     acts,
     i.notes ? el("p", { class: "notes", text: i.notes }) : null,
-    (i.tags && i.tags.length) ? el("div", { class: "tags" }, i.tags.map(t => el("span", { class: "tag", text: t }))) : null);
+    (i.tags && i.tags.length) ? el("div", { class: "tags" }, i.tags.map(t => el("span", { class: "tag", text: t }))) : null].filter(Boolean));
   box.hidden = false;
-  $("mapView").classList.add("card-open");
+  $("main").classList.add("card-open");
 }
 function openPlace(id) {
   const i = byId(id); if (!i) return;
   renderPlace(i); markHere(i.city);
+  document.querySelectorAll("#list .row").forEach(r => r.classList.toggle("active", r.dataset.id === id));
   markers.forEach((m, mid) => { const e = m.getElement(); if (e) e.classList.toggle("selected", mid === id); });
 }
 function closePlace() {
   placeId = null;
-  $("place").hidden = true; $("mapView").classList.remove("card-open");
+  document.querySelectorAll("#list .row.active").forEach(r => r.classList.remove("active"));
+  $("place").hidden = true; $("main").classList.remove("card-open");
   markers.forEach(m => { const e = m.getElement(); if (e) e.classList.remove("selected"); });
   markHere(null);
 }
@@ -424,6 +456,15 @@ $("filterBtn").onclick = () => {
   if (open) closePlace();
 };
 $("q").addEventListener("focus", () => closePlace());
+$("sortSel").onchange = e => { ui.sort = e.target.value; lsSet(LS_UI, ui); render(); $("listView").scrollTop = 0; };
+// Kop inklappen bij naar beneden scrollen in de lijst
+let lastScroll = 0;
+$("listView").addEventListener("scroll", () => {
+  const y = $("listView").scrollTop, app = document.querySelector(".app");
+  if (y > 80 && y > lastScroll + 6) app.classList.add("collapsed");
+  else if (y < 40 || y < lastScroll - 12) app.classList.remove("collapsed");
+  lastScroll = y;
+}, { passive: true });
 
 /* ---------------- data changes ---------------- */
 function byId(id) { return store.data.items.find(i => i.id === id); }

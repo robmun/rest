@@ -51,6 +51,15 @@
   <main id="main">
     <section id="listView" class="view">
       <div class="notice" id="notice" hidden></div>
+      <div class="list-tools">
+        <label class="sort">Sorteren
+          <select id="sortSel">
+            <option value="az">A–Z</option>
+            <option value="open">Nu open eerst</option>
+            <option value="new">Laatst toegevoegd</option>
+          </select>
+        </label>
+      </div>
       <ul class="list" id="list"></ul>
       <div class="empty" id="empty" hidden></div>
       <div class="inspo" id="inspo" hidden></div>
@@ -61,8 +70,8 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>
       </button>
       <div class="nopin" id="noPin" hidden></div>
-      <article class="place" id="place" hidden aria-live="polite"></article>
     </section>
+    <article class="place" id="place" hidden aria-live="polite"></article>
   </main>
 
   <nav class="tabbar" aria-label="Weergave">
