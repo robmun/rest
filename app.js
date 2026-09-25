@@ -9,7 +9,9 @@ const AREAS = {
   Utrecht:   { search: "Utrecht",   viewbox: "4.95,52.16,5.22,52.02", center: [52.090, 5.121], zoom: 13 },
   Kantoor:   { search: "Utrecht",   viewbox: "4.95,52.16,5.22,51.98", center: [52.060, 5.100], zoom: 12 },
 };
-const LS_DATA = "tafels.data.v1", LS_SET = "tafels.settings.v1", LS_UI = "tafels.ui.v1";
+// Bekijkversie (?bekijk): alleen lezen, zonder notities
+const READONLY = /[?&]bekijk\b/i.test(location.search) || /^#bekijk$/i.test(location.hash);
+const LS_DATA = READONLY ? "tafels.view.v1" : "tafels.data.v1", LS_SET = "tafels.settings.v1", LS_UI = "tafels.ui.v1";
 
 const $ = id => document.getElementById(id);
 const now = () => Date.now();
@@ -232,7 +234,7 @@ function statusBadge(i) {
   return st ? el("span", { class: "open-badge " + (st.open ? "is-open" : "is-closed"), text: st.open ? "Open" : "Dicht" }) : null;
 }
 function card(i) {
-  const main = el("button", { type: "button", class: "card-main", onclick: () => openSheet(i), "aria-label": "Bewerk " + i.name },
+  const main = el("button", { type: "button", class: "card-main", onclick: () => READONLY ? (i.lat != null && showOnMap(i.id)) : openSheet(i), "aria-label": (READONLY ? "Toon " : "Bewerk ") + i.name },
     ui.city === ALL ? el("span", { class: "where", text: i.city }) : null,
     el("div", { class: "name-row" }, el("i", { class: "dot c-" + catOf(i), "aria-hidden": "true" }), el("span", { class: "name", text: i.name }), i.visited ? el("span", { class: "been", text: "Geweest" }) : null, statusBadge(i)),
     i.notes ? el("p", { class: "notes", text: i.notes }) : null,
@@ -288,7 +290,7 @@ function renderPlace(i) {
     i.phone ? actionBtn("phone", "Bellen", { href: telUrl(i.phone) }) : null,
     safeUrl(i.url) ? actionBtn("web", "Website", { href: safeUrl(i.url), target: "_blank", rel: "noopener" }) : null,
     actionBtn("share", "Delen", { onclick: () => sharePlace(byId(i.id) || i) }),
-    actionBtn("edit", "Bewerken", { onclick: () => { const it = byId(i.id); closePlace(); openSheet(it); } }));
+    READONLY ? null : actionBtn("edit", "Bewerken", { onclick: () => { const it = byId(i.id); closePlace(); openSheet(it); } }));
   let hoursEl = null;
   if (lines) {
     const today = (new Date().getDay() + 6) % 7;
@@ -476,6 +478,7 @@ async function geocode(i) {
   return null;
 }
 function queueGeocoding() {
+  if (READONLY) return;
   visible().forEach(i => { if (i.lat == null && !i.geoFailed && !geoQueue.includes(i.id)) geoQueue.push(i.id); });
   runGeo();
 }
@@ -519,6 +522,7 @@ async function osmNear(i) {
   return (res.find(x => x.extratags && (x.extratags.opening_hours || x.extratags.phone || x.extratags["contact:phone"])) || res[0] || {}).extratags || null;
 }
 async function runEnrich() {
+  if (READONLY) return;
   if (enrichRunning || geoRunning) return;
   enrichRunning = true;
   let changed = 0;
@@ -605,7 +609,7 @@ function closeSheets() { $("scrim").hidden = true; $("sheet").hidden = true; $("
 document.querySelectorAll("[data-close]").forEach(b => (b.onclick = closeSheets));
 $("scrim").onclick = closeSheets;
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheets(); });
-$("addBtn").onclick = () => openSheet(null);
+$("addBtn").onclick = () => { if (!READONLY) openSheet(null); };
 $("fCity").onchange = e => { $("newCityWrap").hidden = e.target.value !== "__new"; if (e.target.value === "__new") $("fNewCity").focus(); };
 function addTagFromInput() { const v = $("fNewTag").value.trim(); if (!v) return; formTags.add(v.charAt(0).toUpperCase() + v.slice(1)); $("fNewTag").value = ""; renderTagPick(); }
 $("addTagBtn").onclick = addTagFromInput;
@@ -750,6 +754,7 @@ async function ghGet() {
   return { data: JSON.parse(b64decode(j.content)), sha: j.sha };
 }
 async function ghPut(data, sha) {
+  if (READONLY) return { conflict: false, sha };
   const body = { message: "Tafels: lijst bijgewerkt", content: b64encode(JSON.stringify(data, null, 1) + "\n"), branch: settings.branch || "main" };
   if (sha) body.sha = sha;
   const r = await fetch(apiUrl(), { method: "PUT", headers: { ...ghHeaders(), "Content-Type": "application/json" }, body: JSON.stringify(body) });
@@ -786,7 +791,8 @@ async function sync() {
     for (let attempt = 0; attempt < 3; attempt++) {
       const remote = await ghGet();
       if (remote) {
-        if (!store.dirty) { store.data = remote.data; store.sha = remote.sha; persist(); break; }
+        if (READONLY) remote.data.items.forEach(i => delete i.notes);
+        if (!store.dirty || READONLY) { store.data = remote.data; store.sha = remote.sha; store.dirty = false; persist(); break; }
         store.data = merge(remote.data, store.data); store.sha = remote.sha;
       } else store.sha = null;
       if (!store.dirty && remote) break;
@@ -842,6 +848,12 @@ $("importFile").onchange = async e => {
 async function boot() {
   // Altijd openen op de kaart met alle restaurants
   ui.city = ALL; lsSet(LS_UI, ui);
+  if (READONLY) {
+    document.querySelector(".app").classList.add("readonly");
+    $("addBtn").hidden = true; $("syncBtn").hidden = true;
+    const mf = document.querySelector('link[rel="manifest"]'); if (mf) mf.href = "manifest-bekijk.webmanifest";
+    store.data.items.forEach(i => delete i.notes);
+  }
   render();
   setView("map");
   await sync();

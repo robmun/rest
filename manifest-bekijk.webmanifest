@@ -1,0 +1,16 @@
+{
+  "name": "my fav rest's",
+  "short_name": "my fav rest's",
+  "description": "Restauranttips van Robert, met kaart",
+  "lang": "nl",
+  "start_url": "./?bekijk",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F2F4F2",
+  "theme_color": "#1E6B52",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

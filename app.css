@@ -243,3 +243,6 @@ label.f{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:60
 
 h1{white-space:nowrap;font-size:26px}
 .title-row .sync{min-width:0}
+
+/* Bekijkversie: geen knop in het midden */
+.app.readonly .tabbar{grid-template-columns:1fr 1fr}
