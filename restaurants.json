@@ -27,10 +27,8 @@
    "tags": [],
    "url": "https://westervilla.nl/restaurant/",
    "visited": false,
-   "updatedAt": 1790317979636,
-   "lat": 52.384541,
-   "lng": 4.861822,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Haarlemmerweg 369, 1051 LH Amsterdam"
   },
   {
    "id": "ams-cafe-parlotte",
@@ -41,10 +39,8 @@
    "tags": [],
    "url": "https://www.parlotte.nl/",
    "visited": false,
-   "updatedAt": 1790317981001,
-   "lat": 52.378256,
-   "lng": 4.881758,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Westerstraat 182, Amsterdam"
   },
   {
    "id": "ams-wils",
@@ -55,10 +51,8 @@
    "tags": [],
    "url": "https://www.restaurantwils.nl/homenl",
    "visited": false,
-   "updatedAt": 1790317982456,
-   "lat": 52.343394,
-   "lng": 4.856157,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Stadionplein 26, 1076 CM Amsterdam"
   },
   {
    "id": "ams-auberge-jean-marie",
@@ -69,10 +63,8 @@
    "tags": [],
    "url": "http://www.aubergeamsterdam.nl/",
    "visited": true,
-   "updatedAt": 1790317983681,
-   "lat": 52.354644,
-   "lng": 4.889264,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Albert Cuypstraat 58, Amsterdam"
   },
   {
    "id": "ams-beulings",
@@ -85,10 +77,8 @@
    ],
    "url": "https://www.beulings.nl/en/",
    "visited": false,
-   "updatedAt": 1790317984886,
-   "lat": 52.367986,
-   "lng": 4.887686,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Beulingstraat 9, 1017 BA Amsterdam"
   },
   {
    "id": "ams-shaffy-voorheen-felix",
@@ -99,10 +89,8 @@
    "tags": [],
    "url": "https://www.shaffyrestobar.com/nl/",
    "visited": false,
-   "updatedAt": 1790317987234,
-   "lat": 52.359867,
-   "lng": 4.891245,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Keizersgracht 324, Amsterdam"
   },
   {
    "id": "ams-eetcafe-schiller",
@@ -113,8 +101,8 @@
    "tags": [],
    "url": "https://cafeschiller.nl/",
    "visited": false,
-   "updatedAt": 1790317990091,
-   "geoFailed": true
+   "updatedAt": 1790347067470,
+   "address": "Rembrandtplein 24A, 1017 CV Amsterdam"
   },
   {
    "id": "ams-cantine-de-caron",
@@ -128,10 +116,8 @@
    ],
    "url": "https://cantinedecaron.nl/",
    "visited": false,
-   "updatedAt": 1790317991356,
-   "lat": 52.38629,
-   "lng": 4.872817,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Pazzanistraat 8, Amsterdam"
   },
   {
    "id": "ams-cantine-petit-caron",
@@ -145,8 +131,8 @@
    ],
    "url": "https://petitcaron.nl/",
    "visited": true,
-   "updatedAt": 1790317993856,
-   "geoFailed": true
+   "updatedAt": 1790347067470,
+   "address": "Frans Halsstraat 26H, 1072 BR Amsterdam"
   },
   {
    "id": "ams-cafe-restaurant-stork",
@@ -159,10 +145,8 @@
    ],
    "url": "https://restaurantstork.nl/",
    "visited": false,
-   "updatedAt": 1790317995339,
-   "lat": 52.382062,
-   "lng": 4.920205,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Gedempt Hamerkanaal 201, 1021 KP Amsterdam"
   },
   {
    "id": "ams-mos",
@@ -175,10 +159,8 @@
    ],
    "url": "https://mosamsterdam.nl/",
    "visited": false,
-   "updatedAt": 1790317996580,
-   "lat": 52.383796,
-   "lng": 4.895503,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "IJdok 185, Amsterdam"
   },
   {
    "id": "ams-rakang",
@@ -191,10 +173,8 @@
    ],
    "url": "http://www.rakang.nl/",
    "visited": false,
-   "updatedAt": 1790317997794,
-   "lat": 52.369655,
-   "lng": 4.881275,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Elandsgracht 29, Amsterdam"
   },
   {
    "id": "ams-de-goudfazant",
@@ -207,10 +187,8 @@
    ],
    "url": "https://hoteldegoudfazant.nl/",
    "visited": false,
-   "updatedAt": 1790317999001,
-   "lat": 52.383763,
-   "lng": 4.93011,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Aambeeldstraat 30, 1021 KB Amsterdam"
   },
   {
    "id": "ams-hangar",
@@ -221,10 +199,8 @@
    "tags": [],
    "url": "https://hangar.amsterdam/",
    "visited": false,
-   "updatedAt": 1790318000215,
-   "lat": 52.383753,
-   "lng": 4.931042,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Aambeeldstraat 36, 1021 KB Amsterdam"
   },
   {
    "id": "ams-yerba",
@@ -237,8 +213,8 @@
    ],
    "url": "https://www.yerbabar.com/",
    "visited": true,
-   "updatedAt": 1790318002769,
-   "geoFailed": true
+   "updatedAt": 1790347067470,
+   "address": "Ruysdaelstraat 48, 1071 XE Amsterdam"
   },
   {
    "id": "ams-taiko-conservatorium-hotel",
@@ -249,10 +225,8 @@
    "tags": [],
    "url": "https://www.taikocuisine.com/nl/restaurant/",
    "visited": false,
-   "updatedAt": 1790318003981,
-   "lat": 52.358563,
-   "lng": 4.87924,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Paulus Potterstraat 50, 1071 DB Amsterdam"
   },
   {
    "id": "ams-the-duchess",
@@ -263,10 +237,8 @@
    "tags": [],
    "url": "https://the-duchess.com/",
    "visited": false,
-   "updatedAt": 1790318005189,
-   "lat": 52.372811,
-   "lng": 4.889353,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Spuistraat 172, 1012 VT Amsterdam"
   },
   {
    "id": "ams-brut-de-mer",
@@ -279,10 +251,8 @@
    ],
    "url": "http://brutdemer.nl",
    "visited": false,
-   "updatedAt": 1790318006834,
-   "lat": 52.355783,
-   "lng": 4.89255,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Gerard Douplein 8H, 1072 VE Amsterdam"
   },
   {
    "id": "ams-graphite",
@@ -293,10 +263,8 @@
    "tags": [],
    "url": "https://graphite.amsterdam/home",
    "visited": false,
-   "updatedAt": 1790318008033,
-   "lat": 52.36649,
-   "lng": 4.898287,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Paardenstraat 15, 1017 CX Amsterdam"
   },
   {
    "id": "ams-van-der-veen",
@@ -307,10 +275,8 @@
    "tags": [],
    "url": "https://www.vanderveenbarkitchen.nl/",
    "visited": false,
-   "updatedAt": 1790318009435,
-   "lat": 52.349074,
-   "lng": 4.881229,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Beethovenstraat 27A, 1077 HM Amsterdam"
   },
   {
    "id": "ams-domenica",
@@ -321,10 +287,8 @@
    "tags": [],
    "url": "https://www.restaurantdomenica.com/",
    "visited": false,
-   "updatedAt": 1790318010645,
-   "lat": 52.380132,
-   "lng": 4.887435,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Noordermarkt 7, 1015 MV Amsterdam"
   },
   {
    "id": "ams-bistrot-neuf",
@@ -335,10 +299,8 @@
    "tags": [],
    "url": "https://bistrotneuf.nl/",
    "visited": false,
-   "updatedAt": 1790318012000,
-   "lat": 52.379378,
-   "lng": 4.893771,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Haarlemmerstraat 9, 1013 JG Amsterdam"
   },
   {
    "id": "ams-de-juwelier",
@@ -349,10 +311,8 @@
    "tags": [],
    "url": "https://www.restaurant-dejuwelier.nl/restaurantdejuwelier",
    "visited": false,
-   "updatedAt": 1790318013225,
-   "lat": 52.364256,
-   "lng": 4.898276,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Utrechtsestraat 51, 1017 VJ Amsterdam"
   },
   {
    "id": "ams-212",
@@ -363,11 +323,8 @@
    "tags": [],
    "url": "https://212.amsterdam/",
    "visited": false,
-   "updatedAt": 1790318014724,
-   "address": "Amstel 212",
-   "lat": 52.365878,
-   "lng": 4.90026,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Amstel 212, 1017 AH Amsterdam"
   },
   {
    "id": "ams-de-plantage",
@@ -380,10 +337,8 @@
    ],
    "url": "https://www.caferestaurantdeplantage.nl/",
    "visited": false,
-   "updatedAt": 1790318015931,
-   "lat": 52.366585,
-   "lng": 4.912559,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Plantage Kerklaan 36, 1018 CZ Amsterdam"
   },
   {
    "id": "ams-gebr-hartering",
@@ -396,10 +351,8 @@
    ],
    "url": "https://www.gebr-hartering.nl/",
    "visited": false,
-   "updatedAt": 1790318017149,
-   "lat": 52.371644,
-   "lng": 4.907476,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Peperstraat 10, Amsterdam"
   },
   {
    "id": "ams-mont-blanc",
@@ -414,10 +367,8 @@
    ],
    "url": "https://www.restaurantmontblanc.nl/",
    "visited": true,
-   "updatedAt": 1790318018516,
-   "lat": 52.293406,
-   "lng": 4.868092,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Govert Flinckstraat 308, Amsterdam"
   },
   {
    "id": "ams-secret-garden",
@@ -430,10 +381,8 @@
    ],
    "url": "https://www.secretgardenamsterdam.com/",
    "visited": true,
-   "updatedAt": 1790318020276,
-   "lat": 52.366262,
-   "lng": 4.891168,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Reguliersdwarsstraat 38, 1017 BM Amsterdam"
   },
   {
    "id": "ams-gent-aan-de-schinkel",
@@ -447,8 +396,8 @@
    ],
    "url": "https://www.gentaandeschinkel.nl/",
    "visited": true,
-   "updatedAt": 1790318024055,
-   "geoFailed": true
+   "updatedAt": 1790347067470,
+   "address": "Theophile de Bockstraat 1, 1058 TV Amsterdam"
   },
   {
    "id": "ams-pllek",
@@ -462,10 +411,8 @@
    ],
    "url": "https://pllek.nl/",
    "visited": false,
-   "updatedAt": 1790318025297,
-   "lat": 52.398863,
-   "lng": 4.892902,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "TT. Neveritaweg 59, 1033 WB Amsterdam"
   },
   {
    "id": "ams-scheepskameel",
@@ -476,11 +423,8 @@
    "tags": [],
    "url": "https://scheepskameel.nl/",
    "visited": false,
-   "updatedAt": 1790318026593,
-   "address": "Kattenburgerstraat 5",
-   "lat": 52.375501,
-   "lng": 4.914274,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Kattenburgerstraat 5, 1018 JA Amsterdam"
   },
   {
    "id": "ams-badcuyp",
@@ -491,10 +435,8 @@
    "tags": [],
    "url": "https://badcuypamsterdam.nl/",
    "visited": false,
-   "updatedAt": 1790318027793,
-   "lat": 52.356592,
-   "lng": 4.897116,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Eerste Sweelinckstraat 10, 1073 CM Amsterdam"
   },
   {
    "id": "ams-cafe-restaurant-amsterdam",
@@ -507,11 +449,8 @@
    ],
    "url": "https://cradam.nl/",
    "visited": false,
-   "updatedAt": 1790318028992,
-   "address": "Watertorenplein 6",
-   "lat": 52.38422,
-   "lng": 4.868214,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Watertorenplein 6, 1051 PA Amsterdam"
   },
   {
    "id": "ams-george-marina",
@@ -524,10 +463,8 @@
    ],
    "url": "https://www.georgemarina.nl/",
    "visited": false,
-   "updatedAt": 1790318030178,
-   "lat": 52.34182,
-   "lng": 4.918827,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Spaklerweg 10A, 1096 BA Amsterdam"
   },
   {
    "id": "ams-bouillon-d-amsterdam",
@@ -542,10 +479,8 @@
    ],
    "url": "https://www.bouillondamsterdam.nl/",
    "visited": true,
-   "updatedAt": 1790318031427,
-   "lat": 52.374051,
-   "lng": 4.89071,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Nieuwezijds Voorburgwal 176, 1012 SJ Amsterdam"
   },
   {
    "id": "ams-helling-7",
@@ -558,10 +493,8 @@
    ],
    "url": "https://www.helling7.nl/",
    "visited": true,
-   "updatedAt": 1790318032800,
-   "lat": 52.40591,
-   "lng": 4.885003,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "TT. Melissaweg 57, 1033 SP Amsterdam"
   },
   {
    "id": "ams-pianeta-terra",
@@ -574,10 +507,8 @@
    ],
    "url": "https://www.pianetaterra.nl/",
    "visited": false,
-   "updatedAt": 1790318034148,
-   "lat": 52.36802,
-   "lng": 4.887774,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Beulingstraat 7, 1017 BA Amsterdam"
   },
   {
    "id": "ams-toscanini",
@@ -590,10 +521,8 @@
    ],
    "url": "https://restauranttoscanini.nl/",
    "visited": false,
-   "updatedAt": 1790318035368,
-   "lat": 52.380166,
-   "lng": 4.885282,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Lindengracht 75, 1015 KD Amsterdam"
   },
   {
    "id": "ams-palladio",
@@ -606,10 +535,8 @@
    ],
    "url": "https://www.restaurantpalladio.nl/",
    "visited": true,
-   "updatedAt": 1790318036592,
-   "lat": 52.369934,
-   "lng": 4.881157,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Elandsgracht 64, 1016 TX Amsterdam"
   },
   {
    "id": "ams-assaggi",
@@ -622,10 +549,8 @@
    ],
    "url": "https://www.assaggi.nl/",
    "visited": true,
-   "updatedAt": 1790318037816,
-   "lat": 52.376825,
-   "lng": 4.881979,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Tweede Egelantiersdwarsstraat 6, 1015 SC Amsterdam"
   },
   {
    "id": "ams-incanto",
@@ -640,10 +565,8 @@
    ],
    "url": "https://www.restaurant-incanto.nl/",
    "visited": false,
-   "updatedAt": 1790318039041,
-   "lat": 52.367017,
-   "lng": 4.89386,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Amstel 2, 1017 AA Amsterdam"
   },
   {
    "id": "utr-wilhelminapark",
@@ -656,10 +579,8 @@
    ],
    "url": "https://www.wilhelminapark.nl/",
    "visited": false,
-   "updatedAt": 1790318040787,
-   "lat": 52.088341,
-   "lng": 5.140572,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Wilhelminapark 65, 3581 NP Utrecht"
   },
   {
    "id": "utr-concours",
@@ -672,10 +593,8 @@
    ],
    "url": "https://restaurantconcours.nl/restaurant",
    "visited": false,
-   "updatedAt": 1790318042054,
-   "lat": 52.094979,
-   "lng": 5.127497,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Biltstraat 20, Utrecht"
   },
   {
    "id": "utr-goesting",
@@ -686,10 +605,8 @@
    "tags": [],
    "url": "https://www.restaurantgoesting.nl/",
    "visited": false,
-   "updatedAt": 1790318043382,
-   "lat": 52.098498,
-   "lng": 5.137371,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Veeartsenijpad 150, Utrecht"
   },
   {
    "id": "utr-cantina-di-david",
@@ -702,10 +619,8 @@
    ],
    "url": "https://cantinadidavid.nl/",
    "visited": false,
-   "updatedAt": 1790318044704,
-   "lat": 52.093941,
-   "lng": 5.116807,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Oudegracht aan de Werf 88, 3511 AV Utrecht"
   },
   {
    "id": "utr-bistro-madeleine",
@@ -718,8 +633,8 @@
    ],
    "url": "https://www.madeleine-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790318047385,
-   "geoFailed": true
+   "updatedAt": 1790347067470,
+   "address": "Wed 3A, Utrecht"
   },
   {
    "id": "utr-sea-salt-saloon",
@@ -732,10 +647,8 @@
    ],
    "url": "https://seasaltsaloon.nl/",
    "visited": false,
-   "updatedAt": 1790318048585,
-   "lat": 52.089832,
-   "lng": 5.121492,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Wed 3, Utrecht"
   },
   {
    "id": "utr-broadway",
@@ -749,10 +662,8 @@
    ],
    "url": "https://www.steaksandribs.nl/",
    "visited": false,
-   "updatedAt": 1790318050222,
-   "lat": 52.09159,
-   "lng": 5.117454,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Oudegracht aan de Werf 139, 3511 AL Utrecht"
   },
   {
    "id": "utr-ruby-rose",
@@ -765,10 +676,8 @@
    ],
    "url": "https://rubyrose-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790318051511,
-   "lat": 52.092835,
-   "lng": 5.122039,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Korte Jansstraat 23, Utrecht"
   },
   {
    "id": "utr-humphreys",
@@ -779,8 +688,8 @@
    "tags": [],
    "url": "https://www.humphreys.nl/restaurants/humphreys-utrecht",
    "visited": false,
-   "updatedAt": 1790318054330,
-   "geoFailed": true
+   "updatedAt": 1790347067470,
+   "address": "Stadhuisbrug 3, 3511 KP Utrecht"
   },
   {
    "id": "utr-hemel-aarde",
@@ -793,10 +702,8 @@
    ],
    "url": "https://www.hemel-aarde.nl/",
    "visited": false,
-   "updatedAt": 1790318055569,
-   "lat": 52.092471,
-   "lng": 5.122959,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Keistraat 8, 3512 HV Utrecht"
   },
   {
    "id": "utr-tiger-mama",
@@ -809,8 +716,8 @@
    ],
    "url": "https://tigermama.nl/",
    "visited": false,
-   "updatedAt": 1790318058256,
-   "geoFailed": true
+   "updatedAt": 1790347067470,
+   "address": "Voorstraat 80, Utrecht"
   },
   {
    "id": "utr-streetfood-club",
@@ -821,10 +728,8 @@
    "tags": [],
    "url": "https://www.thestreetfoodclub.nl/",
    "visited": false,
-   "updatedAt": 1790318060158,
-   "lat": 52.092993,
-   "lng": 5.122153,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Janskerkhof 9, Utrecht"
   },
   {
    "id": "utr-djakarta",
@@ -837,10 +742,8 @@
    ],
    "url": "https://djakarta.nl/",
    "visited": false,
-   "updatedAt": 1790318062161,
-   "lat": 52.094264,
-   "lng": 5.12587,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Lucasbolwerk 19, 3512 EH Utrecht"
   },
   {
    "id": "utr-cafe-olivier",
@@ -853,10 +756,8 @@
    ],
    "url": "https://www.cafe-olivier.be/nl/",
    "visited": false,
-   "updatedAt": 1790318064157,
-   "lat": 52.090679,
-   "lng": 5.115781,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Achter Clarenburg 6A, 3511 JJ Utrecht"
   },
   {
    "id": "utr-jasmijn-ik",
@@ -869,10 +770,8 @@
    ],
    "url": "https://jasmijnenik.nl/",
    "visited": false,
-   "updatedAt": 1790318066160,
-   "lat": 52.090896,
-   "lng": 5.094875,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Kanaalstraat 219, Utrecht"
   },
   {
    "id": "utr-stadsjochies",
@@ -883,10 +782,8 @@
    "tags": [],
    "url": "https://stadsjochies.nl/",
    "visited": false,
-   "updatedAt": 1790318068156,
-   "lat": 52.07376,
-   "lng": 5.141518,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Rijndijk 14, 3585 LG Utrecht"
   },
   {
    "id": "utr-paloma",
@@ -897,10 +794,8 @@
    "tags": [],
    "url": "https://paloma-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790318070160,
-   "lat": 52.09008,
-   "lng": 5.117084,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Mariaplaats 11, Utrecht"
   },
   {
    "id": "utr-de-rechtbank",
@@ -911,10 +806,8 @@
    "tags": [],
    "url": "https://www.derechtbank.com/",
    "visited": false,
-   "updatedAt": 1790318072164,
-   "lat": 52.089046,
-   "lng": 5.122645,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Korte Nieuwstraat 14, 3512 NM Utrecht"
   },
   {
    "id": "utr-pastoe-foodbar",
@@ -927,10 +820,8 @@
    ],
    "url": "https://www.pastoe-foodbar.nl/",
    "visited": true,
-   "updatedAt": 1790318075167,
-   "lat": 52.074363,
-   "lng": 5.120344,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Rotsoord 7A, 3523 CL Utrecht"
   },
   {
    "id": "utr-leen",
@@ -941,10 +832,8 @@
    "tags": [],
    "url": "https://leen-restaurant.nl/",
    "visited": false,
-   "updatedAt": 1790318077158,
-   "lat": 52.123235,
-   "lng": 5.08963,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Heuveloord 140, Utrecht"
   },
   {
    "id": "utr-restaurant-watertoren",
@@ -957,8 +846,8 @@
    ],
    "url": "https://watertorenutrecht.nl/",
    "visited": false,
-   "updatedAt": 1790318081155,
-   "geoFailed": true
+   "updatedAt": 1790347067470,
+   "address": "Heuveloord 25A, 3523 CK Utrecht"
   },
   {
    "id": "kan-dengh",
@@ -971,10 +860,8 @@
    ],
    "url": "https://dengh.nl/restaurant-utrecht/",
    "visited": false,
-   "updatedAt": 1790318083165,
-   "lat": 52.108215,
-   "lng": 5.034767,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Enghlaan 17, 3543 BD Utrecht"
   },
   {
    "id": "kan-vineyard-food-drinks",
@@ -987,10 +874,8 @@
    ],
    "url": "https://vineyardfoodanddrinks.nl/locaties/vineyard-food-drinks-utrecht/",
    "visited": false,
-   "updatedAt": 1790318085161,
-   "lat": 52.116163,
-   "lng": 5.055365,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Atoomweg 63, 3542 AA Utrecht"
   },
   {
    "id": "kan-buiten-bij-de-sluis",
@@ -1003,10 +888,8 @@
    ],
    "url": "https://www.buitenbijdesluis.nl/",
    "visited": false,
-   "updatedAt": 1790318087162,
-   "lat": 52.096125,
-   "lng": 5.076328,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Oude Vleutenseweg 2, 3541 BE Utrecht"
   },
   {
    "id": "kan-bar-brasserie-de-blend",
@@ -1019,8 +902,8 @@
    ],
    "url": "https://deblend.nl/",
    "visited": false,
-   "updatedAt": 1790318092163,
-   "geoFailed": true
+   "updatedAt": 1790347067470,
+   "address": "Vleutensevaart 100, 3532 AD Utrecht"
   },
   {
    "id": "kan-fort-de-gagel",
@@ -1033,10 +916,8 @@
    ],
    "url": "https://fortdegagel.nl/lunch/",
    "visited": false,
-   "updatedAt": 1790318094152,
-   "lat": 52.129572,
-   "lng": 5.102477,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Gageldijk 167, 3566 MJ Utrecht"
   },
   {
    "id": "kan-roemer",
@@ -1049,10 +930,8 @@
    ],
    "url": "https://www.roemer-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790318096154,
-   "lat": 52.145562,
-   "lng": 5.039876,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Berlijnplein 2, 3541 CM Utrecht"
   },
   {
    "id": "kan-soia-beach-oog-in-al",
@@ -1065,10 +944,8 @@
    ],
    "url": "https://www.soia.nl/",
    "visited": false,
-   "updatedAt": 1790318098169,
-   "lat": 52.094964,
-   "lng": 5.078841,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Kanaalweg 199, 3533 HL Utrecht"
   },
   {
    "id": "kan-balijepark",
@@ -1081,10 +958,8 @@
    ],
    "url": "https://balijepark.nl/",
    "visited": false,
-   "updatedAt": 1790318100162,
-   "lat": 52.081589,
-   "lng": 5.020133,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Augustusweg 32, 3453 KS De Meern"
   },
   {
    "id": "kan-liemes",
@@ -1097,10 +972,8 @@
    ],
    "url": "https://liemes.nl/",
    "visited": false,
-   "updatedAt": 1790318102161,
-   "lat": 52.108345,
-   "lng": 5.052516,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Proostwetering 11, 3543 AB Utrecht"
   },
   {
    "id": "kan-zuiver",
@@ -1113,10 +986,8 @@
    ],
    "url": "https://restaurantzuiver.nl/",
    "visited": false,
-   "updatedAt": 1790318104163,
-   "lat": 52.109098,
-   "lng": 5.045082,
-   "geo": "auto"
+   "updatedAt": 1790347067470,
+   "address": "Vlooswijkseweg 1, 3832 RG Leusden"
   }
  ]
 }
