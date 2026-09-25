@@ -27,11 +27,12 @@
    "tags": [],
    "url": "https://westervilla.nl/restaurant/",
    "visited": false,
-   "updatedAt": 1790347337054,
+   "updatedAt": 1790350703506,
    "address": "Haarlemmerweg 369, 1051 LH Amsterdam",
    "lat": 52.384541,
    "lng": 4.861822,
-   "geo": "auto"
+   "geo": "auto",
+   "osmChecked": 1790350703506
   },
   {
    "id": "ams-cafe-parlotte",
@@ -42,11 +43,13 @@
    "tags": [],
    "url": "https://www.parlotte.nl/",
    "visited": false,
-   "updatedAt": 1790347338355,
+   "updatedAt": 1790350704752,
    "address": "Westerstraat 182, Amsterdam",
    "lat": 52.378276,
    "lng": 4.881742,
-   "geo": "auto"
+   "geo": "auto",
+   "hours": "Mo 16:00-01:00; We-Th 16:00-01:00; Fr 16:00-02:00; Sa 13:00-02:00; Su 13:00-21:00",
+   "osmChecked": 1790350704752
   },
   {
    "id": "ams-wils",
@@ -57,11 +60,13 @@
    "tags": [],
    "url": "https://www.restaurantwils.nl/homenl",
    "visited": false,
-   "updatedAt": 1790347339858,
+   "updatedAt": 1790350705933,
    "address": "Stadionplein 26, 1076 CM Amsterdam",
    "lat": 52.343394,
    "lng": 4.856157,
-   "geo": "auto"
+   "geo": "auto",
+   "phone": "+31 20 236 6522",
+   "osmChecked": 1790350705933
   },
   {
    "id": "ams-auberge-jean-marie",
@@ -72,11 +77,13 @@
    "tags": [],
    "url": "http://www.aubergeamsterdam.nl/",
    "visited": true,
-   "updatedAt": 1790347507581,
+   "updatedAt": 1790350707107,
    "address": "Albert Cuypstraat 58, Amsterdam",
    "lat": 52.354633,
    "lng": 4.889228,
-   "geo": "auto"
+   "geo": "auto",
+   "phone": "+31 20 845 20 05",
+   "osmChecked": 1790350707107
   },
   {
    "id": "ams-beulings",
@@ -89,11 +96,12 @@
    ],
    "url": "https://www.beulings.nl/en/",
    "visited": false,
-   "updatedAt": 1790347509034,
+   "updatedAt": 1790350708280,
    "address": "Beulingstraat 9, 1017 BA Amsterdam",
    "lat": 52.367986,
    "lng": 4.887686,
-   "geo": "auto"
+   "geo": "auto",
+   "osmChecked": 1790350708280
   },
   {
    "id": "ams-shaffy-voorheen-felix",
@@ -104,11 +112,12 @@
    "tags": [],
    "url": "https://www.shaffyrestobar.com/nl/",
    "visited": false,
-   "updatedAt": 1790347510412,
+   "updatedAt": 1790350709619,
    "address": "Keizersgracht 324, Amsterdam",
    "lat": 52.36999,
    "lng": 4.884254,
-   "geo": "auto"
+   "geo": "auto",
+   "osmChecked": 1790350709619
   },
   {
    "id": "ams-eetcafe-schiller",
@@ -119,11 +128,12 @@
    "tags": [],
    "url": "https://cafeschiller.nl/",
    "visited": false,
-   "updatedAt": 1790347511800,
+   "updatedAt": 1790350710948,
    "address": "Rembrandtplein 24A, 1017 CV Amsterdam",
    "lat": 52.365674,
    "lng": 4.896587,
-   "geo": "auto"
+   "geo": "auto",
+   "osmChecked": 1790350710948
   },
   {
    "id": "ams-cantine-de-caron",
@@ -137,11 +147,14 @@
    ],
    "url": "https://cantinedecaron.nl/",
    "visited": false,
-   "updatedAt": 1790347513034,
+   "updatedAt": 1790350712178,
    "address": "Pazzanistraat 8, Amsterdam",
    "lat": 52.38629,
    "lng": 4.872817,
-   "geo": "auto"
+   "geo": "auto",
+   "phone": "+31 20 225 0059",
+   "hours": "Mo-Su 12:00-17:00,18:00-22:00+",
+   "osmChecked": 1790350712178
   },
   {
    "id": "ams-cantine-petit-caron",
@@ -155,11 +168,12 @@
    ],
    "url": "https://petitcaron.nl/",
    "visited": true,
-   "updatedAt": 1790347514935,
+   "updatedAt": 1790350713715,
    "address": "Frans Halsstraat 26H, 1072 BR Amsterdam",
    "lat": 52.357777,
    "lng": 4.888766,
-   "geo": "auto"
+   "geo": "auto",
+   "osmChecked": 1790350713715
   },
   {
    "id": "ams-cafe-restaurant-stork",
