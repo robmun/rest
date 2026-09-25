@@ -99,7 +99,10 @@
    "tags": [],
    "url": "https://www.shaffyrestobar.com/nl/",
    "visited": false,
-   "updatedAt": 1790300000005
+   "updatedAt": 1790317987234,
+   "lat": 52.359867,
+   "lng": 4.891245,
+   "geo": "auto"
   },
   {
    "id": "ams-eetcafe-schiller",
@@ -110,7 +113,8 @@
    "tags": [],
    "url": "https://cafeschiller.nl/",
    "visited": false,
-   "updatedAt": 1790300000006
+   "updatedAt": 1790317990091,
+   "geoFailed": true
   },
   {
    "id": "ams-cantine-de-caron",
@@ -124,7 +128,10 @@
    ],
    "url": "https://cantinedecaron.nl/",
    "visited": false,
-   "updatedAt": 1790300000007
+   "updatedAt": 1790317991356,
+   "lat": 52.38629,
+   "lng": 4.872817,
+   "geo": "auto"
   },
   {
    "id": "ams-cantine-petit-caron",
@@ -138,7 +145,8 @@
    ],
    "url": "https://petitcaron.nl/",
    "visited": true,
-   "updatedAt": 1790300000008
+   "updatedAt": 1790317993856,
+   "geoFailed": true
   },
   {
    "id": "ams-cafe-restaurant-stork",
@@ -151,7 +159,10 @@
    ],
    "url": "https://restaurantstork.nl/",
    "visited": false,
-   "updatedAt": 1790300000009
+   "updatedAt": 1790317995339,
+   "lat": 52.382062,
+   "lng": 4.920205,
+   "geo": "auto"
   },
   {
    "id": "ams-mos",
