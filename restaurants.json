@@ -724,8 +724,11 @@
    "tags": [],
    "url": "https://www.restaurantgoesting.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Veeartsenijpad 150, Utrecht"
+   "updatedAt": 1790349868941,
+   "address": "Veeartsenijpad 150, Utrecht",
+   "lat": 52.098498,
+   "lng": 5.137371,
+   "geo": "adres"
   },
   {
    "id": "utr-cantina-di-david",
@@ -738,8 +741,11 @@
    ],
    "url": "https://cantinadidavid.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Oudegracht aan de Werf 88, 3511 AV Utrecht"
+   "updatedAt": 1790349869398,
+   "address": "Oudegracht aan de Werf 88, 3511 AV Utrecht",
+   "lat": 52.093957,
+   "lng": 5.116839,
+   "geo": "adres"
   },
   {
    "id": "utr-bistro-madeleine",
@@ -752,8 +758,11 @@
    ],
    "url": "https://www.madeleine-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Wed 3A, Utrecht"
+   "updatedAt": 1790349869680,
+   "address": "Wed 3A, Utrecht",
+   "lat": 52.08986,
+   "lng": 5.121672,
+   "geo": "adres"
   },
   {
    "id": "utr-sea-salt-saloon",
@@ -766,8 +775,11 @@
    ],
    "url": "https://seasaltsaloon.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Wed 3, Utrecht"
+   "updatedAt": 1790349869921,
+   "address": "Wed 3, Utrecht",
+   "lat": 52.089835,
+   "lng": 5.121539,
+   "geo": "adres"
   },
   {
    "id": "utr-broadway",
@@ -781,8 +793,11 @@
    ],
    "url": "https://www.steaksandribs.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Oudegracht aan de Werf 139, 3511 AL Utrecht"
+   "updatedAt": 1790349870316,
+   "address": "Oudegracht aan de Werf 139, 3511 AL Utrecht",
+   "lat": 52.091574,
+   "lng": 5.117487,
+   "geo": "adres"
   },
   {
    "id": "utr-ruby-rose",
