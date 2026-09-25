@@ -85,6 +85,7 @@ function parseHoursRaw(src) {
   let s = src.trim().toLowerCase().replace(/[–—]/g, "-").replace(/\s*-\s*/g, "-").replace(/\./g, ":").replace(/\b(\d{1,2})u\b/g, "$1:00");
   s = s.replace(/\b(ma|di|wo|do|vr|za|zo)\b/g, m => NL_DAYS[m]);
   s = s.replace(/\b(gesloten|dicht)\b/g, "off");
+  s = s.replace(/vanaf\s+(\d{1,2}(?::\d{2})?)/g, "$1+").replace(/(\d{1,2}(?::\d{2})?)-laat\b/g, "$1+");
   if (s === "24/7") return { always: true, week: DAY_KEYS.map(() => [[0, 1440]]) };
   const week = DAY_KEYS.map(() => null);
   let any = false;
@@ -109,6 +110,8 @@ function parseHoursRaw(src) {
     else {
       ranges = [];
       for (const t of rest.split(",")) {
+        const oe = /^(\d{1,2})(?::(\d{2}))?\+$/.exec(t.trim());   // open eind, bijv. 17:30+
+        if (oe) { ranges.push([+oe[1] * 60 + +(oe[2] || 0), 1440, true]); continue; }
         const tm = /^(\d{1,2})(?::(\d{2}))?-(\d{1,2})(?::(\d{2}))?\+?$/.exec(t.trim());
         if (!tm) return null;
         const a = +tm[1] * 60 + +(tm[2] || 0); let b = +tm[3] * 60 + +(tm[4] || 0);
@@ -130,7 +133,7 @@ function hoursStatus(i, date = new Date()) {
   const d = (date.getDay() + 6) % 7, min = date.getHours() * 60 + date.getMinutes();
   const today = oh.week[d], yest = oh.week[(d + 6) % 7];
   for (const [a, b] of yest) if (b > 1440 && min + 1440 < b) return { open: true, text: `Open tot ${hhmm(b)}` };
-  for (const [a, b] of today) if (min >= a && min < b) return { open: true, text: `Open tot ${hhmm(b)}` };
+  for (const [a, b, oe] of today) if (min >= a && min < b) return { open: true, text: oe ? `Open · vanaf ${hhmm(a)}` : `Open tot ${hhmm(b)}` };
   const later = today.filter(([a]) => a > min).sort((x, y) => x[0] - y[0])[0];
   if (later) return { open: false, text: `Gesloten · open om ${hhmm(later[0])}` };
   for (let k = 1; k <= 7; k++) {
@@ -141,7 +144,7 @@ function hoursStatus(i, date = new Date()) {
 }
 function hoursLines(i) {
   const oh = parseHours(i.hours); if (!oh) return null;
-  return oh.week.map((r, d) => [NL_SHORT[d], r.length ? r.map(([a, b]) => `${hhmm(a)}–${hhmm(b)}`).join(", ") : "gesloten"]);
+  return oh.week.map((r, d) => [NL_SHORT[d], r.length ? r.map(([a, b, oe]) => oe ? `vanaf ${hhmm(a)}` : `${hhmm(a)}–${hhmm(b)}`).join(", ") : "gesloten"]);
 }
 
 /* ---------------- categorie (kleur op de kaart) ---------------- */
