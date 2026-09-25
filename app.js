@@ -66,10 +66,17 @@ const ARROW = () => { const s = document.createElementNS("http://www.w3.org/2000
 function toast(msg) { const t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => (t.hidden = true), 2400); }
 
 /* ---------------- filtering & list ---------------- */
+const ALL = "Alles";
+let hereCity = null;
+function inCityOf(i) { return ui.city === ALL || i.city === ui.city; }
+function markHere(c) {
+  hereCity = c;
+  document.querySelectorAll("#cities button").forEach(b => b.classList.toggle("here", ui.city === ALL && b.dataset.city === c));
+}
 function filtered() {
   const q = norm(query);
   return visible().filter(i => {
-    if (i.city !== ui.city) return false;
+    if (!inCityOf(i)) return false;
     if (visitFilter === "yes" && !i.visited) return false;
     if (visitFilter === "no" && i.visited) return false;
     for (const t of activeTags) if (!(i.tags || []).includes(t)) return false;
@@ -80,14 +87,15 @@ function filtered() {
 
 function render() {
   const cities = allCities();
-  if (!ui.city || !cities.includes(ui.city)) ui.city = cities[0];
+  if (!ui.city || (ui.city !== ALL && !cities.includes(ui.city))) ui.city = ALL;
   const vis = visible();
-  $("cities").replaceChildren(...cities.map(c => el("button", {
-    type: "button", "aria-pressed": String(c === ui.city),
+  $("cities").replaceChildren(...[ALL, ...cities].map(c => el("button", {
+    type: "button", "aria-pressed": String(c === ui.city), "data-city": c,
+    class: ui.city === ALL && c === hereCity ? "here" : null,
     onclick: () => { ui.city = c; lsSet(LS_UI, ui); activeTags.clear(); render(); fitCity(); $("listView").scrollTop = 0; }
-  }, c, el("span", { text: String(vis.filter(i => i.city === c).length) }))));
+  }, c, el("span", { text: String(c === ALL ? vis.length : vis.filter(i => i.city === c).length) }))));
 
-  const inCity = vis.filter(i => i.city === ui.city);
+  const inCity = vis.filter(inCityOf);
   const used = new Map(); inCity.forEach(i => (i.tags || []).forEach(t => used.set(t, (used.get(t) || 0) + 1)));
   const tagList = [...used.keys()].sort((a, b) => used.get(b) - used.get(a) || a.localeCompare(b, "nl"));
   $("filters").replaceChildren(
@@ -101,9 +109,9 @@ function render() {
   $("list").replaceChildren(...shown.map(card));
   const empty = $("empty");
   empty.hidden = !!shown.length;
-  if (!shown.length) empty.textContent = inCity.length ? "Niets gevonden met deze filters." : `Nog geen restaurants in ${ui.city}. Tik op + om er een toe te voegen.`;
+  if (!shown.length) empty.textContent = inCity.length ? "Niets gevonden met deze filters." : (ui.city === ALL ? "Nog geen restaurants. Tik op + om er een toe te voegen." : `Nog geen restaurants in ${ui.city}. Tik op + om er een toe te voegen.`);
 
-  const inspo = (store.data.inspiration || []).filter(x => (!x.city || x.city === ui.city) && safeUrl(x.url));
+  const inspo = (store.data.inspiration || []).filter(x => (!x.city || ui.city === ALL || x.city === ui.city) && safeUrl(x.url));
   $("inspo").hidden = !inspo.length;
   $("inspo").replaceChildren(el("h2", { text: "Inspiratie" }), ...inspo.map(x => el("a", { href: x.url, target: "_blank", rel: "noopener" }, x.label || x.url)));
 
@@ -128,6 +136,7 @@ function linkRow(i, inPopup) {
 
 function card(i) {
   const main = el("button", { type: "button", class: "card-main", onclick: () => openSheet(i), "aria-label": "Bewerk " + i.name },
+    ui.city === ALL ? el("span", { class: "where", text: i.city }) : null,
     el("div", { class: "name-row" }, el("span", { class: "name", text: i.name }), i.visited ? el("span", { class: "been", text: "Geweest" }) : null),
     i.notes ? el("p", { class: "notes", text: i.notes }) : null,
     (i.tags && i.tags.length) ? el("div", { class: "tags" }, i.tags.map(t => el("span", { class: "tag", text: t }))) : null
@@ -172,6 +181,7 @@ function initMap() {
 }
 function popupFor(i) {
   return el("div", { class: "pop" },
+    el("span", { class: "where", text: i.city }),
     el("h3", { text: i.name }),
     i.notes ? el("p", { text: i.notes }) : null,
     (i.tags && i.tags.length) ? el("div", { class: "tags" }, i.tags.map(t => el("span", { class: "tag", text: t }))) : null,
@@ -185,6 +195,8 @@ function renderMarkers() {
   withPos.forEach(i => {
     const m = L.marker([i.lat, i.lng], { icon: pinIcon(i.visited ? "been" : ""), title: i.name });
     m.bindPopup(() => popupFor(byId(i.id) || i), { maxWidth: 280 });
+    m.on("popupopen", () => markHere(i.city));
+    m.on("popupclose", () => { if (hereCity === i.city) markHere(null); });
     markers.set(i.id, m); cluster.addLayer(m);
   });
   const missing = shown.length - withPos.length;
@@ -196,7 +208,7 @@ function renderMarkers() {
 let lastFitCount = 0;
 function fitCity() {
   if (!map) return;
-  const pts = visible().filter(i => i.city === ui.city && i.lat != null).map(i => [i.lat, i.lng]);
+  const pts = visible().filter(i => inCityOf(i) && i.lat != null).map(i => [i.lat, i.lng]);
   if (pts.length) map.fitBounds(pts, { padding: [40, 40], maxZoom: 15 });
   else { const a = area(ui.city); map.setView(a.center, a.zoom); }
   lastFitCity = ui.city; lastFitCount = pts.length;
@@ -334,7 +346,8 @@ function openSheet(item) {
   $("fVisited").checked = !!(item && item.visited);
   $("fNewTag").value = ""; $("fNewCity").value = "";
   formTags = new Set(item ? item.tags || [] : []);
-  fillCities(item ? item.city : ui.city);
+  const defCity = ui.city === ALL ? "Amsterdam" : ui.city;
+  fillCities(item ? item.city : defCity);
   renderTagPick();
   const d = $("delBtn"); d.hidden = !item; d.textContent = "Verwijderen"; d.classList.remove("confirm"); d.disabled = false;
   $("fErr").hidden = true;
@@ -348,7 +361,7 @@ function openSheet(item) {
     }
     setTimeout(() => {
       miniMap.invalidateSize();
-      const a = area(item ? item.city : ui.city);
+      const a = area(item ? item.city : defCity);
       if (item && item.lat != null) { miniMap.setView([item.lat, item.lng], 16); setDraftPin({ lat: item.lat, lng: item.lng }, false); }
       else if (map) { miniMap.setView(map.getCenter(), Math.min(map.getZoom(), 14)); setDraftPin(null); }
       else { miniMap.setView(a.center, a.zoom); setDraftPin(null); }
@@ -396,7 +409,7 @@ $("form").addEventListener("submit", e => {
   if (!item.address) delete item.address;
   if (!store.data.cities.includes(c)) store.data.cities.push(c);
   const isNew = !editing;
-  ui.city = c; lsSet(LS_UI, ui);
+  if (ui.city !== ALL) { ui.city = c; lsSet(LS_UI, ui); }
   upsert(item); closeSheets();
   toast(isNew ? `${name} toegevoegd` : "Opgeslagen");
   if (item.lat == null) queueGeocoding();
@@ -520,8 +533,8 @@ $("importFile").onchange = async e => {
 
 /* ---------------- start ---------------- */
 async function boot() {
-  // Altijd openen op de kaart van Amsterdam
-  ui.city = "Amsterdam"; lsSet(LS_UI, ui);
+  // Altijd openen op de kaart met alle restaurants
+  ui.city = ALL; lsSet(LS_UI, ui);
   render();
   setView("map");
   await sync();

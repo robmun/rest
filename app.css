@@ -145,3 +145,8 @@ label.f{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:60
   .sheet:not([hidden]){animation:up .22s ease-out}
   @keyframes up{from{transform:translateY(24px);opacity:.6}to{transform:none;opacity:1}}
 }
+
+/* Alles-weergave: laat zien in welke lijst een restaurant staat */
+.where{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--accent)}
+.pop .where{display:block;margin-bottom:2px}
+.seg button.here{box-shadow:inset 0 0 0 2px var(--accent);color:var(--accent)}
