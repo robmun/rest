@@ -186,11 +186,13 @@
    ],
    "url": "https://restaurantstork.nl/",
    "visited": false,
-   "updatedAt": 1790347516198,
+   "updatedAt": 1790350715250,
    "address": "Gedempt Hamerkanaal 201, 1021 KP Amsterdam",
    "lat": 52.382062,
    "lng": 4.920205,
-   "geo": "auto"
+   "geo": "auto",
+   "phone": "+31 20 634 4000",
+   "osmChecked": 1790350715250
   },
   {
    "id": "ams-mos",
@@ -203,11 +205,14 @@
    ],
    "url": "https://mosamsterdam.nl/",
    "visited": false,
-   "updatedAt": 1790347517409,
+   "updatedAt": 1790350716430,
    "address": "IJdok 185, Amsterdam",
    "lat": 52.383796,
    "lng": 4.895503,
-   "geo": "auto"
+   "geo": "auto",
+   "phone": "+31 20 638 0866",
+   "hours": "Tu-We 18:00-22:00; Th-Sa 12:00-16:00,18:00-22:00",
+   "osmChecked": 1790350716430
   },
   {
    "id": "ams-rakang",
@@ -220,11 +225,12 @@
    ],
    "url": "http://www.rakang.nl/",
    "visited": false,
-   "updatedAt": 1790347518803,
+   "updatedAt": 1790350717616,
    "address": "Elandsgracht 29, Amsterdam",
    "lat": 52.369654,
    "lng": 4.881336,
-   "geo": "auto"
+   "geo": "auto",
+   "osmChecked": 1790350717616
   },
   {
    "id": "ams-de-goudfazant",
@@ -237,11 +243,13 @@
    ],
    "url": "https://hoteldegoudfazant.nl/",
    "visited": false,
-   "updatedAt": 1790347520047,
+   "updatedAt": 1790350718812,
    "address": "Aambeeldstraat 30, 1021 KB Amsterdam",
    "lat": 52.383721,
    "lng": 4.930144,
-   "geo": "auto"
+   "geo": "auto",
+   "phone": "+31 20 636 5170",
+   "osmChecked": 1790350718812
   },
   {
    "id": "ams-hangar",
@@ -252,11 +260,12 @@
    "tags": [],
    "url": "https://hangar.amsterdam/",
    "visited": false,
-   "updatedAt": 1790347521481,
+   "updatedAt": 1790350720019,
    "address": "Aambeeldstraat 36, 1021 KB Amsterdam",
    "lat": 52.383726,
    "lng": 4.930925,
-   "geo": "auto"
+   "geo": "auto",
+   "osmChecked": 1790350720019
   },
   {
    "id": "ams-yerba",
@@ -269,11 +278,12 @@
    ],
    "url": "https://www.yerbabar.com/",
    "visited": true,
-   "updatedAt": 1790347522812,
+   "updatedAt": 1790350721700,
    "address": "Ruysdaelstraat 48, 1071 XE Amsterdam",
    "lat": 52.354095,
    "lng": 4.883216,
-   "geo": "auto"
+   "geo": "auto",
+   "osmChecked": 1790350721700
   },
   {
    "id": "ams-taiko-conservatorium-hotel",
@@ -284,11 +294,13 @@
    "tags": [],
    "url": "https://www.taikocuisine.com/nl/restaurant/",
    "visited": false,
-   "updatedAt": 1790347524230,
+   "updatedAt": 1790350723134,
    "address": "Paulus Potterstraat 50, 1071 DB Amsterdam",
    "lat": 52.358605,
    "lng": 4.878529,
-   "geo": "auto"
+   "geo": "auto",
+   "hours": "Mo-Th 17:00-23:59; Fr-Sa 17:00-01:00",
+   "osmChecked": 1790350723134
   },
   {
    "id": "ams-the-duchess",
