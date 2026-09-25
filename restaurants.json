@@ -708,11 +708,14 @@
    ],
    "url": "https://www.restaurantpalladio.nl/",
    "visited": true,
-   "updatedAt": 1790349867349,
+   "updatedAt": 1790350752013,
    "address": "Elandsgracht 64, 1016 TX Amsterdam",
    "lat": 52.369941,
    "lng": 4.881156,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 20 627 7442",
+   "hours": "Mo-Sa 15:00-22:00; Su off",
+   "osmChecked": 1790350752013
   },
   {
    "id": "ams-assaggi",
@@ -725,11 +728,12 @@
    ],
    "url": "https://www.assaggi.nl/",
    "visited": true,
-   "updatedAt": 1790349867757,
+   "updatedAt": 1790350753176,
    "address": "Tweede Egelantiersdwarsstraat 6, 1015 SC Amsterdam",
    "lat": 52.37682,
    "lng": 4.881944,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350753176
   },
   {
    "id": "ams-incanto",
@@ -744,11 +748,14 @@
    ],
    "url": "https://www.restaurant-incanto.nl/",
    "visited": false,
-   "updatedAt": 1790349868168,
+   "updatedAt": 1790350754896,
    "address": "Amstel 2, 1017 AA Amsterdam",
    "lat": 52.367002,
    "lng": 4.893876,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 20 4233681",
+   "hours": "Mo-Sa 17:30-00:00",
+   "osmChecked": 1790350754896
   },
   {
    "id": "utr-wilhelminapark",
@@ -761,11 +768,12 @@
    ],
    "url": "https://www.wilhelminapark.nl/",
    "visited": false,
-   "updatedAt": 1790349868386,
+   "updatedAt": 1790350756131,
    "address": "Wilhelminapark 65, 3581 NP Utrecht",
    "lat": 52.087097,
    "lng": 5.140937,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350756131
   },
   {
    "id": "utr-concours",
