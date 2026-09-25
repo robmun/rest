@@ -27,8 +27,11 @@
    "tags": [],
    "url": "https://westervilla.nl/restaurant/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Haarlemmerweg 369, 1051 LH Amsterdam"
+   "updatedAt": 1790347337054,
+   "address": "Haarlemmerweg 369, 1051 LH Amsterdam",
+   "lat": 52.384541,
+   "lng": 4.861822,
+   "geo": "auto"
   },
   {
    "id": "ams-cafe-parlotte",
@@ -39,8 +42,11 @@
    "tags": [],
    "url": "https://www.parlotte.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Westerstraat 182, Amsterdam"
+   "updatedAt": 1790347338355,
+   "address": "Westerstraat 182, Amsterdam",
+   "lat": 52.378276,
+   "lng": 4.881742,
+   "geo": "auto"
   },
   {
    "id": "ams-wils",
@@ -51,8 +57,11 @@
    "tags": [],
    "url": "https://www.restaurantwils.nl/homenl",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Stadionplein 26, 1076 CM Amsterdam"
+   "updatedAt": 1790347339858,
+   "address": "Stadionplein 26, 1076 CM Amsterdam",
+   "lat": 52.343394,
+   "lng": 4.856157,
+   "geo": "auto"
   },
   {
    "id": "ams-auberge-jean-marie",
@@ -63,8 +72,11 @@
    "tags": [],
    "url": "http://www.aubergeamsterdam.nl/",
    "visited": true,
-   "updatedAt": 1790347067470,
-   "address": "Albert Cuypstraat 58, Amsterdam"
+   "updatedAt": 1790347507581,
+   "address": "Albert Cuypstraat 58, Amsterdam",
+   "lat": 52.354633,
+   "lng": 4.889228,
+   "geo": "auto"
   },
   {
    "id": "ams-beulings",
