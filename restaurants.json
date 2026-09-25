@@ -482,11 +482,14 @@
    ],
    "url": "https://www.restaurantmontblanc.nl/",
    "visited": true,
-   "updatedAt": 1790347539706,
+   "updatedAt": 1790350736349,
    "address": "Govert Flinckstraat 308, Amsterdam",
    "lat": 52.356326,
    "lng": 4.898765,
-   "geo": "auto"
+   "geo": "auto",
+   "phone": "+31 20 7741645",
+   "hours": "Tu-Sa 19:00-23:30",
+   "osmChecked": 1790350736349
   },
   {
    "id": "ams-secret-garden",
@@ -499,11 +502,13 @@
    ],
    "url": "https://www.secretgardenamsterdam.com/",
    "visited": true,
-   "updatedAt": 1790347541045,
+   "updatedAt": 1790350737676,
    "address": "Reguliersdwarsstraat 38, 1017 BM Amsterdam",
    "lat": 52.366265,
    "lng": 4.8911,
-   "geo": "auto"
+   "geo": "auto",
+   "phone": "+31 20 247 4060",
+   "osmChecked": 1790350737676
   },
   {
    "id": "ams-gent-aan-de-schinkel",
@@ -517,11 +522,12 @@
    ],
    "url": "https://www.gentaandeschinkel.nl/",
    "visited": true,
-   "updatedAt": 1790348720864,
+   "updatedAt": 1790350739006,
    "address": "Theophile de Bockstraat 1, 1058 TV Amsterdam",
    "lat": 52.354691,
    "lng": 4.852942,
-   "geo": "auto"
+   "geo": "auto",
+   "osmChecked": 1790350739006
   },
   {
    "id": "ams-pllek",
@@ -535,11 +541,13 @@
    ],
    "url": "https://pllek.nl/",
    "visited": false,
-   "updatedAt": 1790349864626,
+   "updatedAt": 1790350740441,
    "address": "TT. Neveritaweg 59, 1033 WB Amsterdam",
    "lat": 52.399209,
    "lng": 4.892851,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 20 290 0020",
+   "osmChecked": 1790350740441
   },
   {
    "id": "ams-scheepskameel",
@@ -550,11 +558,12 @@
    "tags": [],
    "url": "https://scheepskameel.nl/",
    "visited": false,
-   "updatedAt": 1790349864964,
+   "updatedAt": 1790350741644,
    "address": "Kattenburgerstraat 5, 1018 JA Amsterdam",
    "lat": 52.371804,
    "lng": 4.916275,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350741644
   },
   {
    "id": "ams-badcuyp",
@@ -565,11 +574,13 @@
    "tags": [],
    "url": "https://badcuypamsterdam.nl/",
    "visited": false,
-   "updatedAt": 1790349865225,
+   "updatedAt": 1790350742843,
    "address": "Eerste Sweelinckstraat 10, 1073 CM Amsterdam",
    "lat": 52.356651,
    "lng": 4.897102,
-   "geo": "adres"
+   "geo": "adres",
+   "hours": "Mo-Sa 17:30-00:00",
+   "osmChecked": 1790350742843
   },
   {
    "id": "ams-cafe-restaurant-amsterdam",
@@ -582,11 +593,14 @@
    ],
    "url": "https://cradam.nl/",
    "visited": false,
-   "updatedAt": 1790349865485,
+   "updatedAt": 1790350744071,
    "address": "Watertorenplein 6, 1051 PA Amsterdam",
    "lat": 52.38422,
    "lng": 4.868215,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 20 682 2666",
+   "hours": "Mo-Th,Su 10:30-00:00; Fr-Sa 10:30-01:00",
+   "osmChecked": 1790350744071
   },
   {
    "id": "ams-george-marina",
@@ -599,11 +613,12 @@
    ],
    "url": "https://www.georgemarina.nl/",
    "visited": false,
-   "updatedAt": 1790349865812,
+   "updatedAt": 1790350745294,
    "address": "Spaklerweg 10A, 1096 BA Amsterdam",
    "lat": 52.341956,
    "lng": 4.918839,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350745294
   },
   {
    "id": "ams-bouillon-d-amsterdam",
