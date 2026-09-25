@@ -29,6 +29,11 @@ function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch
 const cached = lsGet(LS_DATA); if (cached && cached.data) store = cached;
 Object.assign(settings, lsGet(LS_SET) || {});
 Object.assign(ui, lsGet(LS_UI) || {});
+function fixSettings() {
+  if (!/^[\w.\/-]+\.json$/.test(settings.path || "")) settings.path = "restaurants.json";
+  if (!/^[\w.\/-]+$/.test(settings.branch || "")) settings.branch = "main";
+}
+fixSettings();
 const connected = () => !!(settings.owner && settings.repo && settings.token);
 
 /* Koppeling dubbel bewaren (localStorage + IndexedDB), zodat iOS hem niet kwijtraakt */
@@ -55,7 +60,7 @@ function saveSettings() {
 async function restoreSettings() {
   if (connected()) { idbSet("settings", settings); return; }
   const s = await idbGet("settings");
-  if (s && s.token) { Object.assign(settings, s); lsSet(LS_SET, settings); }
+  if (s && s.token) { Object.assign(settings, s); fixSettings(); lsSet(LS_SET, settings); }
 }
 
 function persist() { lsSet(LS_DATA, store); }
@@ -516,7 +521,6 @@ document.addEventListener("visibilitychange", () => { if (document.visibilitySta
 /* ---------------- settings ---------------- */
 function openSettings() {
   $("sOwner").value = settings.owner; $("sRepo").value = settings.repo;
-  $("sBranch").value = settings.branch || "main"; $("sPath").value = settings.path || "restaurants.json";
   $("sToken").value = settings.token;
   $("sErr").hidden = true; $("sOk").hidden = true;
   if (connected()) { $("sOk").hidden = false; $("sOk").textContent = syncState.text; }
@@ -528,7 +532,7 @@ $("setForm").addEventListener("submit", async e => {
   e.preventDefault();
   const next = {
     owner: $("sOwner").value.trim(), repo: $("sRepo").value.trim(),
-    branch: $("sBranch").value.trim() || "main", path: $("sPath").value.trim().replace(/^\/+/, "") || "restaurants.json",
+    branch: "main", path: "restaurants.json",
     token: $("sToken").value.trim()
   };
   $("sErr").hidden = true; $("sOk").hidden = true;
