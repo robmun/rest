@@ -159,12 +159,11 @@ function renderNotice() {
 
 /* ---------------- map ---------------- */
 let map = null, cluster = null, markers = new Map(), meMarker = null, lastFitCity = null;
-const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 function tileLayer() {
-  const style = darkQuery.matches ? "dark_all" : "rastertiles/voyager";
-  return L.tileLayer(`https://{s}.basemaps.cartocdn.com/${style}/{z}/{x}/{y}{r}.png`, {
-    maxZoom: 19, subdomains: "abcd",
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  // Standaardkaart van OpenStreetMap (geen sleutel nodig); in donkere modus via CSS gedimd
+  return L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19, className: "osm-tiles",
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   });
 }
 function pinIcon(cls) { return L.divIcon({ className: "", html: `<div class="pin ${cls}"><i></i></div>`, iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -26] }); }
@@ -173,9 +172,8 @@ function initMap() {
   if (map || typeof L === "undefined") return;
   const a = area(ui.city);
   map = L.map("map", { zoomControl: true, attributionControl: true }).setView(a.center, a.zoom);
-  let tiles = tileLayer().addTo(map);
-  darkQuery.addEventListener("change", () => { map.removeLayer(tiles); tiles = tileLayer().addTo(map); });
-  cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 40, spiderfyOnMaxZoom: true, disableClusteringAtZoom: 16 });
+  tileLayer().addTo(map);
+    cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 40, spiderfyOnMaxZoom: true, disableClusteringAtZoom: 16 });
   map.addLayer(cluster);
   renderMarkers();
 }
