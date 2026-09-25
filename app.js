@@ -520,8 +520,10 @@ $("importFile").onchange = async e => {
 
 /* ---------------- start ---------------- */
 async function boot() {
+  // Altijd openen op de kaart van Amsterdam
+  ui.city = "Amsterdam"; lsSet(LS_UI, ui);
   render();
-  setView(ui.view === "map" ? "map" : "list");
+  setView("map");
   await sync();
   queueGeocoding();
 }

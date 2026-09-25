@@ -1,6 +1,6 @@
 {
-  "name": "Tafels",
-  "short_name": "Tafels",
+  "name": "my fav restaurants",
+  "short_name": "my fav restaurants",
   "description": "Mijn favoriete restaurants, met kaart",
   "lang": "nl",
   "start_url": "./",
