@@ -27,7 +27,10 @@
    "tags": [],
    "url": "https://westervilla.nl/restaurant/",
    "visited": false,
-   "updatedAt": 1790300000000
+   "updatedAt": 1790317979636,
+   "lat": 52.384541,
+   "lng": 4.861822,
+   "geo": "auto"
   },
   {
    "id": "ams-cafe-parlotte",
@@ -38,7 +41,10 @@
    "tags": [],
    "url": "https://www.parlotte.nl/",
    "visited": false,
-   "updatedAt": 1790300000001
+   "updatedAt": 1790317981001,
+   "lat": 52.378256,
+   "lng": 4.881758,
+   "geo": "auto"
   },
   {
    "id": "ams-wils",
@@ -49,7 +55,10 @@
    "tags": [],
    "url": "https://www.restaurantwils.nl/homenl",
    "visited": false,
-   "updatedAt": 1790300000002
+   "updatedAt": 1790317982456,
+   "lat": 52.343394,
+   "lng": 4.856157,
+   "geo": "auto"
   },
   {
    "id": "ams-auberge-jean-marie",
@@ -60,7 +69,10 @@
    "tags": [],
    "url": "http://www.aubergeamsterdam.nl/",
    "visited": true,
-   "updatedAt": 1790300000003
+   "updatedAt": 1790317983681,
+   "lat": 52.354644,
+   "lng": 4.889264,
+   "geo": "auto"
   },
   {
    "id": "ams-beulings",
@@ -73,7 +85,10 @@
    ],
    "url": "https://www.beulings.nl/en/",
    "visited": false,
-   "updatedAt": 1790300000004
+   "updatedAt": 1790317984886,
+   "lat": 52.367986,
+   "lng": 4.887686,
+   "geo": "auto"
   },
   {
    "id": "ams-shaffy-voorheen-felix",
