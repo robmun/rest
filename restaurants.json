@@ -119,8 +119,11 @@
    "tags": [],
    "url": "https://cafeschiller.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Rembrandtplein 24A, 1017 CV Amsterdam"
+   "updatedAt": 1790347511800,
+   "address": "Rembrandtplein 24A, 1017 CV Amsterdam",
+   "lat": 52.365674,
+   "lng": 4.896587,
+   "geo": "auto"
   },
   {
    "id": "ams-cantine-de-caron",
@@ -134,8 +137,11 @@
    ],
    "url": "https://cantinedecaron.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Pazzanistraat 8, Amsterdam"
+   "updatedAt": 1790347513034,
+   "address": "Pazzanistraat 8, Amsterdam",
+   "lat": 52.38629,
+   "lng": 4.872817,
+   "geo": "auto"
   },
   {
    "id": "ams-cantine-petit-caron",
@@ -149,8 +155,11 @@
    ],
    "url": "https://petitcaron.nl/",
    "visited": true,
-   "updatedAt": 1790347067470,
-   "address": "Frans Halsstraat 26H, 1072 BR Amsterdam"
+   "updatedAt": 1790347514935,
+   "address": "Frans Halsstraat 26H, 1072 BR Amsterdam",
+   "lat": 52.357777,
+   "lng": 4.888766,
+   "geo": "auto"
   },
   {
    "id": "ams-cafe-restaurant-stork",
@@ -163,8 +172,11 @@
    ],
    "url": "https://restaurantstork.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Gedempt Hamerkanaal 201, 1021 KP Amsterdam"
+   "updatedAt": 1790347516198,
+   "address": "Gedempt Hamerkanaal 201, 1021 KP Amsterdam",
+   "lat": 52.382062,
+   "lng": 4.920205,
+   "geo": "auto"
   },
   {
    "id": "ams-mos",
@@ -177,8 +189,11 @@
    ],
    "url": "https://mosamsterdam.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "IJdok 185, Amsterdam"
+   "updatedAt": 1790347517409,
+   "address": "IJdok 185, Amsterdam",
+   "lat": 52.383796,
+   "lng": 4.895503,
+   "geo": "auto"
   },
   {
    "id": "ams-rakang",
