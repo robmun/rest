@@ -883,7 +883,10 @@
    "tags": [],
    "url": "https://stadsjochies.nl/",
    "visited": false,
-   "updatedAt": 1790310000015
+   "updatedAt": 1790318068156,
+   "lat": 52.07376,
+   "lng": 5.141518,
+   "geo": "auto"
   },
   {
    "id": "utr-paloma",
@@ -894,7 +897,10 @@
    "tags": [],
    "url": "https://paloma-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790310000016
+   "updatedAt": 1790318070160,
+   "lat": 52.09008,
+   "lng": 5.117084,
+   "geo": "auto"
   },
   {
    "id": "utr-de-rechtbank",
@@ -905,7 +911,10 @@
    "tags": [],
    "url": "https://www.derechtbank.com/",
    "visited": false,
-   "updatedAt": 1790310000017
+   "updatedAt": 1790318072164,
+   "lat": 52.089046,
+   "lng": 5.122645,
+   "geo": "auto"
   },
   {
    "id": "utr-pastoe-foodbar",
@@ -918,7 +927,10 @@
    ],
    "url": "https://www.pastoe-foodbar.nl/",
    "visited": true,
-   "updatedAt": 1790310000018
+   "updatedAt": 1790318075167,
+   "lat": 52.074363,
+   "lng": 5.120344,
+   "geo": "auto"
   },
   {
    "id": "utr-leen",
@@ -929,7 +941,10 @@
    "tags": [],
    "url": "https://leen-restaurant.nl/",
    "visited": false,
-   "updatedAt": 1790310000019
+   "updatedAt": 1790318077158,
+   "lat": 52.123235,
+   "lng": 5.08963,
+   "geo": "auto"
   },
   {
    "id": "utr-restaurant-watertoren",
