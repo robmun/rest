@@ -1082,11 +1082,14 @@
    "tags": [],
    "url": "https://www.derechtbank.com/",
    "visited": false,
-   "updatedAt": 1790349873349,
+   "updatedAt": 1790350778554,
    "address": "Korte Nieuwstraat 14, 3512 NM Utrecht",
    "lat": 52.08908,
    "lng": 5.122609,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 233 0030",
+   "hours": "Mo-We 06:30-00:00; Th-Fr 06:30-01:00; Sa 07:30-01:00; Su 07:30-00:00",
+   "osmChecked": 1790350778554
   },
   {
    "id": "utr-pastoe-foodbar",
@@ -1099,11 +1102,14 @@
    ],
    "url": "https://www.pastoe-foodbar.nl/",
    "visited": true,
-   "updatedAt": 1790349873575,
+   "updatedAt": 1790350779968,
    "address": "Rotsoord 7A, 3523 CL Utrecht",
    "lat": 52.074363,
    "lng": 5.120344,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 4004080",
+   "hours": "Mo-Su 11:30-00:30",
+   "osmChecked": 1790350779968
   },
   {
    "id": "utr-leen",
@@ -1114,11 +1120,12 @@
    "tags": [],
    "url": "https://leen-restaurant.nl/",
    "visited": false,
-   "updatedAt": 1790349873871,
+   "updatedAt": 1790350781292,
    "address": "Heuveloord 140, Utrecht",
    "lat": 52.07521,
    "lng": 5.121432,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350781292
   },
   {
    "id": "utr-restaurant-watertoren",
@@ -1131,11 +1138,12 @@
    ],
    "url": "https://watertorenutrecht.nl/",
    "visited": false,
-   "updatedAt": 1790349874086,
+   "updatedAt": 1790350782490,
    "address": "Heuveloord 25A, 3523 CK Utrecht",
    "lat": 52.07555,
    "lng": 5.1208,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350782490
   },
   {
    "id": "kan-dengh",
@@ -1148,11 +1156,13 @@
    ],
    "url": "https://dengh.nl/restaurant-utrecht/",
    "visited": false,
-   "updatedAt": 1790349874395,
+   "updatedAt": 1790350783666,
    "address": "Enghlaan 17, 3543 BD Utrecht",
    "lat": 52.108215,
    "lng": 5.034767,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 303 9252",
+   "osmChecked": 1790350783666
   },
   {
    "id": "kan-vineyard-food-drinks",
@@ -1165,11 +1175,12 @@
    ],
    "url": "https://vineyardfoodanddrinks.nl/locaties/vineyard-food-drinks-utrecht/",
    "visited": false,
-   "updatedAt": 1790349874618,
+   "updatedAt": 1790350784965,
    "address": "Atoomweg 63, 3542 AA Utrecht",
    "lat": 52.116158,
    "lng": 5.055132,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350784965
   },
   {
    "id": "kan-buiten-bij-de-sluis",
@@ -1182,11 +1193,14 @@
    ],
    "url": "https://www.buitenbijdesluis.nl/",
    "visited": false,
-   "updatedAt": 1790349874927,
+   "updatedAt": 1790350786214,
    "address": "Oude Vleutenseweg 2, 3541 BE Utrecht",
    "lat": 52.096125,
    "lng": 5.076328,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 3036 467",
+   "hours": "We,Th 11:30-22:00; Fr,Sa 11:30-24:00; Su 11:30-21:00",
+   "osmChecked": 1790350786214
   },
   {
    "id": "kan-bar-brasserie-de-blend",
@@ -1199,11 +1213,12 @@
    ],
    "url": "https://deblend.nl/",
    "visited": false,
-   "updatedAt": 1790349875155,
+   "updatedAt": 1790350787588,
    "address": "Vleutensevaart 100, 3532 AD Utrecht",
    "lat": 52.09496,
    "lng": 5.081222,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350787588
   },
   {
    "id": "kan-fort-de-gagel",
