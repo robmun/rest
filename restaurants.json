@@ -656,7 +656,10 @@
    ],
    "url": "https://www.wilhelminapark.nl/",
    "visited": false,
-   "updatedAt": 1790310000000
+   "updatedAt": 1790318040787,
+   "lat": 52.088341,
+   "lng": 5.140572,
+   "geo": "auto"
   },
   {
    "id": "utr-concours",
@@ -669,7 +672,10 @@
    ],
    "url": "https://restaurantconcours.nl/restaurant",
    "visited": false,
-   "updatedAt": 1790310000001
+   "updatedAt": 1790318042054,
+   "lat": 52.094979,
+   "lng": 5.127497,
+   "geo": "auto"
   },
   {
    "id": "utr-goesting",
@@ -680,7 +686,10 @@
    "tags": [],
    "url": "https://www.restaurantgoesting.nl/",
    "visited": false,
-   "updatedAt": 1790310000002
+   "updatedAt": 1790318043382,
+   "lat": 52.098498,
+   "lng": 5.137371,
+   "geo": "auto"
   },
   {
    "id": "utr-cantina-di-david",
@@ -693,7 +702,10 @@
    ],
    "url": "https://cantinadidavid.nl/",
    "visited": false,
-   "updatedAt": 1790310000003
+   "updatedAt": 1790318044704,
+   "lat": 52.093941,
+   "lng": 5.116807,
+   "geo": "auto"
   },
   {
    "id": "utr-bistro-madeleine",
