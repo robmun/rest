@@ -414,7 +414,10 @@
    ],
    "url": "https://www.restaurantmontblanc.nl/",
    "visited": true,
-   "updatedAt": 1790300000026
+   "updatedAt": 1790318018516,
+   "lat": 52.293406,
+   "lng": 4.868092,
+   "geo": "auto"
   },
   {
    "id": "ams-secret-garden",
@@ -427,7 +430,10 @@
    ],
    "url": "https://www.secretgardenamsterdam.com/",
    "visited": true,
-   "updatedAt": 1790300000027
+   "updatedAt": 1790318020276,
+   "lat": 52.366262,
+   "lng": 4.891168,
+   "geo": "auto"
   },
   {
    "id": "ams-gent-aan-de-schinkel",
@@ -441,7 +447,8 @@
    ],
    "url": "https://www.gentaandeschinkel.nl/",
    "visited": true,
-   "updatedAt": 1790300000028
+   "updatedAt": 1790318024055,
+   "geoFailed": true
   },
   {
    "id": "ams-pllek",
@@ -455,7 +462,10 @@
    ],
    "url": "https://pllek.nl/",
    "visited": false,
-   "updatedAt": 1790300000029
+   "updatedAt": 1790318025297,
+   "lat": 52.398863,
+   "lng": 4.892902,
+   "geo": "auto"
   },
   {
    "id": "ams-scheepskameel",
@@ -466,8 +476,11 @@
    "tags": [],
    "url": "https://scheepskameel.nl/",
    "visited": false,
-   "updatedAt": 1790300000030,
-   "address": "Kattenburgerstraat 5"
+   "updatedAt": 1790318026593,
+   "address": "Kattenburgerstraat 5",
+   "lat": 52.375501,
+   "lng": 4.914274,
+   "geo": "auto"
   },
   {
    "id": "ams-badcuyp",
