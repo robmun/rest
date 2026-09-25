@@ -786,11 +786,14 @@
    ],
    "url": "https://restaurantconcours.nl/restaurant",
    "visited": false,
-   "updatedAt": 1790349868733,
+   "updatedAt": 1790350757333,
    "address": "Biltstraat 20, Utrecht",
    "lat": 52.095232,
    "lng": 5.127543,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 223 1158",
+   "hours": "Mo-Th 18:00-23:00; Fr-Sa 12:00-14:00,18:00-23:00",
+   "osmChecked": 1790350757333
   },
   {
    "id": "utr-goesting",
@@ -801,11 +804,14 @@
    "tags": [],
    "url": "https://www.restaurantgoesting.nl/",
    "visited": false,
-   "updatedAt": 1790349868941,
+   "updatedAt": 1790350758515,
    "address": "Veeartsenijpad 150, Utrecht",
    "lat": 52.098498,
    "lng": 5.137371,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 273 3346",
+   "hours": "Mo-Su 12:00-24:00",
+   "osmChecked": 1790350758515
   },
   {
    "id": "utr-cantina-di-david",
@@ -818,11 +824,14 @@
    ],
    "url": "https://cantinadidavid.nl/",
    "visited": false,
-   "updatedAt": 1790349869398,
+   "updatedAt": 1790350759800,
    "address": "Oudegracht aan de Werf 88, 3511 AV Utrecht",
    "lat": 52.093957,
    "lng": 5.116839,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 236 84 36",
+   "hours": "Mo-Su 17:00-22:00",
+   "osmChecked": 1790350759800
   },
   {
    "id": "utr-bistro-madeleine",
@@ -835,11 +844,12 @@
    ],
    "url": "https://www.madeleine-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790349869680,
+   "updatedAt": 1790350761228,
    "address": "Wed 3A, Utrecht",
    "lat": 52.08986,
    "lng": 5.121672,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350761228
   },
   {
    "id": "utr-sea-salt-saloon",
@@ -852,11 +862,14 @@
    ],
    "url": "https://seasaltsaloon.nl/",
    "visited": false,
-   "updatedAt": 1790349869921,
+   "updatedAt": 1790350762971,
    "address": "Wed 3, Utrecht",
    "lat": 52.089835,
    "lng": 5.121539,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 234 0460",
+   "hours": "Mo 17:00-00:00; Tu-Su 12:00-00:00",
+   "osmChecked": 1790350762971
   },
   {
    "id": "utr-broadway",
@@ -870,11 +883,13 @@
    ],
    "url": "https://www.steaksandribs.nl/",
    "visited": false,
-   "updatedAt": 1790349870316,
+   "updatedAt": 1790350764152,
    "address": "Oudegracht aan de Werf 139, 3511 AL Utrecht",
    "lat": 52.091574,
    "lng": 5.117487,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 231 2643",
+   "osmChecked": 1790350764152
   },
   {
    "id": "utr-ruby-rose",
@@ -887,11 +902,13 @@
    ],
    "url": "https://rubyrose-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790349870553,
+   "updatedAt": 1790350765356,
    "address": "Korte Jansstraat 23, Utrecht",
    "lat": 52.092861,
    "lng": 5.122037,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 304 5248",
+   "osmChecked": 1790350765356
   },
   {
    "id": "utr-humphreys",
@@ -902,11 +919,12 @@
    "tags": [],
    "url": "https://www.humphreys.nl/restaurants/humphreys-utrecht",
    "visited": false,
-   "updatedAt": 1790349870811,
+   "updatedAt": 1790350766615,
    "address": "Stadhuisbrug 3, 3511 KP Utrecht",
    "lat": 52.09156,
    "lng": 5.11984,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350766615
   },
   {
    "id": "utr-hemel-aarde",
