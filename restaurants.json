@@ -26,8 +26,8 @@
    "notes": "",
    "tags": [],
    "url": "https://westervilla.nl/restaurant/",
-   "visited": false,
-   "updatedAt": 1790350703506,
+   "visited": true,
+   "updatedAt": 1790350750000,
    "address": "Haarlemmerweg 369, 1051 LH Amsterdam",
    "lat": 52.384541,
    "lng": 4.861822,
@@ -633,11 +633,14 @@
    ],
    "url": "https://www.bouillondamsterdam.nl/",
    "visited": true,
-   "updatedAt": 1790349866120,
+   "updatedAt": 1790350746478,
    "address": "Nieuwezijds Voorburgwal 176, 1012 SJ Amsterdam",
    "lat": 52.374125,
    "lng": 4.890771,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 20 227 9889",
+   "hours": "Mo-Su 12:00-23:00",
+   "osmChecked": 1790350746478
   },
   {
    "id": "ams-helling-7",
@@ -650,11 +653,12 @@
    ],
    "url": "https://www.helling7.nl/",
    "visited": true,
-   "updatedAt": 1790349866425,
+   "updatedAt": 1790350748123,
    "address": "TT. Melissaweg 57, 1033 SP Amsterdam",
    "lat": 52.40591,
    "lng": 4.885003,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350748123
   },
   {
    "id": "ams-pianeta-terra",
@@ -667,11 +671,12 @@
    ],
    "url": "https://www.pianetaterra.nl/",
    "visited": false,
-   "updatedAt": 1790349866733,
+   "updatedAt": 1790350749400,
    "address": "Beulingstraat 7, 1017 BA Amsterdam",
    "lat": 52.36801,
    "lng": 4.887771,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350749400
   },
   {
    "id": "ams-toscanini",
@@ -684,11 +689,13 @@
    ],
    "url": "https://restauranttoscanini.nl/",
    "visited": false,
-   "updatedAt": 1790349867055,
+   "updatedAt": 1790350750580,
    "address": "Lindengracht 75, 1015 KD Amsterdam",
    "lat": 52.380178,
    "lng": 4.885372,
-   "geo": "adres"
+   "geo": "adres",
+   "hours": "Mo-Th 18:00-23:00; Su off; Fr,Sa 12:00-14:30,18:00-24:00",
+   "osmChecked": 1790350750580
   },
   {
    "id": "ams-palladio",
