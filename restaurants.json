@@ -352,8 +352,11 @@
    "tags": [],
    "url": "https://bistrotneuf.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Haarlemmerstraat 9, 1013 JG Amsterdam"
+   "updatedAt": 1790347532336,
+   "address": "Haarlemmerstraat 9, 1013 JG Amsterdam",
+   "lat": 52.379378,
+   "lng": 4.893771,
+   "geo": "auto"
   },
   {
    "id": "ams-de-juwelier",
@@ -364,8 +367,11 @@
    "tags": [],
    "url": "https://www.restaurant-dejuwelier.nl/restaurantdejuwelier",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Utrechtsestraat 51, 1017 VJ Amsterdam"
+   "updatedAt": 1790347533827,
+   "address": "Utrechtsestraat 51, 1017 VJ Amsterdam",
+   "lat": 52.364256,
+   "lng": 4.898276,
+   "geo": "auto"
   },
   {
    "id": "ams-212",
@@ -376,8 +382,11 @@
    "tags": [],
    "url": "https://212.amsterdam/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Amstel 212, 1017 AH Amsterdam"
+   "updatedAt": 1790347535726,
+   "address": "Amstel 212, 1017 AH Amsterdam",
+   "lat": 52.365878,
+   "lng": 4.90026,
+   "geo": "auto"
   },
   {
    "id": "ams-de-plantage",
@@ -390,8 +399,11 @@
    ],
    "url": "https://www.caferestaurantdeplantage.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Plantage Kerklaan 36, 1018 CZ Amsterdam"
+   "updatedAt": 1790347537059,
+   "address": "Plantage Kerklaan 36, 1018 CZ Amsterdam",
+   "lat": 52.366585,
+   "lng": 4.912559,
+   "geo": "auto"
   },
   {
    "id": "ams-gebr-hartering",
@@ -404,8 +416,11 @@
    ],
    "url": "https://www.gebr-hartering.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Peperstraat 10, Amsterdam"
+   "updatedAt": 1790347538355,
+   "address": "Peperstraat 10, Amsterdam",
+   "lat": 52.371644,
+   "lng": 4.907476,
+   "geo": "auto"
   },
   {
    "id": "ams-mont-blanc",
