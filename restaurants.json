@@ -957,7 +957,8 @@
    ],
    "url": "https://watertorenutrecht.nl/",
    "visited": false,
-   "updatedAt": 1790310000020
+   "updatedAt": 1790318081155,
+   "geoFailed": true
   },
   {
    "id": "kan-dengh",
@@ -970,7 +971,10 @@
    ],
    "url": "https://dengh.nl/restaurant-utrecht/",
    "visited": false,
-   "updatedAt": 1790310000021
+   "updatedAt": 1790318083165,
+   "lat": 52.108215,
+   "lng": 5.034767,
+   "geo": "auto"
   },
   {
    "id": "kan-vineyard-food-drinks",
@@ -983,7 +987,10 @@
    ],
    "url": "https://vineyardfoodanddrinks.nl/locaties/vineyard-food-drinks-utrecht/",
    "visited": false,
-   "updatedAt": 1790310000022
+   "updatedAt": 1790318085161,
+   "lat": 52.116163,
+   "lng": 5.055365,
+   "geo": "auto"
   },
   {
    "id": "kan-buiten-bij-de-sluis",
@@ -996,7 +1003,10 @@
    ],
    "url": "https://www.buitenbijdesluis.nl/",
    "visited": false,
-   "updatedAt": 1790310000023
+   "updatedAt": 1790318087162,
+   "lat": 52.096125,
+   "lng": 5.076328,
+   "geo": "auto"
   },
   {
    "id": "kan-bar-brasserie-de-blend",
