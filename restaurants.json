@@ -937,11 +937,14 @@
    ],
    "url": "https://www.hemel-aarde.nl/",
    "visited": false,
-   "updatedAt": 1790349871138,
+   "updatedAt": 1790350767773,
    "address": "Keistraat 8, 3512 HV Utrecht",
    "lat": 52.092293,
    "lng": 5.122962,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 880 4500",
+   "hours": "Th-Sa 12:00-16:00,18:00-00:00",
+   "osmChecked": 1790350767773
   },
   {
    "id": "utr-tiger-mama",
@@ -954,11 +957,12 @@
    ],
    "url": "https://tigermama.nl/",
    "visited": false,
-   "updatedAt": 1790349871355,
+   "updatedAt": 1790350768989,
    "address": "Voorstraat 80, Utrecht",
    "lat": 52.09522,
    "lng": 5.122078,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350768989
   },
   {
    "id": "utr-streetfood-club",
@@ -969,11 +973,13 @@
    "tags": [],
    "url": "https://www.thestreetfoodclub.nl/",
    "visited": false,
-   "updatedAt": 1790349871592,
+   "updatedAt": 1790350770283,
    "address": "Janskerkhof 9, Utrecht",
    "lat": 52.092993,
    "lng": 5.122153,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 304 5241",
+   "osmChecked": 1790350770283
   },
   {
    "id": "utr-djakarta",
@@ -986,11 +992,13 @@
    ],
    "url": "https://djakarta.nl/",
    "visited": false,
-   "updatedAt": 1790349871840,
+   "updatedAt": 1790350771458,
    "address": "Lucasbolwerk 19, 3512 EH Utrecht",
    "lat": 52.0943,
    "lng": 5.125856,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 231 9101",
+   "osmChecked": 1790350771458
   },
   {
    "id": "utr-cafe-olivier",
@@ -1003,11 +1011,13 @@
    ],
    "url": "https://www.cafe-olivier.be/nl/",
    "visited": false,
-   "updatedAt": 1790349872063,
+   "updatedAt": 1790350772655,
    "address": "Achter Clarenburg 6A, 3511 JJ Utrecht",
    "lat": 52.090465,
    "lng": 5.115674,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 236 7876",
+   "osmChecked": 1790350772655
   },
   {
    "id": "utr-jasmijn-ik",
@@ -1020,11 +1030,14 @@
    ],
    "url": "https://jasmijnenik.nl/",
    "visited": false,
-   "updatedAt": 1790349872351,
+   "updatedAt": 1790350774540,
    "address": "Kanaalstraat 219, Utrecht",
    "lat": 52.09091,
    "lng": 5.094927,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 293 8907",
+   "hours": "Tu,We 17:30-23:00; Th-Sa 17:30-24:00",
+   "osmChecked": 1790350774540
   },
   {
    "id": "utr-stadsjochies",
@@ -1035,11 +1048,14 @@
    "tags": [],
    "url": "https://stadsjochies.nl/",
    "visited": false,
-   "updatedAt": 1790349872584,
+   "updatedAt": 1790350775738,
    "address": "Rijndijk 14, 3585 LG Utrecht",
    "lat": 52.073263,
    "lng": 5.141591,
-   "geo": "adres"
+   "geo": "adres",
+   "phone": "+31 30 307 4388",
+   "hours": "Tu-We 18:00-22:00; Th-Fr 11:00-22:00; Sa-Su 10:00-22:00",
+   "osmChecked": 1790350775738
   },
   {
    "id": "utr-paloma",
@@ -1050,11 +1066,12 @@
    "tags": [],
    "url": "https://paloma-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790349873082,
+   "updatedAt": 1790350776937,
    "address": "Mariaplaats 11, Utrecht",
    "lat": 52.090105,
    "lng": 5.117167,
-   "geo": "adres"
+   "geo": "adres",
+   "osmChecked": 1790350776937
   },
   {
    "id": "utr-de-rechtbank",
