@@ -810,8 +810,11 @@
    ],
    "url": "https://rubyrose-utrecht.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Korte Jansstraat 23, Utrecht"
+   "updatedAt": 1790349870553,
+   "address": "Korte Jansstraat 23, Utrecht",
+   "lat": 52.092861,
+   "lng": 5.122037,
+   "geo": "adres"
   },
   {
    "id": "utr-humphreys",
@@ -822,8 +825,11 @@
    "tags": [],
    "url": "https://www.humphreys.nl/restaurants/humphreys-utrecht",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Stadhuisbrug 3, 3511 KP Utrecht"
+   "updatedAt": 1790349870811,
+   "address": "Stadhuisbrug 3, 3511 KP Utrecht",
+   "lat": 52.09156,
+   "lng": 5.11984,
+   "geo": "adres"
   },
   {
    "id": "utr-hemel-aarde",
@@ -836,8 +842,11 @@
    ],
    "url": "https://www.hemel-aarde.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Keistraat 8, 3512 HV Utrecht"
+   "updatedAt": 1790349871138,
+   "address": "Keistraat 8, 3512 HV Utrecht",
+   "lat": 52.092293,
+   "lng": 5.122962,
+   "geo": "adres"
   },
   {
    "id": "utr-tiger-mama",
@@ -850,8 +859,11 @@
    ],
    "url": "https://tigermama.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Voorstraat 80, Utrecht"
+   "updatedAt": 1790349871355,
+   "address": "Voorstraat 80, Utrecht",
+   "lat": 52.09522,
+   "lng": 5.122078,
+   "geo": "adres"
   },
   {
    "id": "utr-streetfood-club",
@@ -862,8 +874,11 @@
    "tags": [],
    "url": "https://www.thestreetfoodclub.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Janskerkhof 9, Utrecht"
+   "updatedAt": 1790349871592,
+   "address": "Janskerkhof 9, Utrecht",
+   "lat": 52.092993,
+   "lng": 5.122153,
+   "geo": "adres"
   },
   {
    "id": "utr-djakarta",
@@ -876,8 +891,11 @@
    ],
    "url": "https://djakarta.nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Lucasbolwerk 19, 3512 EH Utrecht"
+   "updatedAt": 1790349871840,
+   "address": "Lucasbolwerk 19, 3512 EH Utrecht",
+   "lat": 52.0943,
+   "lng": 5.125856,
+   "geo": "adres"
   },
   {
    "id": "utr-cafe-olivier",
@@ -890,8 +908,11 @@
    ],
    "url": "https://www.cafe-olivier.be/nl/",
    "visited": false,
-   "updatedAt": 1790347067470,
-   "address": "Achter Clarenburg 6A, 3511 JJ Utrecht"
+   "updatedAt": 1790349872063,
+   "address": "Achter Clarenburg 6A, 3511 JJ Utrecht",
+   "lat": 52.090465,
+   "lng": 5.115674,
+   "geo": "adres"
   },
   {
    "id": "utr-jasmijn-ik",
