@@ -813,7 +813,7 @@ function fillCities(sel) {
   $("fCity").value = sel; $("newCityWrap").hidden = true;
 }
 function setDraftPin(pos, fly) {
-  draftPos = pos;
+  draftPos = pos; setTimeout(renderQuickSummary, 0);
   if (!miniMap) return;
   if (!pos) { if (miniMarker) { miniMap.removeLayer(miniMarker); miniMarker = null; } return; }
   if (!miniMarker) miniMarker = L.marker([pos.lat, pos.lng], { icon: pinIcon("draft") }).addTo(miniMap);
@@ -863,8 +863,10 @@ function openSheet(item) {
       else { miniMap.setView(a.center, a.zoom); setDraftPin(null); }
     }, 60);
   }
-  $("quickWrap").hidden = !!item; $("fLink").value = ""; $("linkHint").hidden = true;
-  if (!item) setTimeout(() => $("fName").focus(), 80);
+  $("quickWrap").hidden = !!item; $("fLink").value = ""; $("linkHint").hidden = true; updateLinkBtn();
+  $("sheet").classList.toggle("qmode", !item); dupOk = false;
+  renderQuickSummary();
+  if (!item) $("fLink").focus();
 }
 function showSheet(id) { $("scrim").hidden = false; $(id).hidden = false; $(id).scrollTop = 0; }
 function closeSheets() { $("scrim").hidden = true; $("sheet").hidden = true; $("settings").hidden = true; $("exportSheet").hidden = true; $("visitSheet").hidden = true; editing = null; }
@@ -947,6 +949,7 @@ async function pickSuggestion(f) {
     (x.cuisine || "").split(";").map(s => CUISINE[s.trim()]).filter(Boolean).forEach(t => formTags.add(t));
     renderTagPick();
   } catch (e) {}
+  renderQuickSummary();
 }
 $("fName").addEventListener("input", () => {
   if (editing) return;
@@ -1059,6 +1062,7 @@ async function applyOsm(tags, lat, lng) {
     setDraftPin({ lat: +(+lat).toFixed(6), lng: +(+lng).toFixed(6), manual: false, geo: "osm" }, true);
     if (!addr || !(tags["addr:postcode"] || tags["addr:city"])) { try { const a = await pdokReverse(lat, lng); if (a) $("fAddress").value = a; } catch (e) {} }
   }
+  renderQuickSummary();
 }
 function linkHint(t) { const h = $("linkHint"); h.textContent = t; h.hidden = !t; }
 function guessName(host) {
@@ -1068,7 +1072,10 @@ function guessName(host) {
 }
 async function fillFromLink() {
   let raw = $("fLink").value.trim();
-  if (!raw) { linkHint("Plak eerst een link."); return; }
+  if (!raw) { linkHint("Plak een link of typ een naam."); return; }
+  if (!/^https?:\/\//i.test(raw) && !/^[\w-]+(\.[\w-]+)+(\/\S*)?$/.test(raw)) {   // gewone tekst: zoeken op naam
+    $("fName").value = raw; linkHint(""); await suggest(raw); renderQuickSummary(); return;
+  }
   if (!/^https?:\/\//i.test(raw)) raw = "https://" + raw;
   let u; try { u = new URL(raw); } catch (e) { linkHint("Dit is geen geldige link."); return; }
   const host = u.hostname.replace(/^www\./, "").toLowerCase();
@@ -1109,9 +1116,60 @@ async function fillFromLink() {
       linkHint(els === null ? "Automatisch opzoeken lukt nu niet. Kies hieronder de juiste zaak of vul het zelf aan."
         : "Deze website staat niet in OpenStreetMap. Kies hieronder de juiste zaak, of vul naam en adres zelf aan.");
     }
-  } finally { btn.disabled = false; btn.textContent = "Invullen"; }
+  } finally { btn.disabled = false; updateLinkBtn(); renderQuickSummary(); }
 }
-$("linkBtn").onclick = fillFromLink;
+function updateLinkBtn() { $("linkBtn").textContent = $("fLink").value.trim() ? "Zoek" : "Plak"; }
+$("linkBtn").onclick = async () => {
+  if (!$("fLink").value.trim() && navigator.clipboard && navigator.clipboard.readText) {
+    try { const t = (await navigator.clipboard.readText()).trim(); if (t) { $("fLink").value = t; updateLinkBtn(); } } catch (e) {}
+    if (!$("fLink").value.trim()) { $("fLink").focus(); linkHint("Plak een link of typ een naam in het veld."); return; }
+  }
+  fillFromLink();
+};
+let quickTimer = null;
+$("fLink").addEventListener("input", () => {
+  updateLinkBtn();
+  const v = $("fLink").value.trim();
+  clearTimeout(quickTimer);
+  if (!v) { hideSuggest(); return; }
+  if (/^https?:\/\//i.test(v) || /^[\w-]+(\.[\w-]+)+(\/\S*)?$/.test(v)) return;   // link: wacht op plakken of Zoek
+  $("fName").value = v; renderQuickSummary();
+  if (v.length >= 3) quickTimer = setTimeout(() => suggest(v), 300);
+});
+$("form").addEventListener("input", e => { if (e.target.id !== "fLink") renderQuickSummary(); });
+$("moreBtn").onclick = () => {
+  $("sheet").classList.remove("qmode");
+  setTimeout(() => { if (miniMap) { miniMap.invalidateSize(); if (draftPos) miniMap.setView([draftPos.lat, draftPos.lng], 16); } }, 30);
+  $("fNotes").focus({ preventScroll: true });
+};
+let dupOk = false;
+function findDuplicate() {
+  const name = $("fName").value.trim(); if (!name) return null;
+  const n = norm(cleanName(name));
+  return visible().find(i => (!editing || i.id !== editing.id) && (norm(cleanName(i.name)) === n ||
+    (draftPos && i.lat != null && distM([i.lat, i.lng], [draftPos.lat, draftPos.lng]) < 60 && (norm(i.name).includes(n) || n.includes(norm(cleanName(i.name)))))));
+}
+function renderQuickSummary() {
+  const box = $("qSummary");
+  const name = $("fName").value.trim();
+  if (!$("sheet").classList.contains("qmode") || !name) { box.hidden = true; return; }
+  const url = $("fUrl").value.trim(), tel = $("fPhone").value.trim(), hrs = $("fHours").value.trim(), adr = $("fAddress").value.trim();
+  const st = hrs ? hoursStatus({ hours: hrs }) : null;
+  const chk = (ok, label, val) => el("li", { class: ok ? "ok" : "no" }, el("span", { class: "ck", text: ok ? "✓" : "–" }), el("b", { text: label }), el("span", { text: val }));
+  const kinds = [...formTags].join(", ");
+  box.replaceChildren(...[
+    el("h3", { text: name }),
+    el("p", { class: adr ? "addr" : "addr muted", text: adr || "Adres wordt na opslaan opgezocht" }),
+    el("ul", { class: "checks" },
+      chk(!!url, "Website", url ? hostOf(url) : "niet gevonden"),
+      chk(!!tel, "Telefoon", tel || "niet gevonden"),
+      chk(!!st, "Openingstijden", st ? st.text : hrs ? hrs : "niet gevonden"),
+      chk(!!draftPos, "Locatie", draftPos ? "op de kaart" : "wordt na opslaan gezocht"),
+      kinds ? chk(true, "Keuken", kinds) : null),
+    (() => { const d = findDuplicate(); return d ? el("p", { class: "dup" }, "Staat al in je lijst. ",
+      el("button", { type: "button", class: "linkbtn", onclick: () => { closeSheets(); setView("map"); showOnMap(d.id); } }, "Bekijk")) : null; })()].filter(Boolean));
+  box.hidden = false;
+}
 $("fLink").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); fillFromLink(); } });
 $("fLink").addEventListener("paste", () => setTimeout(fillFromLink, 50));
 $("fName").addEventListener("paste", e => {
@@ -1125,7 +1183,9 @@ function fixUrl(u) { u = u.trim(); if (!u) return ""; if (!/^https?:\/\//i.test(
 $("form").addEventListener("submit", e => {
   e.preventDefault();
   const name = $("fName").value.trim();
-  if (!name) { showErr("Vul een naam in."); $("fName").focus(); return; }
+  if (!name) { showErr($("sheet").classList.contains("qmode") ? "Plak een link of typ een naam." : "Vul een naam in."); ($("sheet").classList.contains("qmode") ? $("fLink") : $("fName")).focus(); return; }
+  const dup = !editing && findDuplicate();
+  if (dup && !dupOk) { dupOk = true; showErr(`${dup.name} staat al in je lijst. Tik nogmaals op Opslaan om hem toch toe te voegen.`); return; }
   let c = $("fCity").value;
   if (c === "__new") { c = $("fNewCity").value.trim(); if (!c) { showErr("Geef de nieuwe lijst een naam."); return; } }
   if ($("fNewTag").value.trim()) addTagFromInput();

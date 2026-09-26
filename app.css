@@ -349,3 +349,22 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;display
 .row-stars{flex:none;font-size:12px;font-weight:700;color:var(--mark);white-space:nowrap}
 input[type=date]{min-height:44px}
 .visit b.nodate{color:var(--muted);font-weight:600}
+
+/* ===== Snel toevoegen ===== */
+.sheet.qmode #form > :not(.q-keep){display:none}
+.sheet:not(.qmode) #moreBtn{display:none}
+.sheet.qmode .quick{background:transparent;padding:0}
+.sheet.qmode #fLink{font-size:17px;padding:13px 14px}
+#linkBtn{min-width:64px}
+.q-summary{border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px;background:var(--surface)}
+.q-summary h3{margin:0;font:700 22px/1.15 var(--display);letter-spacing:-.01em}
+.q-summary .addr{margin:0;font-size:15px}
+.checks{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:5px}
+.checks li{display:grid;grid-template-columns:22px 136px 1fr;align-items:baseline;font-size:14px}
+.checks li b{font-weight:600}
+.checks li span:last-child{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.checks .ck{font-weight:800}
+.checks .ok .ck{color:var(--open)}
+.checks .no .ck{color:var(--muted)}
+.more-btn{align-self:center;border:0;background:none;color:var(--accent);font-weight:600;font-size:14px;padding:6px}
+.dup{margin:6px 0 0;padding:8px 10px;border-radius:10px;background:var(--mark-soft);font-size:14px}

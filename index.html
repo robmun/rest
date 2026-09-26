@@ -108,17 +108,17 @@
     </button>
   </div>
   <form id="form" novalidate>
-    <div class="group quick" id="quickWrap">
-      <span class="lbl">Snel toevoegen via een link</span>
+    <div class="group quick q-keep" id="quickWrap">
       <div class="inline">
-        <input id="fLink" type="url" inputmode="url" autocomplete="off" autocapitalize="off" placeholder="Plak een website- of Google Maps-link" aria-label="Link">
-        <button type="button" id="linkBtn">Invullen</button>
+        <input id="fLink" autocomplete="off" autocapitalize="off" autocorrect="off" enterkeyhint="search" placeholder="Link of naam van restaurant" aria-label="Link of naam">
+        <button type="button" id="linkBtn">Plak</button>
       </div>
+      <div class="suggest" id="suggest" role="listbox" aria-label="Suggesties" hidden></div>
       <p class="hint" id="linkHint" hidden></p>
     </div>
+    <div class="q-summary q-keep" id="qSummary" hidden></div>
     <div class="group">
       <label class="f">Naam<input id="fName" required autocomplete="off" autocorrect="off" placeholder="Typ een naam, bijv. Rakang"></label>
-      <div class="suggest" id="suggest" role="listbox" aria-label="Suggesties" hidden></div>
     </div>
     <label class="f">Adres<input id="fAddress" autocomplete="off" placeholder="Bijv. Elandsgracht 29, Amsterdam (mag leeg, dan zoekt de app zelf)"></label>
     <label class="f">Website<input id="fUrl" type="url" inputmode="url" autocomplete="off" placeholder="https://"></label>
@@ -142,11 +142,12 @@
       <div id="miniMap" class="mini-map"></div>
       <p class="hint" id="pinHint">Tik op de kaart om de pin te zetten of te verplaatsen.</p>
     </div>
-    <p class="err" id="fErr" hidden></p>
-    <div class="actions">
+    <p class="err q-keep" id="fErr" hidden></p>
+    <div class="actions q-keep">
       <button type="button" class="del" id="delBtn" hidden>Verwijderen</button>
       <button type="submit" class="primary" id="saveBtn">Opslaan</button>
     </div>
+    <button type="button" class="more-btn q-keep" id="moreBtn">Meer gegevens (notitie, kenmerken, pin)</button>
   </form>
 </div>
 
