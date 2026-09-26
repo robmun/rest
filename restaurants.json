@@ -1396,6 +1396,17 @@
    "geo": "osm",
    "updatedAt": 1790374414609,
    "osmChecked": 1790374414609
+  },
+  {
+   "id": "cafe-restaurant-de-ysbreeker-muhut22p",
+   "createdAt": 1790394749378,
+   "name": "Café Restaurant De Ysbreeker",
+   "url": "https://www.deysbreeker.nl/",
+   "city": "Amsterdam",
+   "notes": "Lekker aan de amster",
+   "tags": [],
+   "visited": true,
+   "updatedAt": 1790394749378
   }
  ]
 }
