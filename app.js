@@ -208,9 +208,7 @@ function render() {
 
   renderList();
 
-  const inspo = (store.data.inspiration || []).filter(x => (!x.city || ui.city === ALL || x.city === ui.city) && safeUrl(x.url));
-  $("inspo").hidden = !inspo.length;
-  $("inspo").replaceChildren(el("h2", { text: "Inspiratie" }), ...inspo.map(x => el("a", { href: x.url, target: "_blank", rel: "noopener" }, x.label || x.url)));
+  if (!inspoAdding) renderInspo();   // niet verversen terwijl je een link aan het invoeren bent
 
   renderNotice();
   renderSync();
@@ -294,6 +292,51 @@ function row(i) {
       i.notes ? el("p", { class: "row-note", text: i.notes }) : null));
 }
 
+/* ---------------- inspiratie: links toevoegen en verwijderen ---------------- */
+let inspoAdding = false, inspoArmed = null;
+function saveInspo(list) {
+  store.data.inspiration = list; store.data.inspirationAt = now();
+  store.dirty = true; persist(); renderInspo(); scheduleSync();
+}
+function renderInspo() {
+  const list = (store.data.inspiration || []).filter(x => safeUrl(x.url));
+  const box = $("inspo");
+  box.hidden = READONLY && !list.length;
+  const rows = list.map((x, k) => el("div", { class: "inspo-row" },
+    el("a", { href: x.url, target: "_blank", rel: "noopener" }, x.label || hostOf(x.url)),
+    READONLY ? null : el("button", { type: "button", class: "inspo-del" + (inspoArmed === k ? " armed" : ""), "aria-label": "Verwijder " + (x.label || x.url),
+      onclick: () => {
+        if (inspoArmed !== k) { inspoArmed = k; renderInspo(); return; }
+        inspoArmed = null; saveInspo(list.filter((_, n) => n !== k)); toast("Link verwijderd");
+      } }, inspoArmed === k ? "Verwijder" : svgIcon("close", 12))));
+  let adder = null;
+  if (!READONLY) {
+    if (!inspoAdding) adder = el("button", { type: "button", class: "linkbtn inspo-add", onclick: () => { inspoAdding = true; renderInspo(); setTimeout(() => $("inspoUrl") && $("inspoUrl").focus(), 50); } }, "+ Link toevoegen");
+    else {
+      const f = el("form", { class: "inspo-form", novalidate: "" },
+        el("input", { id: "inspoUrl", type: "url", inputmode: "url", placeholder: "Plak een link", autocomplete: "off", autocapitalize: "off", "aria-label": "Link" }),
+        el("input", { id: "inspoLabel", placeholder: "Titel (optioneel)", autocomplete: "off", "aria-label": "Titel" }),
+        el("p", { class: "err", id: "inspoErr", hidden: "" }),
+        el("div", { class: "inline" },
+          el("button", { type: "submit", class: "solid-btn" }, "Toevoegen"),
+          el("button", { type: "button", onclick: () => { inspoAdding = false; renderInspo(); } }, "Annuleer")));
+      f.addEventListener("submit", e => {
+        e.preventDefault();
+        let u = $("inspoUrl").value.trim();
+        if (u && !/^https?:\/\//i.test(u)) u = "https://" + u;
+        if (!safeUrl(u)) { const er = $("inspoErr"); er.textContent = "Vul een geldige link in."; er.hidden = false; return; }
+        inspoAdding = false;
+        saveInspo([...list, { label: $("inspoLabel").value.trim() || hostOf(u), url: u }]);
+        toast("Link toegevoegd");
+      });
+      adder = f;
+    }
+  }
+  box.replaceChildren(...[el("h2", { text: "Inspiratie" }), ...rows,
+    !list.length && !READONLY && !inspoAdding ? el("p", { class: "hint", text: "Bewaar hier links naar lijstjes en tips die je later wilt bekijken." }) : null,
+    adder].filter(Boolean));
+  if (inspoAdding) { addClearButton($("inspoUrl")); addClearButton($("inspoLabel")); }
+}
 function renderNotice() { $("notice").hidden = true; }
 
 /* ---------------- restaurantkaart onderin ---------------- */
@@ -478,11 +521,15 @@ $("filterBtn").onclick = () => {
 $("q").addEventListener("focus", () => closePlace());
 $("sortSel").onchange = e => { ui.sort = e.target.value; lsSet(LS_UI, ui); render(); $("listView").scrollTop = 0; };
 // Kop inklappen bij naar beneden scrollen in de lijst
-let lastScroll = 0;
+let lastScroll = 0, scrollLock = 0;
 $("listView").addEventListener("scroll", () => {
-  const y = $("listView").scrollTop, app = document.querySelector(".app");
-  if (y > 80 && y > lastScroll + 6) app.classList.add("collapsed");
-  else if (y < 40 || y < lastScroll - 12) app.classList.remove("collapsed");
+  const y = $("listView").scrollTop, app = document.querySelector(".app"), t = performance.now();
+  if (t < scrollLock) { lastScroll = y; return; }             // negeer het verspringen door het in-/uitklappen zelf
+  const collapsed = app.classList.contains("collapsed");
+  let next = collapsed;
+  if (!collapsed && y > 80 && y > lastScroll + 6) next = true;
+  else if (collapsed && (y < 20 || y < lastScroll - 30)) next = false;
+  if (next !== collapsed) { app.classList.toggle("collapsed", next); scrollLock = t + 450; }
   lastScroll = y;
 }, { passive: true });
 
@@ -967,7 +1014,7 @@ async function ghPut(data, sha) {
 }
 function merge(remote, local) {
   const out = { ...remote, cities: [...new Set([...(remote.cities || []), ...(local.cities || [])])] };
-  if (!out.inspiration || !out.inspiration.length) out.inspiration = local.inspiration || [];
+  if ((local.inspirationAt || 0) > (remote.inspirationAt || 0) || !out.inspiration) { out.inspiration = local.inspiration || []; out.inspirationAt = local.inspirationAt; }
   const m = new Map();
   (remote.items || []).forEach(i => m.set(i.id, i));
   (local.items || []).forEach(i => { const r = m.get(i.id); if (!r || (i.updatedAt || 0) > (r.updatedAt || 0)) m.set(i.id, i); });

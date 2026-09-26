@@ -312,3 +312,13 @@ main.card-open .locate,main.card-open .nopin{display:none}
 .search .clear-x{right:0}
 input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
 .inline .clearwrap .clear-x{padding:0;border:0;border-radius:50%;width:24px;height:24px;background:color-mix(in srgb,var(--muted) 22%,transparent);font-size:0}
+
+/* ===== Inspiratie bewerken ===== */
+.inspo-row{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)}
+.inspo-row a{min-width:0;overflow-wrap:anywhere}
+.inspo-del{flex:none;border:0;border-radius:999px;min-width:26px;height:26px;padding:0 6px;display:grid;place-items:center;background:color-mix(in srgb,var(--muted) 18%,transparent);color:var(--muted);font-size:12px;font-weight:700}
+.inspo-del.armed{background:var(--danger-soft);color:var(--danger);padding:0 10px}
+.inspo-add{align-self:flex-start;margin-top:6px}
+.inspo-form{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.inspo-form input{font-size:16px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 12px;width:100%}
+.solid-btn{background:var(--accent)!important;color:var(--accent-ink)!important;border-color:var(--accent)!important}
