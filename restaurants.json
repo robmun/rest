@@ -1451,6 +1451,23 @@
    "geo": "osm",
    "updatedAt": 1790396016536,
    "osmChecked": 1790396016536
+  },
+  {
+   "id": "de-buren-muhvl5xi",
+   "createdAt": 1790396060742,
+   "name": "De Buren",
+   "url": "https://deburenbussum.nl/",
+   "city": "Bussum",
+   "notes": "Met Heiko en Ninette geweest",
+   "address": "Kapelstraat 8, 1404HX Bussum",
+   "phone": "+31 85 4021207",
+   "hours": "We-Th 12:00-23:30; Fr-Sa 12:00-01:00",
+   "tags": [],
+   "visited": true,
+   "lat": 52.274807,
+   "lng": 5.164473,
+   "geo": "osm",
+   "updatedAt": 1790396060742
   }
  ]
 }
