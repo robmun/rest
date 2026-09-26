@@ -1154,6 +1154,27 @@ $("expForm").addEventListener("submit", async e => {
   } finally { btn.disabled = false; btn.textContent = "Exporteer"; }
 });
 
+
+/* ---------------- kruisje om een veld in één keer leeg te maken ---------------- */
+function addClearButton(input) {
+  if (!input || input.closest(".clearwrap")) return;
+  if (!input.placeholder) input.placeholder = " ";
+  const wrap = el("span", { class: "clearwrap" + (input.tagName === "TEXTAREA" ? " is-area" : "") });
+  input.parentNode.insertBefore(wrap, input);
+  wrap.append(input);
+  const b = el("button", { type: "button", class: "clear-x", "aria-label": "Veld leegmaken", tabindex: "-1" });
+  b.append(svgIcon("close", 12));
+  b.addEventListener("mousedown", e => e.preventDefault());
+  b.addEventListener("click", () => {
+    input.value = "";
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+    input.focus();
+  });
+  wrap.append(b);
+}
+document.querySelectorAll('#q, #form input:not([type=checkbox]):not([type=radio]), #form textarea').forEach(addClearButton);
+
 /* ---------------- start ---------------- */
 async function boot() {
   // Altijd openen op de kaart met alle restaurants
