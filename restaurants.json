@@ -1560,6 +1560,22 @@
    "updatedAt": 1790396538727,
    "osmChecked": 1790396351961,
    "addrChecked": true
+  },
+  {
+   "id": "de-eendracht-in-vonk-muhvvsu4",
+   "createdAt": 1790396556990,
+   "name": "De Eendracht in Vonk",
+   "url": "https://deeendracht-bussum.nl/",
+   "city": "Bussum",
+   "notes": "",
+   "address": "Nassaulaan 43, 1404CM Bussum",
+   "phone": "+31 35 2057211",
+   "tags": [],
+   "visited": true,
+   "lat": 52.274928,
+   "lng": 5.159707,
+   "geo": "osm",
+   "updatedAt": 1790396556990
   }
  ]
 }
