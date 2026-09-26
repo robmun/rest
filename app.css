@@ -322,3 +322,13 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;display
 .inspo-form{display:flex;flex-direction:column;gap:8px;margin-top:8px}
 .inspo-form input{font-size:16px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 12px;width:100%}
 .solid-btn{background:var(--accent)!important;color:var(--accent-ink)!important;border-color:var(--accent)!important}
+
+/* ===== Tik op de kaart om toe te voegen ===== */
+.tap-dot{fill:var(--accent);fill-opacity:.35;stroke:var(--accent);stroke-width:2}
+@media (prefers-reduced-motion: no-preference){ .tap-dot{animation:tapPulse 1s ease-out infinite alternate} @keyframes tapPulse{to{fill-opacity:.1}} }
+.cands{display:flex;flex-direction:column;gap:6px}
+.cand{display:grid;grid-template-columns:1fr auto;grid-template-areas:"n go" "s go";gap:1px 10px;align-items:center;text-align:left;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:10px 12px}
+.cand-name{grid-area:n;font:600 16px/1.2 var(--display)}
+.cand-sub{grid-area:s;font-size:13px;color:var(--muted)}
+.cand-go{grid-area:go;font-size:13px;font-weight:700;color:var(--accent-ink);background:var(--accent);border-radius:999px;padding:6px 12px}
+.cand.have .cand-go{background:var(--accent-soft);color:var(--accent)}

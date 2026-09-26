@@ -415,7 +415,7 @@ function openPlace(id) {
   markers.forEach((m, mid) => { const e = m.getElement(); if (e) e.classList.toggle("selected", mid === id); });
 }
 function closePlace() {
-  placeId = null;
+  placeId = null; tapSeq++; clearTap();
   document.querySelectorAll("#list .row.active").forEach(r => r.classList.remove("active"));
   $("place").hidden = true; $("main").classList.remove("card-open");
   markers.forEach(m => { const e = m.getElement(); if (e) e.classList.remove("selected"); });
@@ -447,7 +447,14 @@ function initMap() {
   map.addLayer(cluster);
   map.on("zoomend", updateLabels);
   map.on("moveend", () => { if (!$("mapView").hidden) { viewBounds = map.getBounds(); renderList(); } });
-  map.on("click", () => { closePlace(); document.querySelector(".app").classList.remove("filters-open"); $("filterBtn").setAttribute("aria-expanded", "false"); });
+  map.on("click", e => {
+    const app = document.querySelector(".app");
+    const hadOverlay = !$("place").hidden || app.classList.contains("filters-open");
+    closePlace(); app.classList.remove("filters-open"); $("filterBtn").setAttribute("aria-expanded", "false");
+    if (hadOverlay || READONLY) return;
+    if (map.getZoom() < 16) { if (!zoomHintShown) { zoomHintShown = true; toast("Zoom verder in en tik op een restaurant om het toe te voegen"); } return; }
+    lookupAt(e.latlng);
+  });
   updateLabels();
   renderMarkers();
 }
@@ -858,6 +865,72 @@ $("fName").addEventListener("input", () => {
 $("fName").addEventListener("blur", () => setTimeout(() => { $("suggest").hidden = true; }, 200));
 $("fName").addEventListener("focus", () => { if ($("suggest").children.length && !editing) $("suggest").hidden = false; });
 
+/* ---------------- tik op de kaart: restaurant op die plek toevoegen ---------------- */
+let tapMarker = null, tapSeq = 0, zoomHintShown = false;
+async function overpassAround(lat, lng, r = 45) {
+  const q = `[out:json][timeout:12];nwr(around:${r},${lat},${lng})["amenity"~"^(restaurant|cafe|bar|pub|fast_food|biergarten|food_court|ice_cream)$"]["name"];out center tags 10;`;
+  for (const base of ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]) {
+    try {
+      const r2 = await fetch(base, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "Content-Type": "application/x-www-form-urlencoded" } });
+      if (!r2.ok) continue;
+      return (await r2.json()).elements || [];
+    } catch (e) {}
+  }
+  return null;
+}
+function clearTap() { if (tapMarker && map) { map.removeLayer(tapMarker); } tapMarker = null; }
+function existingNear(name, lat, lng) {
+  const n = norm(cleanName(name));
+  return visible().find(i => i.lat != null && distM([i.lat, i.lng], [lat, lng]) < 250 && (norm(i.name).includes(n) || n.includes(norm(cleanName(i.name)))));
+}
+function renderCandidates(state, list) {
+  placeId = null;
+  const box = $("place");
+  const rows = (list || []).map(c => {
+    const t = c.tags, cc = c.center || { lat: c.lat, lon: c.lon };
+    const have = existingNear(t.name, cc.lat, cc.lon);
+    const adr = [[t["addr:street"], t["addr:housenumber"]].filter(Boolean).join(" "), t["addr:city"]].filter(Boolean).join(", ");
+    const kind = { restaurant: "Restaurant", cafe: "Café", bar: "Bar", pub: "Kroeg", fast_food: "Snackbar", biergarten: "Biertuin", food_court: "Foodhal", ice_cream: "IJssalon" }[t.amenity] || "";
+    return el("button", { type: "button", class: "cand" + (have ? " have" : ""), onclick: () => have ? (clearTap(), openPlace(have.id)) : addFromOsm(c) },
+      el("span", { class: "cand-name", text: t.name }),
+      el("span", { class: "cand-sub", text: have ? "Staat al in je lijst" : [kind, adr].filter(Boolean).join(" · ") }),
+      el("span", { class: "cand-go", text: have ? "Bekijk" : "Toevoegen" }));
+  });
+  const msg = state === "loading" ? "Zoeken wat hier zit…"
+    : state === "error" ? "Opzoeken lukt nu niet. Probeer het zo nog eens, of voeg het toe met +."
+    : !rows.length ? "Geen restaurant gevonden op deze plek. Tik precies op het restaurant, of voeg het toe met +." : null;
+  box.replaceChildren(...[
+    el("div", { class: "place-head" },
+      el("div", { class: "place-title" }, el("h3", { text: rows.length > 1 ? "Welk restaurant?" : "Restaurant op de kaart" })),
+      el("button", { type: "button", class: "x", "aria-label": "Sluiten", onclick: closePlace }, svgIcon("close", 16))),
+    msg ? el("p", { class: "addr", text: msg }) : null,
+    rows.length ? el("div", { class: "cands" }, ...rows) : null].filter(Boolean));
+  box.hidden = false; $("main").classList.add("card-open");
+}
+async function lookupAt(latlng) {
+  const seq = ++tapSeq;
+  clearTap();
+  tapMarker = L.circleMarker(latlng, { radius: 9, className: "tap-dot", interactive: false }).addTo(map);
+  renderCandidates("loading");
+  const els = await overpassAround(latlng.lat, latlng.lng);
+  if (seq !== tapSeq) return;
+  if (els === null) { renderCandidates("error"); return; }
+  const list = els.map(e => ({ ...e, _d: distM([(e.center || e).lat, (e.center || e).lon], [latlng.lat, latlng.lng]) }))
+    .sort((a, b) => a._d - b._d).slice(0, 5);
+  renderCandidates("done", list);
+}
+function addFromOsm(c) {
+  const t = c.tags, cc = c.center || { lat: c.lat, lon: c.lon };
+  closePlace(); clearTap();
+  openSheet(null);
+  setTimeout(async () => {
+    await applyOsm(t, cc.lat, cc.lon);
+    const site = t.website || t["contact:website"];
+    if (site && !$("fUrl").value.trim()) $("fUrl").value = /^https?:/i.test(site) ? site : "https://" + site;
+    linkHint("Gegevens overgenomen van de kaart. Vul eventueel een notitie in en tik op Opslaan.");
+  }, 180);
+}
+
 /* ---------------- toevoegen via een link (website of Google Maps) ---------------- */
 const escRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 async function overpassByWebsite(host) {
@@ -891,7 +964,7 @@ async function applyOsm(tags, lat, lng) {
   setTown(tags["addr:city"]);
   if (lat != null) {
     setDraftPin({ lat: +(+lat).toFixed(6), lng: +(+lng).toFixed(6), manual: false, geo: "osm" }, true);
-    if (!addr) { try { const a = await pdokReverse(lat, lng); if (a) $("fAddress").value = a; } catch (e) {} }
+    if (!addr || !(tags["addr:postcode"] || tags["addr:city"])) { try { const a = await pdokReverse(lat, lng); if (a) $("fAddress").value = a; } catch (e) {} }
   }
 }
 function linkHint(t) { const h = $("linkHint"); h.textContent = t; h.hidden = !t; }
