@@ -1433,6 +1433,23 @@
    "geo": "osm",
    "updatedAt": 1790395943037,
    "osmChecked": 1790395943037
+  },
+  {
+   "id": "therapy-muhvk4kb",
+   "createdAt": 1790396012315,
+   "name": "Therapy",
+   "url": "https://restauranttherapy.nl/",
+   "city": "Bussum",
+   "notes": "",
+   "address": "Kapelstraat 11, 1404HT Bussum",
+   "phone": "+31 35 7370422",
+   "hours": "Tu-Sa 17:00-00:00",
+   "tags": [],
+   "visited": true,
+   "lat": 52.274597,
+   "lng": 5.164749,
+   "geo": "osm",
+   "updatedAt": 1790396012315
   }
  ]
 }
