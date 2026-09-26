@@ -1406,7 +1406,8 @@
    "notes": "Lekker aan de amster",
    "tags": [],
    "visited": true,
-   "updatedAt": 1790394749378
+   "updatedAt": 1790394752819,
+   "geoFailed": true
   }
  ]
 }
