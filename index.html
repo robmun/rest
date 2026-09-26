@@ -106,10 +106,19 @@
     </button>
   </div>
   <form id="form" novalidate>
+    <div class="group quick" id="quickWrap">
+      <span class="lbl">Snel toevoegen via een link</span>
+      <div class="inline">
+        <input id="fLink" type="url" inputmode="url" autocomplete="off" autocapitalize="off" placeholder="Plak een website- of Google Maps-link" aria-label="Link">
+        <button type="button" id="linkBtn">Invullen</button>
+      </div>
+      <p class="hint" id="linkHint" hidden></p>
+    </div>
     <div class="group">
       <label class="f">Naam<input id="fName" required autocomplete="off" autocorrect="off" placeholder="Typ een naam, bijv. Rakang"></label>
       <div class="suggest" id="suggest" role="listbox" aria-label="Suggesties" hidden></div>
     </div>
+    <label class="f">Adres<input id="fAddress" autocomplete="off" placeholder="Bijv. Elandsgracht 29, Amsterdam (mag leeg, dan zoekt de app zelf)"></label>
     <label class="f">Website<input id="fUrl" type="url" inputmode="url" autocomplete="off" placeholder="https://"></label>
     <label class="f">Telefoon<input id="fPhone" type="tel" autocomplete="off" placeholder="Bijv. 020 123 4567"></label>
     <label class="f">Openingstijden<input id="fHours" autocomplete="off" autocapitalize="off" placeholder="Bijv. di-za 17:30-22:00; zo 12:00-21:00"></label>
@@ -127,10 +136,7 @@
     <label class="check"><input type="checkbox" id="fVisited"> Hier ben ik al geweest</label>
     <div class="group">
       <span class="lbl">Locatie op de kaart</span>
-      <div class="inline">
-        <input id="fAddress" placeholder="Adres (optioneel, bijv. Elandsgracht 29)" autocomplete="off" aria-label="Adres">
-        <button type="button" id="findBtn">Zoek</button>
-      </div>
+      <button type="button" class="linkbtn" id="findBtn">Zet pin op het adres</button>
       <div id="miniMap" class="mini-map"></div>
       <p class="hint" id="pinHint">Tik op de kaart om de pin te zetten of te verplaatsen.</p>
     </div>

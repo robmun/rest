@@ -295,3 +295,7 @@ main.card-open .locate,main.card-open .nopin{display:none}
 .sort{margin-right:auto}
 .sort select{width:auto;max-width:190px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.quick{background:var(--accent-soft);border-radius:12px;padding:10px 12px}
+.quick .inline input{background:var(--surface)}
+.quick .hint{color:var(--ink)}
+#findBtn{align-self:flex-start}

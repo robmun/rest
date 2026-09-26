@@ -521,6 +521,22 @@ async function pdok(address) {
   const m = d && /POINT\(([-\d.]+) ([-\d.]+)\)/.exec(d.centroide_ll || "");
   return m ? { lat: +(+m[2]).toFixed(6), lng: +(+m[1]).toFixed(6), via: "adres" } : null;
 }
+const FOOD_RE = /^(restaurant|cafe|bar|pub|fast_food|biergarten|food_court|ice_cream|bistro)$/;
+async function photonSearch(q, center, limit = 12) {
+  const p = new URLSearchParams({ q, limit: String(limit) });
+  if (center) { p.set("lat", String(center[0])); p.set("lon", String(center[1])); }
+  const r = await fetch("https://photon.komoot.io/api/?" + p.toString());
+  if (!r.ok) throw new Error("photon " + r.status);
+  return ((await r.json()).features || []).filter(f => f.properties && f.properties.name && f.geometry);
+}
+async function pdokReverse(lat, lng) {
+  const p = new URLSearchParams({ lat: String(lat), lon: String(lng), type: "adres", rows: "1", fl: "weergavenaam,afstand" });
+  const r = await fetch("https://api.pdok.nl/bzk/locatieserver/search/v3_1/reverse?" + p.toString());
+  if (!r.ok) throw new Error("pdok " + r.status);
+  const d = (await r.json()).response.docs[0];
+  return d && (d.afstand == null || d.afstand < 80) ? d.weergavenaam.replace(/(\d{4})([A-Z]{2})/, "$1 $2") : null;
+}
+function distM(a, b) { const k = 111320; return Math.hypot((a[0] - b[0]) * k, (a[1] - b[1]) * k * Math.cos(a[0] * Math.PI / 180)); }
 async function geocode(i) {
   const a = area(i.city);
   if (i.address && /\d/.test(i.address)) {
@@ -530,6 +546,14 @@ async function geocode(i) {
       if (res) return res;
     } catch (e) {}
   }
+  // Geen (bruikbaar) adres: zoek de zaak op naam in OpenStreetMap, dat geeft ook het adres
+  try {
+    const a2 = area(i.city), feats = await photonSearch(cleanName(i.name), a2.center, 8);
+    const near = feats.filter(f => distM([f.geometry.coordinates[1], f.geometry.coordinates[0]], a2.center) < 25000);
+    const f = near.find(f => FOOD_RE.test(f.properties.osm_value)) || null;
+    await sleep(300);
+    if (f) { const [lng, lat] = f.geometry.coordinates; return { lat: +lat.toFixed(6), lng: +lng.toFixed(6), via: "osm", address: fmtAddress(f.properties) || null }; }
+  } catch (e) {}
   const tries = [];
   if (i.address) tries.push([`${i.address}, ${a.search}`, null]);
   tries.push([cleanName(i.name), a.viewbox]);
@@ -561,7 +585,7 @@ async function runGeo() {
         const res = await geocode(i);
         const cur = byId(id);
         if (cur && !cur.deleted && cur.lat == null) {
-          if (res) { cur.lat = res.lat; cur.lng = res.lng; cur.geo = res.via || "auto"; }
+          if (res) { cur.lat = res.lat; cur.lng = res.lng; cur.geo = res.via || "auto"; if (res.address && !cur.address) cur.address = res.address; }
           else cur.geoFailed = true;
           cur.updatedAt = now(); store.dirty = true; persist();
         }
@@ -590,6 +614,15 @@ async function runEnrich() {
   if (enrichRunning || geoRunning) return;
   enrichRunning = true;
   let changed = 0;
+  // Pin maar geen adres (bijv. zelf gezet): adres opzoeken bij de pin
+  for (const item of visible().filter(i => i.lat != null && !i.address && !i.revChecked)) {
+    let adr = null;
+    try { adr = await pdokReverse(item.lat, item.lng); } catch (e) { break; }
+    await sleep(150);
+    const cur = byId(item.id); if (!cur || cur.deleted) continue;
+    if (adr && !cur.address) cur.address = adr;
+    cur.revChecked = true; cur.updatedAt = now(); store.dirty = true; persist(); changed++;
+  }
   for (const item of visible().filter(i => i.lat != null && !i.osmChecked)) {
     let x = null;
     try { x = await osmNear(item); } catch (e) { break; }
@@ -599,6 +632,8 @@ async function runEnrich() {
       const tel = x.phone || x["contact:phone"];
       if (tel && !cur.phone) cur.phone = tel.split(";")[0].trim();
       if (x.opening_hours && !cur.hours && parseHours(x.opening_hours)) cur.hours = x.opening_hours;
+      const site = x.website || x["contact:website"];
+      if (site && !cur.url) cur.url = site;
     }
     cur.osmChecked = now(); cur.updatedAt = now(); store.dirty = true; persist(); changed++;
     if (changed % 8 === 0) { render(); scheduleSync(); }
@@ -672,6 +707,7 @@ function openSheet(item) {
       else { miniMap.setView(a.center, a.zoom); setDraftPin(null); }
     }, 60);
   }
+  $("quickWrap").hidden = !!item; $("fLink").value = ""; $("linkHint").hidden = true;
   if (!item) setTimeout(() => $("fName").focus(), 80);
 }
 function showSheet(id) { $("scrim").hidden = false; $(id).hidden = false; $(id).scrollTop = 0; }
@@ -691,10 +727,10 @@ $("findBtn").onclick = async () => {
   const b = $("findBtn"); b.disabled = true; b.textContent = "Zoeken…";
   try {
     const res = await geocode({ name: name || address, address, city: c });
-    if (res) { setDraftPin({ ...res, manual: false, geo: res.via || "auto" }, true); $("pinHint").textContent = "Gevonden. Klopt het niet? Tik op de juiste plek."; }
+    if (res) { setDraftPin({ ...res, manual: false, geo: res.via || "auto" }, true); if (res.address && !$("fAddress").value.trim()) $("fAddress").value = res.address; $("pinHint").textContent = "Gevonden. Klopt het niet? Tik op de juiste plek."; }
     else $("pinHint").textContent = "Niet gevonden. Probeer een adres, of tik zelf op de kaart.";
   } catch (e) { $("pinHint").textContent = "Zoeken lukt nu niet. Tik zelf op de kaart."; }
-  b.disabled = false; b.textContent = "Zoek";
+  b.disabled = false; b.textContent = "Zet pin op het adres";
 };
 /* ---------------- suggesties bij het typen van een naam (OpenStreetMap via Photon) ---------------- */
 const CUISINE = { italian: "Italiaans", pizza: "Italiaans", french: "Frans", thai: "Thais", asian: "Aziatisch", chinese: "Aziatisch",
@@ -739,11 +775,7 @@ async function pickSuggestion(f) {
   $("fName").value = pr.name;
   const addr = fmtAddress(pr); if (addr) $("fAddress").value = addr;
   const town = pr.city || pr.town || pr.village || "";
-  const sel = $("fCity");
-  if (town && sel.value !== "Kantoor") {
-    if (![...sel.options].some(o => o.value === town)) sel.prepend(el("option", { value: town }, town));
-    sel.value = town;
-  }
+  setTown(town);
   setDraftPin({ lat: +lat.toFixed(6), lng: +lng.toFixed(6), manual: false, geo: "osm" }, true);
   $("pinHint").textContent = "Adres en locatie ingevuld. Klopt de pin niet? Tik op de juiste plek.";
   // Website en keuken ophalen uit OpenStreetMap
@@ -769,6 +801,101 @@ $("fName").addEventListener("input", () => {
 });
 $("fName").addEventListener("blur", () => setTimeout(() => { $("suggest").hidden = true; }, 200));
 $("fName").addEventListener("focus", () => { if ($("suggest").children.length && !editing) $("suggest").hidden = false; });
+
+/* ---------------- toevoegen via een link (website of Google Maps) ---------------- */
+const escRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+async function overpassByWebsite(host) {
+  const h = escRe(host);
+  const q = `[out:json][timeout:25];area["ISO3166-1"="NL"][admin_level=2]->.nl;(nwr(area.nl)["website"~"${h}",i];nwr(area.nl)["contact:website"~"${h}",i];);out center tags 5;`;
+  for (const base of ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]) {
+    try {
+      const r = await fetch(base, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "Content-Type": "application/x-www-form-urlencoded" } });
+      if (!r.ok) continue;
+      return (await r.json()).elements || [];
+    } catch (e) {}
+  }
+  return null;
+}
+function setTown(town) {
+  const sel = $("fCity");
+  if (!town || sel.value === "Kantoor") return;
+  if (![...sel.options].some(o => o.value === town)) sel.prepend(el("option", { value: town }, town));
+  sel.value = town;
+}
+async function applyOsm(tags, lat, lng) {
+  if (tags.name) $("fName").value = tags.name;
+  const addr = [[tags["addr:street"], tags["addr:housenumber"]].filter(Boolean).join(" "),
+    [tags["addr:postcode"], tags["addr:city"]].filter(Boolean).join(" ")].filter(Boolean).join(", ");
+  if (addr) $("fAddress").value = addr;
+  const tel = tags.phone || tags["contact:phone"];
+  if (tel && !$("fPhone").value.trim()) $("fPhone").value = tel.split(";")[0].trim();
+  if (tags.opening_hours && !$("fHours").value.trim() && parseHours(tags.opening_hours)) $("fHours").value = tags.opening_hours;
+  (tags.cuisine || "").split(";").map(s => CUISINE[s.trim()]).filter(Boolean).forEach(t => formTags.add(t));
+  renderTagPick();
+  setTown(tags["addr:city"]);
+  if (lat != null) {
+    setDraftPin({ lat: +(+lat).toFixed(6), lng: +(+lng).toFixed(6), manual: false, geo: "osm" }, true);
+    if (!addr) { try { const a = await pdokReverse(lat, lng); if (a) $("fAddress").value = a; } catch (e) {} }
+  }
+}
+function linkHint(t) { const h = $("linkHint"); h.textContent = t; h.hidden = !t; }
+function guessName(host) {
+  let n = host.split(".")[0].replace(/^(restaurant|eetcafe|cafe|bistro|brasserie|bar|hotel)[-]?/i, "").replace(/[-_]?(restaurant|amsterdam|utrecht)$/i, "");
+  n = n.replace(/[-_]+/g, " ").trim();
+  return n ? n.charAt(0).toUpperCase() + n.slice(1) : host;
+}
+async function fillFromLink() {
+  let raw = $("fLink").value.trim();
+  if (!raw) { linkHint("Plak eerst een link."); return; }
+  if (!/^https?:\/\//i.test(raw)) raw = "https://" + raw;
+  let u; try { u = new URL(raw); } catch (e) { linkHint("Dit is geen geldige link."); return; }
+  const host = u.hostname.replace(/^www\./, "").toLowerCase();
+  const btn = $("linkBtn"); btn.disabled = true; btn.textContent = "Zoeken…"; linkHint("Even zoeken…");
+  try {
+    if (/^(maps\.app\.goo\.gl|goo\.gl)$/.test(host)) {
+      linkHint("Een korte Google Maps-link kan ik niet uitlezen. Typ de naam hieronder, dan krijg je suggesties.");
+      $("fName").focus(); return;
+    }
+    if (/(^|\.)google\.[a-z.]+$/.test(host) && /\/maps/.test(u.pathname) || host === "maps.google.com") {
+      const full = decodeURIComponent(u.href);
+      const pm = /\/place\/([^/]+)/.exec(u.pathname);
+      const c3 = /!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/.exec(full) || /@(-?\d+\.\d+),(-?\d+\.\d+)/.exec(full);
+      const name = pm ? decodeURIComponent(pm[1].replace(/\+/g, " ")) : (u.searchParams.get("q") || u.searchParams.get("query") || "");
+      if (!name) { linkHint("In deze Google Maps-link staat geen restaurant. Typ de naam hieronder."); return; }
+      $("fName").value = name;
+      if (c3) {
+        const lat = +c3[1], lng = +c3[2];
+        let feats = []; try { feats = await photonSearch(name, [lat, lng], 6); } catch (e) {}
+        const f = feats.find(f => distM([f.geometry.coordinates[1], f.geometry.coordinates[0]], [lat, lng]) < 150);
+        if (f) await pickSuggestion(f);
+        else await applyOsm({}, lat, lng);
+        linkHint("Ingevuld vanuit Google Maps. Controleer de gegevens en tik op Opslaan.");
+      } else { suggest(name); linkHint("Kies hieronder de juiste zaak."); }
+      return;
+    }
+    // Website: zoek de zaak in OpenStreetMap op basis van het webadres
+    $("fUrl").value = u.origin + "/";
+    const els = await overpassByWebsite(host);
+    const hit = els && (els.find(e => e.tags && FOOD_RE.test(e.tags.amenity || "")) || els.find(e => e.tags && e.tags.name));
+    if (hit) {
+      const c = hit.center || { lat: hit.lat, lon: hit.lon };
+      await applyOsm(hit.tags, c.lat, c.lon);
+      linkHint(`Gevonden: ${hit.tags.name}. Controleer de gegevens en tik op Opslaan.`);
+    } else {
+      const g = guessName(host);
+      $("fName").value = g; suggest(g);
+      linkHint(els === null ? "Automatisch opzoeken lukt nu niet. Kies hieronder de juiste zaak of vul het zelf aan."
+        : "Deze website staat niet in OpenStreetMap. Kies hieronder de juiste zaak, of vul naam en adres zelf aan.");
+    }
+  } finally { btn.disabled = false; btn.textContent = "Invullen"; }
+}
+$("linkBtn").onclick = fillFromLink;
+$("fLink").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); fillFromLink(); } });
+$("fLink").addEventListener("paste", () => setTimeout(fillFromLink, 50));
+$("fName").addEventListener("paste", e => {
+  const t = (e.clipboardData && e.clipboardData.getData("text") || "").trim();
+  if (/^https?:\/\//i.test(t) && !editing) { e.preventDefault(); $("fLink").value = t; fillFromLink(); }
+});
 
 function showErr(m) { const e = $("fErr"); e.textContent = m; e.hidden = false; }
 function fixUrl(u) { u = u.trim(); if (!u) return ""; if (!/^https?:\/\//i.test(u)) u = "https://" + u; return u; }
