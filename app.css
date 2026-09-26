@@ -274,3 +274,24 @@ main.card-open .locate,main.card-open .nopin{display:none}
 .app:not(.mapmode) .place{max-height:70%}
 .acts{grid-template-columns:repeat(auto-fit,minmax(50px,1fr))}
 .act{font-size:11.5px}
+
+/* ===== Lijst volgt kaart + exporteren ===== */
+.list-tools{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap}
+.inview{font-size:13px;color:var(--muted);margin-right:auto}
+.linkbtn{border:0;background:none;padding:0;color:var(--accent);font-weight:600;font-size:13px}
+.tool-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--accent);border-radius:9px;padding:5px 10px;font-weight:600;font-size:14px}
+.panel-export{align-self:flex-start;border:0;background:none;padding:2px 0;color:var(--accent);font-weight:600;font-size:14px}
+.app:not(.mapmode) .panel-export{display:none}
+.opts{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.opts legend{margin-bottom:6px}
+.opt{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer}
+.opt:has(input:checked){border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.opt:has(input:disabled){opacity:.5}
+.opt input{margin-top:3px;accent-color:var(--accent);width:18px;height:18px;flex:none}
+.opt span{display:flex;flex-direction:column;gap:2px}
+.opt small{color:var(--muted);font-size:13px}
+.list-tools{row-gap:8px}
+.inview{flex-basis:100%;margin-right:0}
+.sort{margin-right:auto}
+.sort select{width:auto;max-width:190px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}

@@ -48,7 +48,7 @@ function safeUrl(u) { return /^https?:\/\//i.test(u || "") ? u : null; }
 function hostOf(u) { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (e) { return "Website"; } }
 function area(city) { return AREAS[city] || { search: city, viewbox: null, center: [52.2, 5.3], zoom: 8 }; }
 function mapsUrl(i) {
-  return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(i.name + " " + (i.address || "") + " " + area(i.city).search);
+  return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(i.name + ", " + (i.address || area(i.city).search));
 }
 function slug(s) { return norm(s).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "r"; }
 
@@ -179,7 +179,7 @@ function filtered() {
     return true;
   }).sort((a, b) => a.name.localeCompare(b.name, "nl", { sensitivity: "base" }));
 }
-function activeFilterCount() { return activeTags.size + (visitFilter ? 1 : 0) + (openFilter ? 1 : 0) + (ui.city !== ALL ? 1 : 0); }
+function activeFilterCount() { return activeTags.size + (visitFilter ? 1 : 0) + (openFilter ? 1 : 0); }
 
 function render() {
   const cities = allCities();
@@ -206,13 +206,7 @@ function render() {
   const n = activeFilterCount();
   $("filterBadge").hidden = !n; $("filterBadge").textContent = String(n);
 
-  const shown = filtered();
-  $("count").textContent = shown.length === inCity.length ? `${inCity.length}` : `${shown.length}/${inCity.length}`;
-  $("list").replaceChildren(...listRows(shown));
-  $("sortSel").value = ui.sort || "az";
-  const empty = $("empty");
-  empty.hidden = !!shown.length;
-  if (!shown.length) empty.textContent = inCity.length ? (openFilter ? "Geen restaurants die nu open zijn (van de restaurants met bekende openingstijden)." : "Niets gevonden met deze filters.") : (ui.city === ALL ? "Nog geen restaurants. Tik op + om er een toe te voegen." : `Nog geen restaurants in ${ui.city}. Tik op + om er een toe te voegen.`);
+  renderList();
 
   const inspo = (store.data.inspiration || []).filter(x => (!x.city || ui.city === ALL || x.city === ui.city) && safeUrl(x.url));
   $("inspo").hidden = !inspo.length;
@@ -247,16 +241,42 @@ function sortItems(arr) {
   }
   return arr.slice().sort(byName);
 }
+/* ---------------- lijst volgt het kaartbeeld ---------------- */
+let viewBounds = null;
+function locatedAllInView() {
+  if (!viewBounds) return true;
+  return visible().every(i => i.lat == null || viewBounds.contains([i.lat, i.lng]));
+}
+function inViewOf(i) {
+  if (!viewBounds || query.trim()) return true;          // bij zoeken: altijd alles doorzoeken
+  if (i.lat == null) return locatedAllInView();          // zonder locatie alleen bij 'alles in beeld'
+  return viewBounds.contains([i.lat, i.lng]);
+}
+function listShown() { return filtered().filter(inViewOf); }
+function renderList() {
+  const all = filtered(), shown = all.filter(inViewOf), total = visible().length;
+  $("count").textContent = shown.length === total ? `${total}` : `${shown.length}/${total}`;
+  const partial = viewBounds && !query.trim() && !locatedAllInView();
+  const iv = $("inView");
+  iv.replaceChildren(partial
+    ? el("span", {}, `${shown.length} in kaartbeeld · `, el("button", { type: "button", class: "linkbtn", onclick: showAll }, "Toon alles"))
+    : el("span", { text: query.trim() ? `${shown.length} gevonden` : `${shown.length} restaurants` }));
+  $("list").replaceChildren(...listRows(shown));
+  $("sortSel").value = ui.sort || "az";
+  const empty = $("empty");
+  empty.hidden = !!shown.length;
+  if (!shown.length) empty.textContent = !total ? "Nog geen restaurants. Tik op + om er een toe te voegen."
+    : partial && all.length ? "Geen restaurants in dit deel van de kaart. Zoom uit of tik op Toon alles."
+    : openFilter ? "Geen restaurants die nu open zijn (van de restaurants met bekende openingstijden)." : "Niets gevonden met deze filters.";
+}
+function showAll() {
+  if (!map) return;
+  const pts = visible().filter(i => i.lat != null).map(i => [i.lat, i.lng]);
+  if (pts.length) map.fitBounds(pts, { paddingTopLeft: [30, 90], paddingBottomRight: [30, 40] });
+  viewBounds = null; renderList();
+}
 function listRows(shown) {
-  if (ui.city !== ALL) return sortItems(shown).map(row);
-  const out = [];
-  for (const c of allCities()) {
-    const g = shown.filter(i => i.city === c);
-    if (!g.length) continue;
-    out.push(el("li", { class: "group-head" }, el("span", { text: c }), el("span", { class: "n", text: String(g.length) })));
-    out.push(...sortItems(g).map(row));
-  }
-  return out;
+  return sortItems(shown).map(row);
 }
 function row(i) {
   const st = hoursStatus(i);
@@ -335,7 +355,6 @@ function renderPlace(i) {
   box.replaceChildren(...[
     el("div", { class: "place-head" },
       el("div", { class: "place-title" },
-        el("span", { class: "where", text: i.city }),
         el("h3", {}, el("i", { class: "dot c-" + catOf(i), "aria-hidden": "true" }), i.name, i.visited ? el("span", { class: "been", text: "Geweest" }) : null)),
       el("button", { type: "button", class: "x", "aria-label": "Sluiten", onclick: closePlace }, svgIcon("close", 16))),
     i.address ? el("p", { class: "addr", text: i.address }) : null,
@@ -384,6 +403,7 @@ function initMap() {
   cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 40, spiderfyOnMaxZoom: true, disableClusteringAtZoom: 16 });
   map.addLayer(cluster);
   map.on("zoomend", updateLabels);
+  map.on("moveend", () => { if (!$("mapView").hidden) { viewBounds = map.getBounds(); renderList(); } });
   map.on("click", () => { closePlace(); document.querySelector(".app").classList.remove("filters-open"); $("filterBtn").setAttribute("aria-expanded", "false"); });
   updateLabels();
   renderMarkers();
@@ -609,6 +629,12 @@ function setDraftPin(pos, fly) {
   else miniMarker.setLatLng([pos.lat, pos.lng]);
   if (fly) miniMap.setView([pos.lat, pos.lng], 16);
 }
+function nearestArea() {
+  if (!map) return "Amsterdam";
+  const c = map.getCenter(); let best = "Amsterdam", bd = Infinity;
+  for (const [k, a] of Object.entries(AREAS)) { const d = (a.center[0] - c.lat) ** 2 + (a.center[1] - c.lng) ** 2; if (d < bd) { bd = d; best = k; } }
+  return best === "Kantoor" ? "Utrecht" : best;
+}
 function openSheet(item) {
   editing = item ? { ...item } : null; delArmed = false;
   $("sheetTitle").textContent = item ? "Bewerken" : "Restaurant toevoegen";
@@ -621,7 +647,7 @@ function openSheet(item) {
   $("fVisited").checked = !!(item && item.visited);
   $("fNewTag").value = ""; $("fNewCity").value = "";
   formTags = new Set(item ? item.tags || [] : []);
-  const defCity = ui.city === ALL ? "Amsterdam" : ui.city;
+  const defCity = nearestArea();
   fillCities(item ? item.city : defCity);
   renderTagPick();
   const d = $("delBtn"); d.hidden = !item; d.textContent = "Verwijderen"; d.classList.remove("confirm"); d.disabled = false;
@@ -649,7 +675,7 @@ function openSheet(item) {
   if (!item) setTimeout(() => $("fName").focus(), 80);
 }
 function showSheet(id) { $("scrim").hidden = false; $(id).hidden = false; $(id).scrollTop = 0; }
-function closeSheets() { $("scrim").hidden = true; $("sheet").hidden = true; $("settings").hidden = true; editing = null; }
+function closeSheets() { $("scrim").hidden = true; $("sheet").hidden = true; $("settings").hidden = true; $("exportSheet").hidden = true; editing = null; }
 document.querySelectorAll("[data-close]").forEach(b => (b.onclick = closeSheets));
 $("scrim").onclick = closeSheets;
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheets(); });
@@ -714,7 +740,10 @@ async function pickSuggestion(f) {
   const addr = fmtAddress(pr); if (addr) $("fAddress").value = addr;
   const town = pr.city || pr.town || pr.village || "";
   const sel = $("fCity");
-  if (sel.value !== "Kantoor" && [...sel.options].some(o => o.value === town)) sel.value = town;
+  if (town && sel.value !== "Kantoor") {
+    if (![...sel.options].some(o => o.value === town)) sel.prepend(el("option", { value: town }, town));
+    sel.value = town;
+  }
   setDraftPin({ lat: +lat.toFixed(6), lng: +lng.toFixed(6), manual: false, geo: "osm" }, true);
   $("pinHint").textContent = "Adres en locatie ingevuld. Klopt de pin niet? Tik op de juiste plek.";
   // Website en keuken ophalen uit OpenStreetMap
@@ -887,6 +916,98 @@ $("importFile").onchange = async e => {
   } catch (err) { $("sErr").hidden = false; $("sErr").textContent = "Dit bestand is geen geldige Tafels-back-up."; }
   e.target.value = "";
 };
+
+
+/* ---------------- exporteren: Excel of Google My Maps (KML) ---------------- */
+function exportItems(scope) {
+  const src = visible().slice().sort((a, b) => a.name.localeCompare(b.name, "nl", { sensitivity: "base" }));
+  if (scope !== "view" || !map) return src;
+  const b = map.getBounds();
+  return src.filter(i => i.lat != null && b.contains([i.lat, i.lng]));
+}
+function openExport() {
+  closePlace();
+  const nAll = exportItems("all").length, nView = map ? exportItems("view").length : nAll;
+  $("expAllN").textContent = `${nAll} restaurants`;
+  $("expViewN").textContent = map ? `${nView} restaurants` : "Open eerst de kaart";
+  document.querySelector('input[name="expScope"][value="view"]').disabled = !map;
+  if (!map) document.querySelector('input[name="expScope"][value="all"]').checked = true;
+  $("expErr").hidden = true;
+  showSheet("exportSheet");
+}
+$("exportOpen").onclick = openExport;
+$("exportOpenMap").onclick = () => { document.querySelector(".app").classList.remove("filters-open"); openExport(); };
+
+let xlsxLib = null;
+function loadXlsx() {
+  if (window.XLSX) return Promise.resolve(window.XLSX);
+  if (xlsxLib) return xlsxLib;
+  xlsxLib = new Promise((res, rej) => {
+    const s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
+    s.onload = () => res(window.XLSX); s.onerror = () => { xlsxLib = null; rej(new Error("xlsx")); };
+    document.head.append(s);
+  });
+  return xlsxLib;
+}
+async function buildXlsx(items, title) {
+  const X = await loadXlsx();
+  const head = ["Naam", "Adres", "Website", "Notitie", "Kenmerken", "Geweest", "Telefoon", "Openingstijden", "Google Maps", "Breedtegraad", "Lengtegraad"];
+  const rows = items.map(i => [i.name, i.address || "", safeUrl(i.url) || "", i.notes || "", (i.tags || []).join(", "), i.visited ? "ja" : "",
+    i.phone || "", i.hours || "", mapsUrl(i), i.lat ?? "", i.lng ?? ""]);
+  const ws = X.utils.aoa_to_sheet([head, ...rows]);
+  ws["!cols"] = [28, 38, 34, 50, 26, 9, 16, 30, 16, 12, 12].map(w => ({ wch: w }));
+  ws["!autofilter"] = { ref: X.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: rows.length, c: head.length - 1 } }) };
+  rows.forEach((r, k) => {
+    const web = X.utils.encode_cell({ r: k + 1, c: 2 }), gm = X.utils.encode_cell({ r: k + 1, c: 8 });
+    if (r[2]) ws[web].l = { Target: r[2] };
+    ws[gm].l = { Target: r[8] }; ws[gm].v = "Open in Google Maps";
+  });
+  const wb = X.utils.book_new();
+  X.utils.book_append_sheet(wb, ws, title.slice(0, 31));
+  const out = X.write(wb, { bookType: "xlsx", type: "array" });
+  return new Blob([out], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+}
+function xmlEsc(s) { return String(s).replace(/[<>&'"]/g, c => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", "'": "&apos;", '"': "&quot;" }[c])); }
+function buildKml(items, title) {
+  const pm = items.filter(i => i.lat != null).map(i => {
+    const desc = [i.address, (i.tags || []).join(", "), i.notes, safeUrl(i.url), i.phone].filter(Boolean).join("\n");
+    return `    <Placemark>\n      <name>${xmlEsc(i.name)}</name>\n      <description>${xmlEsc(desc)}</description>\n` +
+      (i.address ? `      <address>${xmlEsc(i.address)}</address>\n` : "") +
+      `      <Point><coordinates>${i.lng},${i.lat},0</coordinates></Point>\n    </Placemark>`;
+  }).join("\n");
+  const kml = `<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">\n  <Document>\n    <name>${xmlEsc(title)}</name>\n${pm}\n  </Document>\n</kml>\n`;
+  return new Blob([kml], { type: "application/vnd.google-earth.kml+xml" });
+}
+async function deliverFile(blob, name) {
+  const file = new File([blob], name, { type: blob.type });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try { await navigator.share({ files: [file], title: name }); return "shared"; }
+    catch (e) { if (e && e.name === "AbortError") return "cancelled"; }
+  }
+  const a = el("a", { href: URL.createObjectURL(blob), download: name });
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 30000);
+  return "downloaded";
+}
+$("expForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const scope = document.querySelector('input[name="expScope"]:checked').value;
+  const fmt = document.querySelector('input[name="expFmt"]:checked').value;
+  const items = exportItems(scope);
+  if (!items.length) { $("expErr").hidden = false; $("expErr").textContent = "Er staan geen restaurants in dit kaartbeeld. Zoom uit en probeer het opnieuw."; return; }
+  const date = new Date().toISOString().slice(0, 10);
+  const label = scope === "view" ? "kaartbeeld" : "alles";
+  const title = `my fav rest's (${label})`;
+  const btn = $("expGo"); btn.disabled = true; btn.textContent = "Bezig…";
+  try {
+    const blob = fmt === "kml" ? buildKml(items, title) : await buildXlsx(items, scope === "view" ? "Kaartbeeld" : "Alle restaurants");
+    const res = await deliverFile(blob, `my-fav-rests-${label}-${date}.${fmt}`);
+    if (res !== "cancelled") { closeSheets(); toast(`${items.length} restaurants geëxporteerd`); }
+  } catch (err) {
+    $("expErr").hidden = false; $("expErr").textContent = "Exporteren lukt nu niet. Controleer je internetverbinding en probeer het opnieuw.";
+  } finally { btn.disabled = false; btn.textContent = "Exporteer"; }
+});
 
 /* ---------------- start ---------------- */
 async function boot() {
