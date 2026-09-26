@@ -1593,9 +1593,9 @@
    "lat": 52.267732,
    "lng": 5.19745,
    "geo": "osm",
-   "updatedAt": 1790396738598,
-   "addrChecked": true,
-   "osmChecked": 1790396738598
+   "updatedAt": 1790396768286,
+   "osmChecked": 1790396738598,
+   "phone": "035 888 8877"
   }
  ]
 }
