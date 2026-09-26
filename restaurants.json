@@ -4,7 +4,8 @@
   "Amsterdam",
   "Utrecht",
   "Kantoor",
-  "Bussum"
+  "Bussum",
+  "Laren"
  ],
  "inspiration": [
   {
@@ -1505,6 +1506,24 @@
    "geo": "osm",
    "updatedAt": 1790396266859,
    "osmChecked": 1790396266859
+  },
+  {
+   "id": "la-vespa-muhvrbps",
+   "createdAt": 1790396348176,
+   "name": "La Vespa",
+   "url": "https://lavespa.nl/",
+   "city": "Laren",
+   "notes": "",
+   "address": "Stationsweg 28, 1404 AP Bussum Stationsweg 28, 1404 AP Bussum",
+   "phone": "035 694 4037",
+   "tags": [
+    "Italiaans"
+   ],
+   "visited": true,
+   "lat": 52.258323,
+   "lng": 5.223505,
+   "geo": "osm",
+   "updatedAt": 1790396348176
   }
  ]
 }
