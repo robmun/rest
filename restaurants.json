@@ -1406,13 +1406,11 @@
    "notes": "Lekker aan de amster",
    "tags": [],
    "visited": true,
-   "updatedAt": 1790395456871,
-   "lat": 52.401488,
-   "lng": 4.891096,
-   "geo": "osm",
-   "address": "Weesperzijde 23 1091 EC Amsterdam",
+   "updatedAt": 1790395648741,
+   "address": "Weesperzijde 23, 1091 EC Amsterdam",
    "osmChecked": 1790395381870,
-   "phone": "020 468 1808"
+   "phone": "020 468 1808",
+   "hours": "ma-zo 08:00-00:00"
   }
  ]
 }
