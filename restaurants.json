@@ -29,13 +29,14 @@
    "tags": [],
    "url": "https://westervilla.nl/restaurant/",
    "visited": true,
-   "updatedAt": 1790351480502,
+   "updatedAt": 1790396529720,
    "address": "Haarlemmerweg 369, 1051 LH Amsterdam",
    "lat": 52.384541,
    "lng": 4.861822,
    "geo": "auto",
    "osmChecked": 1790350703506,
-   "phone": "+31 20 227 9811"
+   "phone": "+31 20 227 9811",
+   "addrChecked": true
   },
   {
    "id": "ams-cafe-parlotte",
@@ -46,13 +47,14 @@
    "tags": [],
    "url": "https://www.parlotte.nl/",
    "visited": false,
-   "updatedAt": 1790350704752,
+   "updatedAt": 1790396530048,
    "address": "Westerstraat 182, Amsterdam",
    "lat": 52.378276,
    "lng": 4.881742,
    "geo": "auto",
    "hours": "Mo 16:00-01:00; We-Th 16:00-01:00; Fr 16:00-02:00; Sa 13:00-02:00; Su 13:00-21:00",
-   "osmChecked": 1790350704752
+   "osmChecked": 1790350704752,
+   "addrChecked": true
   },
   {
    "id": "ams-wils",
@@ -63,14 +65,15 @@
    "tags": [],
    "url": "https://www.restaurantwils.nl/homenl",
    "visited": false,
-   "updatedAt": 1790351480502,
+   "updatedAt": 1790396530323,
    "address": "Stadionplein 26, 1076 CM Amsterdam",
    "lat": 52.343394,
    "lng": 4.856157,
    "geo": "auto",
    "phone": "+31 20 236 6522",
    "osmChecked": 1790350705933,
-   "hours": "ma gesloten; di-do 17:00-00:00; vr-za 12:00-00:00"
+   "hours": "ma gesloten; di-do 17:00-00:00; vr-za 12:00-00:00",
+   "addrChecked": true
   },
   {
    "id": "ams-auberge-jean-marie",
@@ -81,13 +84,14 @@
    "tags": [],
    "url": "http://www.aubergeamsterdam.nl/",
    "visited": true,
-   "updatedAt": 1790350707107,
+   "updatedAt": 1790396530657,
    "address": "Albert Cuypstraat 58, Amsterdam",
    "lat": 52.354633,
    "lng": 4.889228,
    "geo": "auto",
    "phone": "+31 20 845 20 05",
-   "osmChecked": 1790350707107
+   "osmChecked": 1790350707107,
+   "addrChecked": true
   },
   {
    "id": "ams-beulings",
@@ -100,12 +104,13 @@
    ],
    "url": "https://www.beulings.nl/en/",
    "visited": false,
-   "updatedAt": 1790350708280,
+   "updatedAt": 1790396530924,
    "address": "Beulingstraat 9, 1017 BA Amsterdam",
    "lat": 52.367986,
    "lng": 4.887686,
    "geo": "auto",
-   "osmChecked": 1790350708280
+   "osmChecked": 1790350708280,
+   "addrChecked": true
   },
   {
    "id": "ams-shaffy-voorheen-felix",
@@ -116,12 +121,13 @@
    "tags": [],
    "url": "https://www.shaffyrestobar.com/nl/",
    "visited": false,
-   "updatedAt": 1790350709619,
+   "updatedAt": 1790396531184,
    "address": "Keizersgracht 324, Amsterdam",
    "lat": 52.36999,
    "lng": 4.884254,
    "geo": "auto",
-   "osmChecked": 1790350709619
+   "osmChecked": 1790350709619,
+   "addrChecked": true
   },
   {
    "id": "ams-eetcafe-schiller",
@@ -132,14 +138,15 @@
    "tags": [],
    "url": "https://cafeschiller.nl/",
    "visited": true,
-   "updatedAt": 1790374170236,
+   "updatedAt": 1790396531433,
    "address": "Rembrandtplein 24A, 1017 CV Amsterdam",
    "lat": 52.365674,
    "lng": 4.896587,
    "geo": "auto",
    "osmChecked": 1790350710948,
    "hours": "ma 16:00-00:00; di-do 16:00-01:00; vr 16:00-02:00; za 15:00-02:00; zo 15:00-00:00",
-   "phone": "020 624 9846"
+   "phone": "020 624 9846",
+   "addrChecked": true
   },
   {
    "id": "ams-cantine-de-caron",
@@ -153,14 +160,15 @@
    ],
    "url": "https://cantinedecaron.nl/",
    "visited": false,
-   "updatedAt": 1790350712178,
+   "updatedAt": 1790396531713,
    "address": "Pazzanistraat 8, Amsterdam",
    "lat": 52.38629,
    "lng": 4.872817,
    "geo": "auto",
    "phone": "+31 20 225 0059",
    "hours": "Mo-Su 12:00-17:00,18:00-22:00+",
-   "osmChecked": 1790350712178
+   "osmChecked": 1790350712178,
+   "addrChecked": true
   },
   {
    "id": "ams-cantine-petit-caron",
@@ -174,12 +182,13 @@
    ],
    "url": "https://petitcaron.nl/",
    "visited": true,
-   "updatedAt": 1790350713715,
+   "updatedAt": 1790396531966,
    "address": "Frans Halsstraat 26H, 1072 BR Amsterdam",
    "lat": 52.357777,
    "lng": 4.888766,
    "geo": "auto",
-   "osmChecked": 1790350713715
+   "osmChecked": 1790350713715,
+   "addrChecked": true
   },
   {
    "id": "ams-cafe-restaurant-stork",
@@ -192,13 +201,14 @@
    ],
    "url": "https://restaurantstork.nl/",
    "visited": false,
-   "updatedAt": 1790350715250,
+   "updatedAt": 1790396532220,
    "address": "Gedempt Hamerkanaal 201, 1021 KP Amsterdam",
    "lat": 52.382062,
    "lng": 4.920205,
    "geo": "auto",
    "phone": "+31 20 634 4000",
-   "osmChecked": 1790350715250
+   "osmChecked": 1790350715250,
+   "addrChecked": true
   },
   {
    "id": "ams-mos",
@@ -211,14 +221,15 @@
    ],
    "url": "https://mosamsterdam.nl/",
    "visited": true,
-   "updatedAt": 1790374268131,
+   "updatedAt": 1790396532462,
    "address": "IJdok 185, Amsterdam",
    "lat": 52.383796,
    "lng": 4.895503,
    "geo": "auto",
    "phone": "+31 20 638 0866",
    "hours": "Tu-We 18:00-22:00; Th-Sa 12:00-16:00,18:00-22:00",
-   "osmChecked": 1790350716430
+   "osmChecked": 1790350716430,
+   "addrChecked": true
   },
   {
    "id": "ams-rakang",
@@ -232,12 +243,13 @@
    ],
    "url": "http://www.rakang.nl/",
    "visited": true,
-   "updatedAt": 1790350829210,
+   "updatedAt": 1790396532762,
    "address": "Elandsgracht 29, Amsterdam",
    "lat": 52.369654,
    "lng": 4.881336,
    "geo": "auto",
-   "osmChecked": 1790350717616
+   "osmChecked": 1790350717616,
+   "addrChecked": true
   },
   {
    "id": "ams-de-goudfazant",
@@ -250,14 +262,15 @@
    ],
    "url": "https://hoteldegoudfazant.nl/",
    "visited": true,
-   "updatedAt": 1790374141469,
+   "updatedAt": 1790396533017,
    "address": "Aambeeldstraat 30, 1021 KB Amsterdam",
    "lat": 52.383721,
    "lng": 4.930144,
    "geo": "auto",
    "phone": "+31 20 636 5170",
    "osmChecked": 1790350718812,
-   "hours": "ma gesloten; di-zo 17:30+"
+   "hours": "ma gesloten; di-zo 17:30+",
+   "addrChecked": true
   },
   {
    "id": "ams-hangar",
@@ -268,14 +281,15 @@
    "tags": [],
    "url": "https://hangar.amsterdam/",
    "visited": false,
-   "updatedAt": 1790351480502,
+   "updatedAt": 1790396533275,
    "address": "Aambeeldstraat 36, 1021 KB Amsterdam",
    "lat": 52.383726,
    "lng": 4.930925,
    "geo": "auto",
    "osmChecked": 1790350720019,
    "hours": "ma-di gesloten; wo-do 11:00-01:00; vr-za 11:00-03:00; zo 11:00-01:00",
-   "phone": "+31 20 363 8657"
+   "phone": "+31 20 363 8657",
+   "addrChecked": true
   },
   {
    "id": "ams-yerba",
@@ -288,12 +302,13 @@
    ],
    "url": "https://www.yerbabar.com/",
    "visited": true,
-   "updatedAt": 1790350721700,
+   "updatedAt": 1790396533525,
    "address": "Ruysdaelstraat 48, 1071 XE Amsterdam",
    "lat": 52.354095,
    "lng": 4.883216,
    "geo": "auto",
-   "osmChecked": 1790350721700
+   "osmChecked": 1790350721700,
+   "addrChecked": true
   },
   {
    "id": "ams-taiko-conservatorium-hotel",
@@ -304,13 +319,14 @@
    "tags": [],
    "url": "https://www.taikocuisine.com/nl/restaurant/",
    "visited": false,
-   "updatedAt": 1790350723134,
+   "updatedAt": 1790396533801,
    "address": "Paulus Potterstraat 50, 1071 DB Amsterdam",
    "lat": 52.358605,
    "lng": 4.878529,
    "geo": "auto",
    "hours": "Mo-Th 17:00-23:59; Fr-Sa 17:00-01:00",
-   "osmChecked": 1790350723134
+   "osmChecked": 1790350723134,
+   "addrChecked": true
   },
   {
    "id": "ams-the-duchess",
@@ -321,14 +337,15 @@
    "tags": [],
    "url": "https://the-duchess.com/",
    "visited": true,
-   "updatedAt": 1790374305753,
+   "updatedAt": 1790396534144,
    "address": "Spuistraat 172, 1012 VT Amsterdam",
    "lat": 52.372811,
    "lng": 4.889353,
    "geo": "auto",
    "osmChecked": 1790350724875,
    "hours": "ma-do 17:00-23:00; vr-zo 12:00-23:00",
-   "phone": "+31 20 811 3322"
+   "phone": "+31 20 811 3322",
+   "addrChecked": true
   },
   {
    "id": "ams-brut-de-mer",
@@ -341,14 +358,15 @@
    ],
    "url": "http://brutdemer.nl",
    "visited": false,
-   "updatedAt": 1790350726246,
+   "updatedAt": 1790396534375,
    "address": "Gerard Douplein 8H, 1072 VE Amsterdam",
    "lat": 52.355783,
    "lng": 4.89255,
    "geo": "auto",
    "phone": "+31 20 471 4099",
    "hours": "Mo-Th 16:00-24:00; Fr-Su 12:00-24:00",
-   "osmChecked": 1790350726246
+   "osmChecked": 1790350726246,
+   "addrChecked": true
   },
   {
    "id": "ams-graphite",
@@ -364,14 +382,15 @@
    "tags": [],
    "url": "https://www.vanderveenbarkitchen.nl/",
    "visited": false,
-   "updatedAt": 1790351480502,
+   "updatedAt": 1790396534639,
    "address": "Beethovenstraat 27A, 1077 HM Amsterdam",
    "lat": 52.349075,
    "lng": 4.877681,
    "geo": "auto",
    "osmChecked": 1790350727539,
    "hours": "di-za 18:00-00:00",
-   "phone": "+31 20 737 1259"
+   "phone": "+31 20 737 1259",
+   "addrChecked": true
   },
   {
    "id": "ams-domenica",
@@ -382,14 +401,15 @@
    "tags": [],
    "url": "https://www.restaurantdomenica.com/",
    "visited": true,
-   "updatedAt": 1790374161499,
+   "updatedAt": 1790396534922,
    "address": "Noordermarkt 7, 1015 MV Amsterdam",
    "lat": 52.380142,
    "lng": 4.887429,
    "geo": "auto",
    "osmChecked": 1790350728717,
    "hours": "ma gesloten; di-vr 12:30-14:30,18:00-22:00; za 12:00-16:00; zo 12:00-22:00",
-   "phone": "+31 20 774 6720"
+   "phone": "+31 20 774 6720",
+   "addrChecked": true
   },
   {
    "id": "ams-bistrot-neuf",
@@ -400,14 +420,15 @@
    "tags": [],
    "url": "https://bistrotneuf.nl/",
    "visited": false,
-   "updatedAt": 1790350730099,
+   "updatedAt": 1790396535178,
    "address": "Haarlemmerstraat 9, 1013 JG Amsterdam",
    "lat": 52.379378,
    "lng": 4.893771,
    "geo": "auto",
    "phone": "+31 20 400 3210",
    "hours": "Mo-Th 16:00-24:00; Fr-Su 12:00-24:00",
-   "osmChecked": 1790350730099
+   "osmChecked": 1790350730099,
+   "addrChecked": true
   },
   {
    "id": "ams-de-juwelier",
@@ -418,14 +439,15 @@
    "tags": [],
    "url": "https://www.restaurant-dejuwelier.nl/restaurantdejuwelier",
    "visited": false,
-   "updatedAt": 1790350731279,
+   "updatedAt": 1790396535428,
    "address": "Utrechtsestraat 51, 1017 VJ Amsterdam",
    "lat": 52.364256,
    "lng": 4.898276,
    "geo": "auto",
    "phone": "+31 20 247 1007",
    "hours": "Mo-Su 12:00-13:30, 18:00-22:00",
-   "osmChecked": 1790350731279
+   "osmChecked": 1790350731279,
+   "addrChecked": true
   },
   {
    "id": "ams-212",
@@ -436,14 +458,15 @@
    "tags": [],
    "url": "https://212.amsterdam/",
    "visited": false,
-   "updatedAt": 1790350732536,
+   "updatedAt": 1790396535670,
    "address": "Amstel 212, 1017 AH Amsterdam",
    "lat": 52.365878,
    "lng": 4.90026,
    "geo": "auto",
    "phone": "+31 20 334 8685",
    "hours": "Tu-Th 18:30-21:00; Fr-Sa 12:00-13:30,18:30-21:00",
-   "osmChecked": 1790350732536
+   "osmChecked": 1790350732536,
+   "addrChecked": true
   },
   {
    "id": "ams-de-plantage",
@@ -456,14 +479,15 @@
    ],
    "url": "https://www.caferestaurantdeplantage.nl/",
    "visited": true,
-   "updatedAt": 1790374152080,
+   "updatedAt": 1790396535914,
    "address": "Plantage Kerklaan 36, 1018 CZ Amsterdam",
    "lat": 52.366585,
    "lng": 4.912559,
    "geo": "auto",
    "phone": "+31 20 760 6800",
    "hours": "Mo 10:00-21:00; Tu-Su 10:00-24:00",
-   "osmChecked": 1790350733715
+   "osmChecked": 1790350733715,
+   "addrChecked": true
   },
   {
    "id": "ams-gebr-hartering",
@@ -476,14 +500,15 @@
    ],
    "url": "https://www.gebr-hartering.nl/",
    "visited": false,
-   "updatedAt": 1790350735166,
+   "updatedAt": 1790396536178,
    "address": "Peperstraat 10, Amsterdam",
    "lat": 52.371644,
    "lng": 4.907476,
    "geo": "auto",
    "phone": "+31 20 421 0699",
    "hours": "Mo-Su 18:00-22:00",
-   "osmChecked": 1790350735166
+   "osmChecked": 1790350735166,
+   "addrChecked": true
   },
   {
    "id": "ams-mont-blanc",
@@ -498,14 +523,15 @@
    ],
    "url": "https://www.restaurantmontblanc.nl/",
    "visited": true,
-   "updatedAt": 1790350736349,
+   "updatedAt": 1790396536417,
    "address": "Govert Flinckstraat 308, Amsterdam",
    "lat": 52.356326,
    "lng": 4.898765,
    "geo": "auto",
    "phone": "+31 20 7741645",
    "hours": "Tu-Sa 19:00-23:30",
-   "osmChecked": 1790350736349
+   "osmChecked": 1790350736349,
+   "addrChecked": true
   },
   {
    "id": "ams-secret-garden",
@@ -518,14 +544,15 @@
    ],
    "url": "https://www.secretgardenamsterdam.com/",
    "visited": true,
-   "updatedAt": 1790351480502,
+   "updatedAt": 1790396536679,
    "address": "Reguliersdwarsstraat 38, 1017 BM Amsterdam",
    "lat": 52.366265,
    "lng": 4.8911,
    "geo": "auto",
    "phone": "+31 20 247 4060",
    "osmChecked": 1790350737676,
-   "hours": "ma-do 18:00-01:00; vr 17:30-02:00; za-zo 12:30-15:00,17:30-02:00"
+   "hours": "ma-do 18:00-01:00; vr 17:30-02:00; za-zo 12:30-15:00,17:30-02:00",
+   "addrChecked": true
   },
   {
    "id": "ams-gent-aan-de-schinkel",
@@ -539,14 +566,15 @@
    ],
    "url": "https://www.gentaandeschinkel.nl/",
    "visited": true,
-   "updatedAt": 1790351480502,
+   "updatedAt": 1790396537123,
    "address": "Theophile de Bockstraat 1, 1058 TV Amsterdam",
    "lat": 52.354691,
    "lng": 4.852942,
    "geo": "auto",
    "osmChecked": 1790350739006,
    "hours": "ma-do 10:00-01:00; vr-za 10:00-02:00; zo 10:00-00:00",
-   "phone": "020 388 2851"
+   "phone": "020 388 2851",
+   "addrChecked": true
   },
   {
    "id": "ams-pllek",
@@ -1396,8 +1424,9 @@
    "lat": 52.08998,
    "lng": 5.120824,
    "geo": "osm",
-   "updatedAt": 1790374414609,
-   "osmChecked": 1790374414609
+   "updatedAt": 1790396537382,
+   "osmChecked": 1790374414609,
+   "addrChecked": true
   },
   {
    "id": "cafe-restaurant-de-ysbreeker-muhut22p",
@@ -1432,8 +1461,9 @@
    "lat": 52.274228,
    "lng": 5.164704,
    "geo": "osm",
-   "updatedAt": 1790395943037,
-   "osmChecked": 1790395943037
+   "updatedAt": 1790396537584,
+   "osmChecked": 1790395943037,
+   "addrChecked": true
   },
   {
    "id": "therapy-muhvk4kb",
@@ -1450,8 +1480,9 @@
    "lat": 52.274597,
    "lng": 5.164749,
    "geo": "osm",
-   "updatedAt": 1790396016536,
-   "osmChecked": 1790396016536
+   "updatedAt": 1790396537814,
+   "osmChecked": 1790396016536,
+   "addrChecked": true
   },
   {
    "id": "de-buren-muhvl5xi",
@@ -1468,8 +1499,9 @@
    "lat": 52.274807,
    "lng": 5.164473,
    "geo": "osm",
-   "updatedAt": 1790396064914,
-   "osmChecked": 1790396064914
+   "updatedAt": 1790396538041,
+   "osmChecked": 1790396064914,
+   "addrChecked": true
   },
   {
    "id": "archibald-muhvnems",
@@ -1485,8 +1517,9 @@
    "lat": 52.280176,
    "lng": 5.162728,
    "geo": "osm",
-   "updatedAt": 1790396169247,
-   "osmChecked": 1790396169247
+   "updatedAt": 1790396538250,
+   "osmChecked": 1790396169247,
+   "addrChecked": true
   },
   {
    "id": "spaghettiamo-muhvpi79",
@@ -1504,8 +1537,9 @@
    "lat": 52.279189,
    "lng": 5.158145,
    "geo": "osm",
-   "updatedAt": 1790396266859,
-   "osmChecked": 1790396266859
+   "updatedAt": 1790396538503,
+   "osmChecked": 1790396266859,
+   "addrChecked": true
   },
   {
    "id": "la-vespa-muhvrbps",
@@ -1520,11 +1554,12 @@
     "Italiaans"
    ],
    "visited": true,
-   "lat": 52.258323,
-   "lng": 5.223505,
-   "geo": "osm",
-   "updatedAt": 1790396399819,
-   "osmChecked": 1790396351961
+   "lat": 52.27974,
+   "lng": 5.158009,
+   "geo": "adres",
+   "updatedAt": 1790396538727,
+   "osmChecked": 1790396351961,
+   "addrChecked": true
   }
  ]
 }
