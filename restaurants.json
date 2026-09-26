@@ -1406,12 +1406,13 @@
    "notes": "Lekker aan de amster",
    "tags": [],
    "visited": true,
-   "updatedAt": 1790395381870,
+   "updatedAt": 1790395456871,
    "lat": 52.401488,
    "lng": 4.891096,
    "geo": "osm",
-   "address": "NDSM-kade 5, 1033 PG Amsterdam",
-   "osmChecked": 1790395381870
+   "address": "Weesperzijde 23 1091 EC Amsterdam",
+   "osmChecked": 1790395381870,
+   "phone": "020 468 1808"
   }
  ]
 }
