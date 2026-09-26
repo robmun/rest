@@ -661,6 +661,15 @@ async function runEnrich() {
   if (enrichRunning || geoRunning) return;
   enrichRunning = true;
   let changed = 0;
+  // Controle: staat een automatisch gezette pin ver van het adres? Dan de pin op het adres zetten
+  for (const item of visible().filter(i => i.address && /\d/.test(i.address) && i.lat != null && i.geo !== "manual" && i.geo !== "adres" && !i.addrChecked)) {
+    let res = null;
+    try { res = await pdok(item.address); } catch (e) { break; }
+    await sleep(150);
+    const cur = byId(item.id); if (!cur || cur.deleted) continue;
+    if (res && distM([cur.lat, cur.lng], [res.lat, res.lng]) > 250) { cur.lat = res.lat; cur.lng = res.lng; cur.geo = "adres"; }
+    cur.addrChecked = true; cur.updatedAt = now(); store.dirty = true; persist(); changed++;
+  }
   // Pin maar geen adres (bijv. zelf gezet): adres opzoeken bij de pin
   for (const item of visible().filter(i => i.lat != null && !i.address && !i.revChecked)) {
     let adr = null;
@@ -958,7 +967,7 @@ $("form").addEventListener("submit", e => {
   const item = { ...base, name, url: fixUrl($("fUrl").value), city: c, notes: $("fNotes").value.trim(), address: $("fAddress").value.trim(), phone: $("fPhone").value.trim(), hours: $("fHours").value.trim(), tags: [...formTags], visited: $("fVisited").checked };
   const hoursText = item.hours;
   if (hoursText && !parseHours(hoursText)) { showErr("Openingstijden niet begrepen. Schrijf ze zo: di-za 17:30-22:00; zo 12:00-21:00"); $("fHours").focus(); return; }
-  delete item.geoFailed;
+  delete item.geoFailed; delete item.addrChecked;
   if (draftPos) { item.lat = draftPos.lat; item.lng = draftPos.lng; item.geo = draftPos.manual ? "manual" : (draftPos.manual === false ? (draftPos.geo || "auto") : item.geo); }
   else { delete item.lat; delete item.lng; delete item.geo; }
   if (!item.address) delete item.address;
