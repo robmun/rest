@@ -1469,6 +1469,22 @@
    "geo": "osm",
    "updatedAt": 1790396064914,
    "osmChecked": 1790396064914
+  },
+  {
+   "id": "archibald-muhvnems",
+   "createdAt": 1790396165332,
+   "name": "Archibald",
+   "url": "https://archibald.nl/",
+   "city": "Bussum",
+   "notes": "",
+   "address": "Brinklaan 25, 1404EP Bussum",
+   "phone": "+31 35 6943030",
+   "tags": [],
+   "visited": true,
+   "lat": 52.280176,
+   "lng": 5.162728,
+   "geo": "osm",
+   "updatedAt": 1790396165333
   }
  ]
 }
