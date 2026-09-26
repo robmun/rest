@@ -1578,6 +1578,22 @@
    "updatedAt": 1790396561929,
    "addrChecked": true,
    "osmChecked": 1790396561929
+  },
+  {
+   "id": "de-groene-afslag-muhvzld0",
+   "createdAt": 1790396733924,
+   "name": "De Groene Afslag",
+   "url": "https://degroeneafslag.nl/",
+   "city": "Bussum",
+   "notes": "",
+   "address": "Cissy van Marxveldtstraat 1, 1403VM Bussum",
+   "hours": "Mo-Fr 07:30-22:00; Sa-Su 08:00-22:00",
+   "tags": [],
+   "visited": false,
+   "lat": 52.267732,
+   "lng": 5.19745,
+   "geo": "osm",
+   "updatedAt": 1790396733924
   }
  ]
 }
