@@ -458,14 +458,15 @@
    "tags": [],
    "url": "https://212.amsterdam/",
    "visited": false,
-   "updatedAt": 1790399694921,
+   "updatedAt": 1790399698119,
    "address": "Amstel 212, 1017 AH Amsterdam",
    "lat": 52.365878,
    "lng": 4.90026,
    "geo": "auto",
    "phone": "+31 20 334 8685",
    "hours": "Tu-Th 18:30-21:00; Fr-Sa 12:00-13:30,18:30-21:00",
-   "osmChecked": 1790350732536
+   "osmChecked": 1790350732536,
+   "addrChecked": true
   },
   {
    "id": "ams-de-plantage",
