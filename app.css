@@ -167,11 +167,11 @@ label.f{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:60
 
 /* ===== Categorie-kleuren ===== */
 :root{
-  --c-it:#C8413B; --c-fr:#3A5FB0; --c-as:#D17A1F; --c-vis:#15848C; --c-fine:#7A4BB0; --c-lunch:#5F8A1E; --c-x:#1E6B52;
-  --open:#2E8B57; --closed:#B3261E;
+  --c-it:#B4563F; --c-fr:#44619A; --c-as:#C08A2E; --c-vis:#1E6B52; --c-fine:#1E6B52; --c-lunch:#1E6B52; --c-x:#1E6B52;
+  --open:#2E8B57; --closed:#686A62;
 }
 @media (prefers-color-scheme: dark){
-  :root{ --c-it:#E4665F; --c-fr:#6F93E0; --c-as:#EBA052; --c-vis:#3DB7BF; --c-fine:#A785D8; --c-lunch:#8DBA4A; --c-x:#5CC49E; --open:#5CC49E; --closed:#F08A82; }
+  :root{ --c-it:#D98068; --c-fr:#8199CC; --c-as:#D9AE5C; --c-vis:#5CC49E; --c-fine:#5CC49E; --c-lunch:#5CC49E; --c-x:#5CC49E; --open:#5CC49E; --closed:#A09F96; }
 }
 .c-it{--c:var(--c-it)} .c-fr{--c:var(--c-fr)} .c-as{--c:var(--c-as)} .c-vis{--c:var(--c-vis)}
 .c-fine{--c:var(--c-fine)} .c-lunch{--c:var(--c-lunch)} .c-x{--c:var(--c-x)}
@@ -241,7 +241,7 @@ label.f{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:60
 .open-badge.is-closed{color:var(--closed);background:color-mix(in srgb,var(--closed) 12%,transparent)}
 .name-row{flex-wrap:wrap}
 
-h1{white-space:nowrap;font-size:26px}
+h1{white-space:nowrap}
 .title-row .sync{min-width:0}
 
 /* Bekijkversie: geen knop in het midden */
@@ -455,3 +455,25 @@ ul.list{gap:10px}
 .panel-export{font-size:13px}
 .wide-btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px;font-weight:600;color:var(--accent);text-align:left}
 .group-head,.list-tools .inview{color:var(--muted)}
+
+
+/* ===== Ontwerp-ronde 2: één kleurtaal, rustige status, eigen stem voor notities, woordmerk ===== */
+:root{ --note:"Newsreader",Georgia,"Times New Roman",serif; }
+/* 1. Geen categoriebolletjes meer in lijst en kaart: alles strak links */
+.meta,.row-note,.status,.place .meta,.place .addr,.place .notes,.place .status{padding-left:0}
+.row-top .name{font-size:20px}
+/* 2. Gesloten neutraal, open groen; geweest als klein goud vinkje met gedempte tekst */
+.open-text.is-closed{color:var(--muted);font-weight:500}
+.open-text.is-open{font-weight:600}
+.st-been{color:var(--muted);font-weight:500}
+.st-been::before{content:"✓";color:var(--mark);font-weight:800;margin-right:5px}
+.status .sep{color:var(--muted)}
+/* 3. Notities in een eigen, cursieve schreefletter */
+.row-note,.place .notes,.visit-note{font-family:var(--note);font-style:italic;font-size:16px;line-height:1.35;color:color-mix(in srgb,var(--ink) 72%,var(--bg))}
+.row-note{font-size:15.5px}
+#fNotes,#vNote{font-family:var(--note);font-style:italic;font-size:17px}
+/* 5. Woordmerk */
+.title-row h1.wordmark{display:flex;align-items:center;gap:9px;margin:0;font:700 26px/1 var(--display);letter-spacing:-.035em;color:var(--ink)}
+.wordmark .wm-pin{flex:none;color:var(--accent);transform:translateY(1px)}
+.wordmark span{white-space:nowrap}
+@media (max-width:360px){ .title-row h1.wordmark{font-size:22px} }

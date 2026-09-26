@@ -166,9 +166,6 @@ const CATS = [
   ["it", "Italiaans", t => t.includes("Italiaans")],
   ["fr", "Frans", t => t.includes("Frans")],
   ["as", "Aziatisch", t => t.some(x => ["Aziatisch", "Thais", "Indonesisch"].includes(x))],
-  ["vis", "Vis", t => t.includes("Vis")],
-  ["fine", "Fine dining", t => t.includes("Fine dining")],
-  ["lunch", "Lunch", t => t.includes("Lunch")],
 ];
 function catOf(i) { const t = i.tags || []; const c = CATS.find(([, , f]) => f(t)); return c ? c[0] : "x"; }
 
@@ -401,7 +398,7 @@ function metaLine(i, expandable) {
 function statusLine(i, withHours = true) {
   const st = hoursStatus(i), n = (i.visits || []).length, avg = avgRating(i);
   const bits = [];
-  if (isVisited(i)) bits.push(el("span", { class: "st-been", text: "✓ Geweest" + (n > 1 ? ` ${n}×` : "") + (avg ? ` · ★ ${fmtAvg(avg)}` : "") }));
+  if (isVisited(i)) bits.push(el("span", { class: "st-been", text: "Geweest" + (n > 1 ? ` ${n}×` : "") + (avg ? ` · ★ ${fmtAvg(avg)}` : "") }));
   if (withHours && st) bits.push(el("span", { class: "open-text " + (st.open ? "is-open" : "is-closed"), text: st.text }));
   if (!bits.length) return null;
   const line = el("div", { class: "status" });
@@ -411,9 +408,7 @@ function statusLine(i, withHours = true) {
 function row(i) {
   return el("li", { class: "row" + (i.id === placeId ? " active" : ""), "data-id": i.id },
     el("button", { type: "button", class: "row-main", onclick: () => openPlace(i.id), "aria-label": i.name },
-      ...[el("div", { class: "row-top" },
-        el("i", { class: "dot c-" + catOf(i), "aria-hidden": "true" }),
-        el("span", { class: "name", text: i.name })),
+      ...[el("div", { class: "row-top" }, el("span", { class: "name", text: i.name })),
       metaLine(i, false),
       i.notes ? el("p", { class: "row-note", text: i.notes }) : null,
       statusLine(i)].filter(Boolean)));
@@ -527,7 +522,7 @@ function renderPlace(i) {
   if (hoursEl) { if (status.children.length) status.append(el("span", { class: "sep", text: " · " })); status.append(hoursEl); }
   box.replaceChildren(...[
     el("div", { class: "place-head" },
-      el("h3", {}, el("i", { class: "dot c-" + catOf(i), "aria-hidden": "true" }), i.name),
+      el("h3", { text: i.name }),
       el("button", { type: "button", class: "x", "aria-label": "Sluiten", onclick: closePlace }, svgIcon("close", 16))),
     metaLine(i, true),
     i.address ? el("p", { class: "addr", text: i.address }) : null,
