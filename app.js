@@ -979,6 +979,20 @@ function buildKml(items, title) {
   const kml = `<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">\n  <Document>\n    <name>${xmlEsc(title)}</name>\n${pm}\n  </Document>\n</kml>\n`;
   return new Blob([kml], { type: "application/vnd.google-earth.kml+xml" });
 }
+function buildMessage(items, scope) {
+  const head = `*my fav rest's* – ${scope === "view" ? "selectie van de kaart" : "alle restaurants"} (${items.length})`;
+  const blocks = items.map(i => [`*${i.name}*`, i.address, safeUrl(i.url) || mapsUrl(i)].filter(Boolean).join("\n"));
+  return [head, ...blocks].join("\n\n");
+}
+async function shareText(text) {
+  if (navigator.share) {
+    try { await navigator.share({ text }); return "shared"; }
+    catch (e) { if (e && e.name === "AbortError") return "cancelled"; }
+  }
+  try { await navigator.clipboard.writeText(text); toast("Tekst gekopieerd, plak hem in WhatsApp"); return "copied"; } catch (e) {}
+  window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
+  return "whatsapp";
+}
 async function deliverFile(blob, name) {
   const file = new File([blob], name, { type: blob.type });
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -1001,9 +1015,13 @@ $("expForm").addEventListener("submit", async e => {
   const title = `my fav rest's (${label})`;
   const btn = $("expGo"); btn.disabled = true; btn.textContent = "Bezig…";
   try {
-    const blob = fmt === "kml" ? buildKml(items, title) : await buildXlsx(items, scope === "view" ? "Kaartbeeld" : "Alle restaurants");
-    const res = await deliverFile(blob, `my-fav-rests-${label}-${date}.${fmt}`);
-    if (res !== "cancelled") { closeSheets(); toast(`${items.length} restaurants geëxporteerd`); }
+    let res;
+    if (fmt === "wa") res = await shareText(buildMessage(items, scope));
+    else {
+      const blob = fmt === "kml" ? buildKml(items, title) : await buildXlsx(items, scope === "view" ? "Kaartbeeld" : "Alle restaurants");
+      res = await deliverFile(blob, `my-fav-rests-${label}-${date}.${fmt}`);
+    }
+    if (res !== "cancelled") { closeSheets(); if (res !== "copied") toast(`${items.length} restaurants gedeeld`); }
   } catch (err) {
     $("expErr").hidden = false; $("expErr").textContent = "Exporteren lukt nu niet. Controleer je internetverbinding en probeer het opnieuw.";
   } finally { btn.disabled = false; btn.textContent = "Exporteer"; }
