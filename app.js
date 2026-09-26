@@ -168,7 +168,7 @@ function avgRating(i) {
 }
 function maxRating(i) { return Math.max(0, ...(i.visits || []).map(v => v.rating || 0)); }
 function lastVisit(i) { return visitsOf(i)[0]?.date || ""; }
-const fmtDate = s => { try { return new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { day: "numeric", month: "short", year: "numeric" }); } catch (e) { return s; } };
+const fmtDate = s => { if (!s) return "Datum onbekend"; try { return new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { day: "numeric", month: "short", year: "numeric" }); } catch (e) { return s; } };
 const stars = n => "★".repeat(n) + "☆".repeat(5 - n);
 const fmtAvg = r => r.toFixed(1).replace(".", ",").replace(",0", "");
 function visitSearchText(i) { return (i.visits || []).map(v => [v.with, v.occasion, v.note].filter(Boolean).join(" ")).join(" "); }
@@ -205,7 +205,6 @@ function openVisit(itemId, visitId) {
 $("visitForm").addEventListener("submit", e => {
   e.preventDefault();
   const date = $("vDate").value;
-  if (!date) { $("vErr").textContent = "Kies een datum."; $("vErr").hidden = false; return; }
   const it = byId(visitCtx.itemId); if (!it) return closeSheets();
   const item = { ...it, visits: (it.visits || []).slice() };
   const v = { id: visitCtx.visitId || "v" + now().toString(36), date, with: $("vWith").value.trim(), occasion: visitCtx.occasion || "", rating: visitCtx.rating || 0, note: $("vNote").value.trim() };
@@ -230,10 +229,10 @@ function visitsSection(i) {
   const avg = avgRating(i);
   const head = el("div", { class: "visits-head" },
     el("span", { class: "lbl", text: "Bezoeken" }),
-    list.length ? el("span", { class: "visits-sum", text: [`${list.length}×`, `laatst ${fmtDate(list[0].date)}`, avg ? `gem. ★ ${fmtAvg(avg)}` : null].filter(Boolean).join(" · ") }) : null);
+    list.length ? el("span", { class: "visits-sum", text: [`${list.length}×`, list[0].date ? `laatst ${fmtDate(list[0].date)}` : null, avg ? `gem. ★ ${fmtAvg(avg)}` : null].filter(Boolean).join(" · ") }) : null);
   const rows = list.map(v => el("button", { type: "button", class: "visit", onclick: () => openVisit(i.id, v.id) },
     el("span", { class: "visit-line" },
-      el("b", { text: fmtDate(v.date) }),
+      el("b", { class: v.date ? null : "nodate", text: fmtDate(v.date) }),
       v.with ? ` — met ${v.with}` : "",
       v.occasion ? ` — ${v.occasion.toLowerCase()}` : "",
       v.rating ? el("span", { class: "visit-stars", text: " — " + stars(v.rating) }) : null),

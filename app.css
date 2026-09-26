@@ -348,3 +348,4 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;display
 .times{flex:none;font-size:12px;font-weight:700;color:var(--mark)}
 .row-stars{flex:none;font-size:12px;font-weight:700;color:var(--mark);white-space:nowrap}
 input[type=date]{min-height:44px}
+.visit b.nodate{color:var(--muted);font-weight:600}
