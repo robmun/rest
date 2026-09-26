@@ -1597,6 +1597,25 @@
    "osmChecked": 1790396738598,
    "phone": "035 888 8877",
    "addrChecked": true
+  },
+  {
+   "id": "impero-romano-muhxx455",
+   "createdAt": 1790399977529,
+   "name": "Impero Romano",
+   "url": "https://imperoromano.nl/",
+   "city": "Amsterdam",
+   "notes": "",
+   "address": "Amsteldijk 25, 1074HS Amsterdam",
+   "phone": "+31 20 7527444",
+   "hours": "Mo-Fr 17:00-24:00; Sa-Su 13:00-24:00",
+   "tags": [
+    "Italiaans"
+   ],
+   "visited": true,
+   "lat": 52.356794,
+   "lng": 4.904448,
+   "geo": "osm",
+   "updatedAt": 1790399977530
   }
  ]
 }
