@@ -1406,8 +1406,12 @@
    "notes": "Lekker aan de amster",
    "tags": [],
    "visited": true,
-   "updatedAt": 1790394752819,
-   "geoFailed": true
+   "updatedAt": 1790395381870,
+   "lat": 52.401488,
+   "lng": 4.891096,
+   "geo": "osm",
+   "address": "NDSM-kade 5, 1033 PG Amsterdam",
+   "osmChecked": 1790395381870
   }
  ]
 }
