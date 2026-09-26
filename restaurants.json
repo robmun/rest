@@ -1486,6 +1486,24 @@
    "geo": "osm",
    "updatedAt": 1790396169247,
    "osmChecked": 1790396169247
+  },
+  {
+   "id": "spaghettiamo-muhvpi79",
+   "createdAt": 1790396263269,
+   "name": "Spaghettiamo",
+   "url": "https://spaghettiamo.nl/",
+   "city": "Bussum",
+   "notes": "",
+   "address": "Stationsweg 2, 1404 AN Bussum",
+   "phone": "+31 35 8887775",
+   "tags": [
+    "Italiaans"
+   ],
+   "visited": true,
+   "lat": 52.279189,
+   "lng": 5.158145,
+   "geo": "osm",
+   "updatedAt": 1790396263269
   }
  ]
 }
