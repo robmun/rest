@@ -3,7 +3,8 @@
  "cities": [
   "Amsterdam",
   "Utrecht",
-  "Kantoor"
+  "Kantoor",
+  "Bussum"
  ],
  "inspiration": [
   {
@@ -1414,6 +1415,23 @@
    "lat": 52.357456,
    "lng": 4.906782,
    "geo": "adres"
+  },
+  {
+   "id": "nobel-muhvijgk",
+   "createdAt": 1790395938308,
+   "name": "Nobel",
+   "url": "https://nobelbussum.nl/",
+   "city": "Bussum",
+   "notes": "Keertje garvile gedaan ook",
+   "address": "Kapelstraat 24, 1404HX Bussum",
+   "phone": "+31 35 3030982",
+   "hours": "Tu-Th 17:00-23:00; Fr-Sa 12:00-00:00",
+   "tags": [],
+   "visited": true,
+   "lat": 52.274228,
+   "lng": 5.164704,
+   "geo": "osm",
+   "updatedAt": 1790395938308
   }
  ]
 }
