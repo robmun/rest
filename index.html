@@ -25,8 +25,9 @@
   <header class="top">
     <div class="title-row">
       <h1>my fav rest's</h1>
-      <button class="sync" id="syncBtn" type="button" aria-label="Synchronisatie en instellingen">
-        <span class="dot" id="syncDot"></span><span id="syncText">Laden…</span>
+      <button class="settings-btn" id="syncBtn" type="button" aria-label="Instellingen">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+        <span class="dot" id="syncDot"></span><span class="sr" id="syncText">Laden…</span>
       </button>
     </div>
     <div class="search-row">
@@ -44,7 +45,7 @@
       <div class="seg" id="cities" role="group" aria-label="Lijst" hidden></div>
       <div class="chips" id="filters" role="group" aria-label="Filter op kenmerk"></div>
       <div class="legend" id="legend" aria-label="Kleuren op de kaart"></div>
-      <button type="button" class="panel-export" id="exportOpenMap">Exporteren…</button>
+      <button type="button" class="panel-export" id="exportOpenMap">Instellingen en exporteren</button>
     </div>
     <div class="geo-progress" id="geoProgress" hidden></div>
   </header>
@@ -54,19 +55,17 @@
       <div class="notice" id="notice" hidden></div>
       <div class="list-tools">
         <span class="inview" id="inView"></span>
-        <label class="sort"><span class="sr">Sorteren</span>
+        <label class="sort-btn" title="Sorteren">
+          <span id="sortLabel">A–Z</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16M3 16l4 4 4-4M17 20V4M13 8l4-4 4 4"/></svg>
           <select id="sortSel" aria-label="Sorteren">
-            <option value="az">Sorteer: A–Z</option>
-            <option value="open">Sorteer: open eerst</option>
-            <option value="new">Sorteer: nieuwste</option>
-            <option value="lastvisit">Sorteer: laatst bezocht</option>
-            <option value="rating">Sorteer: hoogste waardering</option>
+            <option value="az">A–Z</option>
+            <option value="open">Open eerst</option>
+            <option value="new">Nieuwste</option>
+            <option value="lastvisit">Laatst bezocht</option>
+            <option value="rating">Hoogste waardering</option>
           </select>
         </label>
-        <button type="button" class="tool-btn" id="exportOpen" aria-label="Exporteren">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
-          Exporteer
-        </button>
       </div>
       <ul class="list" id="list"></ul>
       <div class="empty" id="empty" hidden></div>
@@ -156,7 +155,7 @@
 <div class="sheet" id="settings" role="dialog" aria-modal="true" aria-labelledby="setTitle" hidden>
   <div class="grab"></div>
   <div class="sheet-head">
-    <h2 id="setTitle">Synchronisatie</h2>
+    <h2 id="setTitle">Instellingen</h2>
     <button class="x" type="button" data-close aria-label="Sluiten">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
     </button>
@@ -167,6 +166,10 @@
     <p class="err" id="sErr" hidden></p>
     <div class="actions">
       <button type="submit" class="primary" id="connectBtn">Nu synchroniseren</button>
+    </div>
+    <div class="group backup">
+      <span class="lbl">Exporteren</span>
+      <button type="button" class="wide-btn" id="exportOpen">Exporteer naar Excel, Google My Maps of WhatsApp…</button>
     </div>
     <div class="group backup">
       <span class="lbl">Back-up</span>

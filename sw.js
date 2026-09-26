@@ -1,5 +1,5 @@
 // Tafels service worker: app werkt ook offline; je lijst zelf staat in localStorage/GitHub.
-const CACHE = "tafels-v26";
+const CACHE = "tafels-v27";
 const SHELL = ["./", "index.html", "app.css", "app.js", "manifest.webmanifest",
   "apple-touch-icon.png", "icon-192.png", "icon-512.png"];
 const CDN = ["https://cdnjs.cloudflare.com/", "https://fonts.googleapis.com/", "https://fonts.gstatic.com/"];

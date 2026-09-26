@@ -365,6 +365,7 @@ function renderList() {
     : el("span", { text: query.trim() ? `${shown.length} gevonden` : `${shown.length} restaurants` }));
   $("list").replaceChildren(...listRows(shown));
   $("sortSel").value = ui.sort || "az";
+  $("sortLabel").textContent = $("sortSel").selectedOptions[0]?.textContent || "A–Z";
   const empty = $("empty");
   empty.hidden = !!shown.length;
   if (!shown.length) empty.textContent = !total ? "Nog geen restaurants. Tik op + om er een toe te voegen."
@@ -380,22 +381,42 @@ function showAll() {
 function listRows(shown) {
   return sortItems(shown).map(row);
 }
+const PRICE = { Betaalbaar: "€", Prijzig: "€€€" };
+function metaParts(i) {
+  const tags = (i.tags || []).filter(t => !PRICE[t]).sort(tagOrder);
+  const price = (i.tags || []).map(t => PRICE[t]).find(Boolean) || "";
+  return { shown: tags.slice(0, 2), price, rest: tags.slice(2) };
+}
+function metaLine(i, expandable) {
+  const { shown, price, rest } = metaParts(i);
+  const parts = [...shown, price].filter(Boolean);
+  if (!parts.length && !rest.length) return null;
+  const line = el("div", { class: "meta" }, el("span", { text: parts.join(" · ") }));
+  if (rest.length) {
+    if (expandable) line.append(el("button", { type: "button", class: "more-tags", onclick: ev => { ev.stopPropagation(); ev.currentTarget.replaceWith(el("span", { class: "rest-tags", text: (parts.length ? " · " : "") + rest.join(" · ") })); } }, `+${rest.length}`));
+    else line.append(el("span", { class: "more-tags", text: ` +${rest.length}` }));
+  }
+  return line;
+}
+function statusLine(i, withHours = true) {
+  const st = hoursStatus(i), n = (i.visits || []).length, avg = avgRating(i);
+  const bits = [];
+  if (isVisited(i)) bits.push(el("span", { class: "st-been", text: "✓ Geweest" + (n > 1 ? ` ${n}×` : "") + (avg ? ` · ★ ${fmtAvg(avg)}` : "") }));
+  if (withHours && st) bits.push(el("span", { class: "open-text " + (st.open ? "is-open" : "is-closed"), text: st.text }));
+  if (!bits.length) return null;
+  const line = el("div", { class: "status" });
+  bits.forEach((b, k) => { if (k) line.append(el("span", { class: "sep", text: " · " })); line.append(b); });
+  return line;
+}
 function row(i) {
-  const st = hoursStatus(i);
-  const kinds = (i.tags || []).slice().sort(tagOrder).slice(0, 2).join(" · ");
-  const sub = el("div", { class: "row-sub" },
-    kinds ? el("span", { text: kinds }) : null,
-    st ? el("span", { class: "open-text " + (st.open ? "is-open" : "is-closed"), text: st.text }) : null);
   return el("li", { class: "row" + (i.id === placeId ? " active" : ""), "data-id": i.id },
     el("button", { type: "button", class: "row-main", onclick: () => openPlace(i.id), "aria-label": i.name },
-      el("div", { class: "row-top" },
+      ...[el("div", { class: "row-top" },
         el("i", { class: "dot c-" + catOf(i), "aria-hidden": "true" }),
-        el("span", { class: "name", text: i.name }),
-        isVisited(i) ? el("b", { class: "been-mark", title: "Geweest", "aria-label": "Geweest" }) : null,
-        (i.visits || []).length > 1 ? el("span", { class: "times", text: `${i.visits.length}×` }) : null,
-        avgRating(i) ? el("span", { class: "row-stars", text: `★ ${fmtAvg(avgRating(i))}` }) : null),
-      sub.children.length ? sub : null,
-      i.notes ? el("p", { class: "row-note", text: i.notes }) : null));
+        el("span", { class: "name", text: i.name })),
+      metaLine(i, false),
+      i.notes ? el("p", { class: "row-note", text: i.notes }) : null,
+      statusLine(i)].filter(Boolean)));
 }
 
 /* ---------------- inspiratie: links toevoegen en verwijderen ---------------- */
@@ -486,32 +507,34 @@ function renderPlace(i) {
   const st = hoursStatus(i);
   const lines = hoursLines(i);
   const box = $("place");
-  const acts = el("div", { class: "acts" },
-    actionBtn("route", "Route", { href: routeUrl(i), target: "_blank", rel: "noopener" }),
-    i.phone ? actionBtn("phone", "Bellen", { href: telUrl(i.phone) }) : null,
-    safeUrl(i.url) ? actionBtn("web", "Website", { href: safeUrl(i.url), target: "_blank", rel: "noopener" }) : null,
-    ui.view === "list" && i.lat != null ? actionBtn("map", "Kaart", { onclick: () => showOnMap(i.id) }) : null,
+  const more = el("div", { class: "acts-more", hidden: "" },
+    ...[i.phone ? actionBtn("phone", "Bellen", { href: telUrl(i.phone) }) : null,
+    ui.view === "list" && i.lat != null ? actionBtn("map", "Op kaart", { onclick: () => showOnMap(i.id) }) : null,
     actionBtn("share", "Delen", { onclick: () => sharePlace(byId(i.id) || i) }),
-    READONLY ? null : actionBtn("edit", "Bewerken", { onclick: () => { const it = byId(i.id); closePlace(); openSheet(it); } }));
+    READONLY ? null : actionBtn("edit", "Bewerken", { onclick: () => { const it = byId(i.id); closePlace(); openSheet(it); } })].filter(Boolean));
+  const acts = el("div", { class: "acts" }, ...[
+    actionBtn("route", "Route", { href: routeUrl(i), target: "_blank", rel: "noopener" }),
+    safeUrl(i.url) ? actionBtn("web", "Website", { href: safeUrl(i.url), target: "_blank", rel: "noopener" }) : null,
+    el("button", { type: "button", class: "act act-more", "aria-label": "Meer acties", "aria-expanded": "false", onclick: ev => { more.hidden = !more.hidden; ev.currentTarget.setAttribute("aria-expanded", String(!more.hidden)); } }, "•••")].filter(Boolean));
   let hoursEl = null;
   if (lines) {
     const today = (new Date().getDay() + 6) % 7;
     hoursEl = el("details", { class: "hours" },
-      el("summary", {}, el("span", { class: "open-text " + (st.open ? "is-open" : "is-closed"), text: st.text }), el("span", { class: "more", text: "Alle tijden" })),
+      el("summary", {}, el("span", { class: "open-text " + (st.open ? "is-open" : "is-closed"), text: st.text }), el("span", { class: "more", text: "tijden" })),
       el("table", {}, ...lines.map(([d, t], k) => el("tr", { class: k === today ? "today" : null }, el("th", { text: d }), el("td", { text: t })))));
-  } else if (i.hours) hoursEl = el("p", { class: "hours-raw", text: i.hours });
-  else hoursEl = el("p", { class: "hours-raw muted", text: "Openingstijden onbekend" });
+  } else if (i.hours) hoursEl = el("span", { class: "hours-raw", text: i.hours });
+  const status = statusLine(i, false) || el("div", { class: "status" });
+  if (hoursEl) { if (status.children.length) status.append(el("span", { class: "sep", text: " · " })); status.append(hoursEl); }
   box.replaceChildren(...[
     el("div", { class: "place-head" },
-      el("div", { class: "place-title" },
-        el("h3", {}, el("i", { class: "dot c-" + catOf(i), "aria-hidden": "true" }), i.name, isVisited(i) ? el("span", { class: "been", text: "Geweest" }) : null)),
+      el("h3", {}, el("i", { class: "dot c-" + catOf(i), "aria-hidden": "true" }), i.name),
       el("button", { type: "button", class: "x", "aria-label": "Sluiten", onclick: closePlace }, svgIcon("close", 16))),
+    metaLine(i, true),
     i.address ? el("p", { class: "addr", text: i.address }) : null,
-    hoursEl,
-    acts,
     i.notes ? el("p", { class: "notes", text: i.notes }) : null,
-    visitsSection(i),
-    (i.tags && i.tags.length) ? el("div", { class: "tags" }, i.tags.map(t => el("span", { class: "tag", text: t }))) : null].filter(Boolean));
+    status.children.length ? status : null,
+    acts, more,
+    visitsSection(i)].filter(Boolean));
   box.hidden = false;
   $("main").classList.add("card-open");
 }
@@ -1377,8 +1400,8 @@ function openExport() {
   $("expErr").hidden = true;
   showSheet("exportSheet");
 }
-$("exportOpen").onclick = openExport;
-$("exportOpenMap").onclick = () => { document.querySelector(".app").classList.remove("filters-open"); openExport(); };
+$("exportOpen").onclick = () => { $("settings").hidden = true; openExport(); };
+$("exportOpenMap").onclick = () => { document.querySelector(".app").classList.remove("filters-open"); READONLY ? openExport() : openSettings(); };
 
 let xlsxLib = null;
 function loadXlsx() {
@@ -1503,7 +1526,7 @@ async function boot() {
   ui.city = ALL; lsSet(LS_UI, ui);
   if (READONLY) {
     document.querySelector(".app").classList.add("readonly");
-    $("addBtn").hidden = true; $("syncBtn").hidden = true;
+    $("addBtn").hidden = true; $("syncBtn").hidden = true; $("exportOpenMap").textContent = "Exporteren";
     const mf = document.querySelector('link[rel="manifest"]'); if (mf) mf.href = "manifest-bekijk.webmanifest";
     store.data.items.forEach(i => { if (i.visits && i.visits.length) i.visited = true; delete i.notes; delete i.visits; });
   }

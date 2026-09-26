@@ -1,5 +1,5 @@
 :root{
-  --bg:#F2F4F2; --surface:#FFFFFF; --ink:#16211D; --muted:#5E6B66; --line:#DCE2DF;
+  --bg:#F6F4EF; --surface:#FFFFFF; --ink:#1A211D; --muted:#686A62; --line:#E6E1D7;
   --accent:#1E6B52; --accent-ink:#FFFFFF; --accent-soft:#E1EEE8;
   --mark:#C98A12; --mark-soft:#F7EBCF; --danger:#B3261E; --danger-soft:#FBE3E1;
   --ok:#2E8B57; --warn:#C98A12;
@@ -12,7 +12,7 @@
 @media (prefers-color-scheme: dark){
   :root{
     color-scheme:dark;
-    --bg:#0F1513; --surface:#18211E; --ink:#E8EEEB; --muted:#98A6A0; --line:#2A3531;
+    --bg:#121411; --surface:#1C201C; --ink:#ECEDE7; --muted:#A09F96; --line:#2D302B;
     --accent:#5CC49E; --accent-ink:#0B1411; --accent-soft:#1D3A30;
     --mark:#E6B34A; --mark-soft:#3A3020; --danger:#F08A82; --danger-soft:#3D1F1D;
     --ok:#5CC49E; --warn:#E6B34A;
@@ -376,3 +376,82 @@ input[type=date]{min-height:44px}
 .tg-chips{display:flex;flex-wrap:wrap;gap:6px}
 .newtag select{flex:none;font-size:15px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 6px;color:var(--ink);max-width:110px}
 @media (max-width:360px){ .tag-group{grid-template-columns:1fr} .tg-label{padding-top:0} }
+
+
+/* ===================== Ontwerp-ronde: rust, hiërarchie, warmte ===================== */
+:root{ --radius:16px; --hair:color-mix(in srgb,var(--line) 75%,transparent); }
+@media (prefers-color-scheme: dark){ :root{ --hair:var(--line); } }
+
+/* Kop: titel → zoeken → filters */
+header.top{border-bottom:0;padding-bottom:6px;gap:10px}
+.title-row h1{font-size:30px;letter-spacing:-.025em}
+.settings-btn{position:relative;flex:none;width:40px;height:40px;border-radius:12px;border:0;background:transparent;color:var(--muted);display:grid;place-items:center}
+.settings-btn .dot{position:absolute;top:8px;right:7px;width:7px;height:7px;box-shadow:0 0 0 2px var(--bg)}
+.settings-btn .dot.ok{background:transparent;box-shadow:none}
+.search{border-color:var(--hair);background:var(--surface);border-radius:14px}
+.count{display:none}
+.chip{border-color:var(--hair);background:var(--surface);font-weight:500}
+.app:not(.mapmode) header.top::after{content:"";height:1px;background:var(--hair);margin:4px -16px 0}
+
+/* Lijst-hulpregel: aantal links, sorteren als klein menu rechts */
+.list-tools{flex-wrap:nowrap;margin-bottom:10px;align-items:center}
+.inview{flex-basis:auto;margin-right:auto}
+.sort-btn{position:relative;display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-size:13px;font-weight:600;padding:4px 2px;cursor:pointer}
+.sort-btn select{position:absolute;inset:0;opacity:0;width:100%;height:100%;font-size:16px;cursor:pointer}
+
+/* Restaurantrijen: naam dominant, één metaregel, notitie subtiel, status klein */
+ul.list{gap:10px}
+.row{border:1px solid var(--hair);border-radius:var(--radius);box-shadow:none}
+.row-main{padding:14px 16px 13px;gap:4px}
+.row-top{gap:9px}
+.row-top .name{font:650 19px/1.2 var(--display);letter-spacing:-.015em;white-space:normal}
+.row-top .dot{width:9px;height:9px}
+.meta{font-size:14px;color:var(--ink);opacity:.8;padding-left:18px}
+.meta .more-tags{border:0;background:none;padding:0 0 0 6px;color:var(--muted);font:inherit;font-weight:600}
+.row-note{padding-left:18px;font-size:13.5px;color:var(--muted);font-style:italic;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.status{display:flex;flex-wrap:wrap;align-items:baseline;font-size:13px;color:var(--muted);padding-left:18px;margin-top:2px}
+.status .sep{white-space:pre}
+.st-been{color:var(--mark);font-weight:700}
+.status .open-text{font-weight:600}
+.row.active{border-color:var(--accent)}
+
+/* Restaurantkaart (onderin) */
+.place{border-radius:22px;padding:18px 18px 16px;gap:8px}
+.place-head{align-items:center}
+.place h3{font:700 25px/1.12 var(--display);letter-spacing:-.02em;gap:10px}
+.place h3 .dot{width:11px;height:11px}
+.place .meta,.place .addr,.place .notes,.place .status{padding-left:21px}
+.place .meta{font-size:15px}
+.place .addr{font-size:14px}
+.place .notes{font-size:14px;font-style:italic}
+.place .status{font-size:14px}
+.place .hours{display:inline;font-size:14px}
+.place .hours summary{display:inline-flex;gap:6px}
+.place .hours .more{font-size:13px;font-weight:600}
+.place .hours table{display:block}
+.acts{display:flex;gap:8px;margin-top:6px;grid-template-columns:none}
+.act{flex-direction:row;gap:7px;padding:10px 16px;border-radius:999px;font-size:14px;font-weight:600;background:var(--accent-soft);color:var(--accent)}
+.act svg{width:18px;height:18px}
+.act:first-child{background:var(--accent);color:var(--accent-ink)}
+.act-more{margin-left:auto;padding:10px 14px;letter-spacing:1px;border:0}
+.acts-more{display:flex;flex-wrap:wrap;gap:8px}
+.acts-more .act{background:var(--bg);color:var(--ink)}
+.acts-more .act:first-child{background:var(--bg);color:var(--ink)}
+.visits{border-top:1px solid var(--hair);margin-top:4px}
+
+/* Tabbalk in iOS-stijl: + ingebed in plaats van zwevend */
+.tabbar{grid-template-columns:1fr 1fr 1fr;padding:8px 24px calc(10px + var(--safe-b));background:color-mix(in srgb,var(--surface) 88%,transparent);-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);border-top:1px solid var(--hair)}
+.tab{gap:3px;font-size:11px;font-weight:600;padding:2px 0;color:var(--muted)}
+.tab svg{width:25px;height:25px}
+.tab[aria-pressed="true"]{color:var(--accent)}
+.tab[aria-pressed="true"] svg{stroke-width:2.4}
+.add{justify-self:center;margin-top:0;width:46px;height:46px;border-radius:15px;box-shadow:none}
+.add svg{width:22px;height:22px}
+.app.readonly .tabbar{grid-template-columns:1fr 1fr}
+
+/* Minder chroom op de kaart */
+.app.mapmode .search,.app.mapmode .filter-btn{box-shadow:0 2px 12px rgba(0,0,0,.12)}
+.locate{border-color:transparent;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+.panel-export{font-size:13px}
+.wide-btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px;font-weight:600;color:var(--accent);text-align:left}
+.group-head,.list-tools .inview{color:var(--muted)}
