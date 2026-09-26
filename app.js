@@ -1,7 +1,20 @@
 /* Tafels — persoonlijke restaurantlijst met kaart en GitHub-sync */
 "use strict";
 
-const BASE_TAGS = ["Zakelijk","Lunch","Terras","Aan het water","Italiaans","Frans","Thais","Aziatisch","Indonesisch","Peruaans","Steak","Vis","Vegan","Fine dining","Knus","Groot","Betaalbaar","Prijzig","Tip","Wachtlijst"];
+// Kenmerken per groep; eigen kenmerken krijgen een groep via store.data.tagGroups
+const TAG_GROUPS = [
+  ["Keuken", ["Italiaans", "Frans", "Thais", "Aziatisch", "Indonesisch", "Peruaans", "Belgisch", "Steak", "Vis", "Vegan"]],
+  ["Moment", ["Lunch", "Diner", "Ontbijt", "Borrel"]],
+  ["Sfeer", ["Knus", "Groot", "Terras", "Aan het water", "Fine dining"]],
+  ["Prijs", ["Betaalbaar", "Prijzig"]],
+  ["Gebruik", ["Zakelijk", "Tip", "Wachtlijst"]],
+];
+const GROUP_NAMES = [...TAG_GROUPS.map(g => g[0]), "Overig"];
+function groupOf(t) {
+  const g = TAG_GROUPS.find(([, ts]) => ts.includes(t));
+  return g ? g[0] : ((store.data.tagGroups || {})[t] || "Overig");
+}
+function tagOrder(a, b) { return GROUP_NAMES.indexOf(groupOf(a)) - GROUP_NAMES.indexOf(groupOf(b)); }
 const BASE_CITIES = ["Amsterdam","Utrecht","Kantoor"];
 // Zoekgebied per lijst (voor het automatisch vinden van locaties) en startpunt van de kaart
 const AREAS = {
@@ -42,6 +55,7 @@ function allCities() {
   visible().forEach(i => i.city && s.add(i.city));
   return [...s];
 }
+const BASE_TAGS = TAG_GROUPS.flatMap(g => g[1]);
 function allTags() { const s = new Set(BASE_TAGS); visible().forEach(i => (i.tags || []).forEach(t => s.add(t))); return [...s]; }
 function norm(s) { return (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
 function safeUrl(u) { return /^https?:\/\//i.test(u || "") ? u : null; }
@@ -279,7 +293,7 @@ function render() {
 
   const inCity = vis.filter(inCityOf);
   const used = new Map(); inCity.forEach(i => (i.tags || []).forEach(t => used.set(t, (used.get(t) || 0) + 1)));
-  const tagList = [...used.keys()].sort((a, b) => used.get(b) - used.get(a) || a.localeCompare(b, "nl"));
+  const tagList = [...used.keys()].sort((a, b) => tagOrder(a, b) || used.get(b) - used.get(a) || a.localeCompare(b, "nl"));
   $("filters").replaceChildren(...[
     el("button", { type: "button", class: "chip state", "aria-pressed": String(openFilter), onclick: () => { openFilter = !openFilter; render(); } }, "Nu open"),
     el("button", { type: "button", class: "chip state", "aria-pressed": String(visitFilter === "yes"), onclick: () => { visitFilter = visitFilter === "yes" ? null : "yes"; render(); } }, "Geweest"),
@@ -368,7 +382,7 @@ function listRows(shown) {
 }
 function row(i) {
   const st = hoursStatus(i);
-  const kinds = (i.tags || []).slice(0, 2).join(" · ");
+  const kinds = (i.tags || []).slice().sort(tagOrder).slice(0, 2).join(" · ");
   const sub = el("div", { class: "row-sub" },
     kinds ? el("span", { text: kinds }) : null,
     st ? el("span", { class: "open-text " + (st.open ? "is-open" : "is-closed"), text: st.text }) : null);
@@ -803,10 +817,21 @@ function updateGeoProgress() { if (!geoQueue.length) $("geoProgress").hidden = t
 let miniMap = null, miniMarker = null;
 function renderTagPick() {
   const tags = [...new Set([...allTags(), ...formTags])];
-  $("fTags").replaceChildren(...tags.map(t => el("button", {
-    type: "button", class: "chip", "aria-pressed": String(formTags.has(t)),
-    onclick: e => { formTags.has(t) ? formTags.delete(t) : formTags.add(t); e.currentTarget.setAttribute("aria-pressed", String(formTags.has(t))); }
-  }, t)));
+  const sections = GROUP_NAMES.map(g => {
+    const own = tags.filter(t => groupOf(t) === g);
+    const ordered = g === "Overig" ? own.sort((a, b) => a.localeCompare(b, "nl")) : [...(TAG_GROUPS.find(x => x[0] === g) || [, []])[1].filter(t => own.includes(t)), ...own.filter(t => !BASE_TAGS.includes(t)).sort((a, b) => a.localeCompare(b, "nl"))];
+    if (!ordered.length) return null;
+    return el("div", { class: "tag-group" },
+      el("span", { class: "tg-label", text: g }),
+      el("div", { class: "tg-chips" }, ...ordered.map(t => el("button", {
+        type: "button", class: "chip", "aria-pressed": String(formTags.has(t)),
+        onclick: ev => { formTags.has(t) ? formTags.delete(t) : formTags.add(t); ev.currentTarget.setAttribute("aria-pressed", String(formTags.has(t))); renderQuickSummary(); }
+      }, t))));
+  }).filter(Boolean);
+  $("fTags").replaceChildren(...sections);
+  const sel = $("fNewTagGroup");
+  if (!sel.options.length) sel.replaceChildren(...GROUP_NAMES.map(g => el("option", { value: g }, g)));
+  if (!sel.value) sel.value = "Overig";
 }
 function fillCities(sel) {
   $("fCity").replaceChildren(...allCities().map(c => el("option", { value: c }, c)), el("option", { value: "__new" }, "Nieuwe lijst…"));
@@ -875,7 +900,14 @@ $("scrim").onclick = closeSheets;
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheets(); });
 $("addBtn").onclick = () => { if (!READONLY) openSheet(null); };
 $("fCity").onchange = e => { $("newCityWrap").hidden = e.target.value !== "__new"; if (e.target.value === "__new") $("fNewCity").focus(); };
-function addTagFromInput() { const v = $("fNewTag").value.trim(); if (!v) return; formTags.add(v.charAt(0).toUpperCase() + v.slice(1)); $("fNewTag").value = ""; renderTagPick(); }
+function addTagFromInput() {
+  const v = $("fNewTag").value.trim(); if (!v) return;
+  const t = v.charAt(0).toUpperCase() + v.slice(1), g = $("fNewTagGroup").value || "Overig";
+  if (!BASE_TAGS.includes(t) && g !== "Overig" && (store.data.tagGroups || {})[t] !== g) {
+    store.data.tagGroups = { ...(store.data.tagGroups || {}), [t]: g }; store.dirty = true; persist();
+  }
+  formTags.add(t); $("fNewTag").value = ""; $("fNewTagGroup").value = "Overig"; renderTagPick();
+}
 $("addTagBtn").onclick = addTagFromInput;
 $("fNewTag").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); addTagFromInput(); } });
 $("findBtn").onclick = async () => {
@@ -1249,6 +1281,7 @@ async function ghPut(data, sha) {
 }
 function merge(remote, local) {
   const out = { ...remote, cities: [...new Set([...(remote.cities || []), ...(local.cities || [])])] };
+  out.tagGroups = { ...(remote.tagGroups || {}), ...(local.tagGroups || {}) };
   if ((local.inspirationAt || 0) > (remote.inspirationAt || 0) || !out.inspiration) { out.inspiration = local.inspiration || []; out.inspirationAt = local.inspirationAt; }
   const m = new Map();
   (remote.items || []).forEach(i => m.set(i.id, i));

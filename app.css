@@ -368,3 +368,11 @@ input[type=date]{min-height:44px}
 .checks .no .ck{color:var(--muted)}
 .more-btn{align-self:center;border:0;background:none;color:var(--accent);font-weight:600;font-size:14px;padding:6px}
 .dup{margin:6px 0 0;padding:8px 10px;border-radius:10px;background:var(--mark-soft);font-size:14px}
+
+/* ===== Kenmerken in groepen ===== */
+#fTags{display:flex;flex-direction:column;gap:10px}
+.tag-group{display:grid;grid-template-columns:72px 1fr;gap:8px;align-items:start}
+.tg-label{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding-top:7px}
+.tg-chips{display:flex;flex-wrap:wrap;gap:6px}
+.newtag select{flex:none;font-size:15px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 6px;color:var(--ink);max-width:110px}
+@media (max-width:360px){ .tag-group{grid-template-columns:1fr} .tg-label{padding-top:0} }
