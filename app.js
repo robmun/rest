@@ -158,6 +158,91 @@ const CATS = [
 ];
 function catOf(i) { const t = i.tags || []; const c = CATS.find(([, , f]) => f(t)); return c ? c[0] : "x"; }
 
+/* ---------------- bezoekhistorie ---------------- */
+const OCCASIONS = ["Diner", "Lunch", "Zakelijk", "Borrel", "Ontbijt", "Verjaardag"];
+function visitsOf(i) { return (i.visits || []).slice().sort((a, b) => (b.date || "").localeCompare(a.date || "")); }
+function isVisited(i) { return !!i.visited || !!(i.visits && i.visits.length); }
+function avgRating(i) {
+  const r = (i.visits || []).map(v => v.rating).filter(Boolean);
+  return r.length ? r.reduce((a, b) => a + b, 0) / r.length : null;
+}
+function maxRating(i) { return Math.max(0, ...(i.visits || []).map(v => v.rating || 0)); }
+function lastVisit(i) { return visitsOf(i)[0]?.date || ""; }
+const fmtDate = s => { try { return new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { day: "numeric", month: "short", year: "numeric" }); } catch (e) { return s; } };
+const stars = n => "★".repeat(n) + "☆".repeat(5 - n);
+const fmtAvg = r => r.toFixed(1).replace(".", ",").replace(",0", "");
+function visitSearchText(i) { return (i.visits || []).map(v => [v.with, v.occasion, v.note].filter(Boolean).join(" ")).join(" "); }
+
+let visitCtx = null; // { itemId, visitId }
+function renderStars(n) {
+  $("vStars").replaceChildren(...[1, 2, 3, 4, 5].map(k => el("button", {
+    type: "button", class: "star" + (k <= n ? " on" : ""), role: "radio", "aria-checked": String(k === n), "aria-label": `${k} ster${k > 1 ? "ren" : ""}`,
+    onclick: () => { visitCtx.rating = visitCtx.rating === k ? 0 : k; renderStars(visitCtx.rating); }
+  }, "★")));
+}
+function renderOcc() {
+  $("vOcc").replaceChildren(...OCCASIONS.map(o => el("button", {
+    type: "button", class: "chip", "aria-pressed": String(visitCtx.occasion === o),
+    onclick: () => { visitCtx.occasion = visitCtx.occasion === o ? "" : o; renderOcc(); }
+  }, o)));
+}
+function openVisit(itemId, visitId) {
+  const it = byId(itemId); if (!it) return;
+  const v = visitId ? (it.visits || []).find(x => x.id === visitId) : null;
+  visitCtx = { itemId, visitId: v ? v.id : null, rating: v ? v.rating || 0 : 0, occasion: v ? v.occasion || "" : "" };
+  $("visitTitle").textContent = v ? "Bezoek bewerken" : "Bezoek toevoegen";
+  $("visitFor").textContent = it.name;
+  $("vDate").value = v ? v.date : new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  $("vWith").value = v ? v.with || "" : "";
+  $("vNote").value = v ? v.note || "" : "";
+  const names = new Set(); visible().forEach(i => (i.visits || []).forEach(x => x.with && names.add(x.with)));
+  $("withList").replaceChildren(...[...names].sort((a, b) => a.localeCompare(b, "nl")).map(n => el("option", { value: n })));
+  renderStars(visitCtx.rating); renderOcc();
+  const d = $("vDel"); d.hidden = !v; d.textContent = "Verwijderen"; d.classList.remove("confirm"); d.dataset.armed = "";
+  $("vErr").hidden = true;
+  showSheet("visitSheet");
+}
+$("visitForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const date = $("vDate").value;
+  if (!date) { $("vErr").textContent = "Kies een datum."; $("vErr").hidden = false; return; }
+  const it = byId(visitCtx.itemId); if (!it) return closeSheets();
+  const item = { ...it, visits: (it.visits || []).slice() };
+  const v = { id: visitCtx.visitId || "v" + now().toString(36), date, with: $("vWith").value.trim(), occasion: visitCtx.occasion || "", rating: visitCtx.rating || 0, note: $("vNote").value.trim() };
+  Object.keys(v).forEach(k => { if (v[k] === "" || v[k] === 0) delete v[k]; });
+  const idx = item.visits.findIndex(x => x.id === v.id);
+  if (idx >= 0) item.visits[idx] = v; else item.visits.push(v);
+  item.visited = true;
+  const isNew = idx < 0;
+  closeSheets(); upsert(item);
+  toast(isNew ? "Bezoek bewaard" : "Bezoek bijgewerkt");
+});
+$("vDel").onclick = () => {
+  const d = $("vDel");
+  if (!d.dataset.armed) { d.dataset.armed = "1"; d.textContent = "Zeker weten?"; d.classList.add("confirm"); return; }
+  const it = byId(visitCtx.itemId); if (!it) return closeSheets();
+  const item = { ...it, visits: (it.visits || []).filter(x => x.id !== visitCtx.visitId) };
+  closeSheets(); upsert(item); toast("Bezoek verwijderd");
+};
+function visitsSection(i) {
+  const list = visitsOf(i);
+  if (READONLY) return null;
+  const avg = avgRating(i);
+  const head = el("div", { class: "visits-head" },
+    el("span", { class: "lbl", text: "Bezoeken" }),
+    list.length ? el("span", { class: "visits-sum", text: [`${list.length}×`, `laatst ${fmtDate(list[0].date)}`, avg ? `gem. ★ ${fmtAvg(avg)}` : null].filter(Boolean).join(" · ") }) : null);
+  const rows = list.map(v => el("button", { type: "button", class: "visit", onclick: () => openVisit(i.id, v.id) },
+    el("span", { class: "visit-line" },
+      el("b", { text: fmtDate(v.date) }),
+      v.with ? ` — met ${v.with}` : "",
+      v.occasion ? ` — ${v.occasion.toLowerCase()}` : "",
+      v.rating ? el("span", { class: "visit-stars", text: " — " + stars(v.rating) }) : null),
+    v.note ? el("span", { class: "visit-note", text: v.note }) : null));
+  const legacy = !list.length && i.visited ? el("p", { class: "hint", text: "Gemarkeerd als geweest, nog zonder datum." }) : null;
+  const add = el("button", { type: "button", class: "linkbtn", onclick: () => openVisit(i.id) }, "+ Bezoek toevoegen");
+  return el("div", { class: "visits" }, ...[head, legacy, ...rows, add].filter(Boolean));
+}
+
 /* ---------------- filtering & list ---------------- */
 const ALL = "Alles";
 let hereCity = null, openFilter = false;
@@ -171,11 +256,13 @@ function filtered() {
   const nowD = new Date();
   return visible().filter(i => {
     if (!inCityOf(i)) return false;
-    if (visitFilter === "yes" && !i.visited) return false;
-    if (visitFilter === "no" && i.visited) return false;
+    if (visitFilter === "yes" && !isVisited(i)) return false;
+    if (visitFilter === "no" && isVisited(i)) return false;
+    if (visitFilter === "often" && (i.visits || []).length < 2) return false;
+    if (visitFilter === "top" && maxRating(i) < 5) return false;
     if (openFilter) { const st = hoursStatus(i, nowD); if (!st || !st.open) return false; }
     for (const t of activeTags) if (!(i.tags || []).includes(t)) return false;
-    if (q && !norm([i.name, i.notes, i.address, (i.tags || []).join(" ")].join(" ")).includes(q)) return false;
+    if (q && !norm([i.name, i.notes, i.address, (i.tags || []).join(" "), visitSearchText(i)].join(" ")).includes(q)) return false;
     return true;
   }).sort((a, b) => a.name.localeCompare(b.name, "nl", { sensitivity: "base" }));
 }
@@ -194,12 +281,14 @@ function render() {
   const inCity = vis.filter(inCityOf);
   const used = new Map(); inCity.forEach(i => (i.tags || []).forEach(t => used.set(t, (used.get(t) || 0) + 1)));
   const tagList = [...used.keys()].sort((a, b) => used.get(b) - used.get(a) || a.localeCompare(b, "nl"));
-  $("filters").replaceChildren(
+  $("filters").replaceChildren(...[
     el("button", { type: "button", class: "chip state", "aria-pressed": String(openFilter), onclick: () => { openFilter = !openFilter; render(); } }, "Nu open"),
     el("button", { type: "button", class: "chip state", "aria-pressed": String(visitFilter === "yes"), onclick: () => { visitFilter = visitFilter === "yes" ? null : "yes"; render(); } }, "Geweest"),
     el("button", { type: "button", class: "chip state", "aria-pressed": String(visitFilter === "no"), onclick: () => { visitFilter = visitFilter === "no" ? null : "no"; render(); } }, "Nog proberen"),
+    READONLY ? null : el("button", { type: "button", class: "chip state", "aria-pressed": String(visitFilter === "often"), onclick: () => { visitFilter = visitFilter === "often" ? null : "often"; render(); } }, "Vaker geweest"),
+    READONLY ? null : el("button", { type: "button", class: "chip state", "aria-pressed": String(visitFilter === "top"), onclick: () => { visitFilter = visitFilter === "top" ? null : "top"; render(); } }, "★★★★★"),
     ...tagList.map(t => el("button", { type: "button", class: "chip", "aria-pressed": String(activeTags.has(t)), onclick: () => { activeTags.has(t) ? activeTags.delete(t) : activeTags.add(t); render(); } }, t))
-  );
+  ].filter(Boolean));
   $("legend").replaceChildren(
     ...[...CATS.map(([k, label]) => [k, label]), ["x", "Overig"]].map(([k, label]) => el("span", { class: "lg" }, el("i", { class: "dot c-" + k }), label)),
     el("span", { class: "lg" }, el("i", { class: "dot been-dot" }), "Geweest"));
@@ -232,6 +321,8 @@ function statusBadge(i) {
 function sortItems(arr) {
   const mode = ui.sort || "az", d = new Date();
   const byName = (a, b) => a.name.localeCompare(b.name, "nl", { sensitivity: "base" });
+  if (mode === "lastvisit") return arr.slice().sort((a, b) => lastVisit(b).localeCompare(lastVisit(a)) || byName(a, b));
+  if (mode === "rating") return arr.slice().sort((a, b) => (avgRating(b) || 0) - (avgRating(a) || 0) || byName(a, b));
   if (mode === "new") return arr.slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0) || byName(a, b));
   if (mode === "open") {
     const rank = i => { const st = hoursStatus(i, d); return st ? (st.open ? 0 : 1) : 2; };
@@ -287,7 +378,9 @@ function row(i) {
       el("div", { class: "row-top" },
         el("i", { class: "dot c-" + catOf(i), "aria-hidden": "true" }),
         el("span", { class: "name", text: i.name }),
-        i.visited ? el("b", { class: "been-mark", title: "Geweest", "aria-label": "Geweest" }) : null),
+        isVisited(i) ? el("b", { class: "been-mark", title: "Geweest", "aria-label": "Geweest" }) : null,
+        (i.visits || []).length > 1 ? el("span", { class: "times", text: `${i.visits.length}×` }) : null,
+        avgRating(i) ? el("span", { class: "row-stars", text: `★ ${fmtAvg(avgRating(i))}` }) : null),
       sub.children.length ? sub : null,
       i.notes ? el("p", { class: "row-note", text: i.notes }) : null));
 }
@@ -398,12 +491,13 @@ function renderPlace(i) {
   box.replaceChildren(...[
     el("div", { class: "place-head" },
       el("div", { class: "place-title" },
-        el("h3", {}, el("i", { class: "dot c-" + catOf(i), "aria-hidden": "true" }), i.name, i.visited ? el("span", { class: "been", text: "Geweest" }) : null)),
+        el("h3", {}, el("i", { class: "dot c-" + catOf(i), "aria-hidden": "true" }), i.name, isVisited(i) ? el("span", { class: "been", text: "Geweest" }) : null)),
       el("button", { type: "button", class: "x", "aria-label": "Sluiten", onclick: closePlace }, svgIcon("close", 16))),
     i.address ? el("p", { class: "addr", text: i.address }) : null,
     hoursEl,
     acts,
     i.notes ? el("p", { class: "notes", text: i.notes }) : null,
+    visitsSection(i),
     (i.tags && i.tags.length) ? el("div", { class: "tags" }, i.tags.map(t => el("span", { class: "tag", text: t }))) : null].filter(Boolean));
   box.hidden = false;
   $("main").classList.add("card-open");
@@ -464,7 +558,7 @@ function renderMarkers() {
   const shown = filtered();
   const withPos = shown.filter(i => i.lat != null && i.lng != null);
   withPos.forEach(i => {
-    const m = L.marker([i.lat, i.lng], { icon: pinIcon("c-" + catOf(i), i.visited), title: i.name, riseOnHover: true });
+    const m = L.marker([i.lat, i.lng], { icon: pinIcon("c-" + catOf(i), isVisited(i)), title: i.name, riseOnHover: true });
     m.bindTooltip(i.name, { permanent: true, direction: "right", className: "pin-label", interactive: false });
     m.on("click", () => openPlace(i.id));
     m.on("add", () => { if (i.id === placeId) { const e = m.getElement(); if (e) e.classList.add("selected"); } });
@@ -774,7 +868,7 @@ function openSheet(item) {
   if (!item) setTimeout(() => $("fName").focus(), 80);
 }
 function showSheet(id) { $("scrim").hidden = false; $(id).hidden = false; $(id).scrollTop = 0; }
-function closeSheets() { $("scrim").hidden = true; $("sheet").hidden = true; $("settings").hidden = true; $("exportSheet").hidden = true; editing = null; }
+function closeSheets() { $("scrim").hidden = true; $("sheet").hidden = true; $("settings").hidden = true; $("exportSheet").hidden = true; $("visitSheet").hidden = true; editing = null; }
 document.querySelectorAll("[data-close]").forEach(b => (b.onclick = closeSheets));
 $("scrim").onclick = closeSheets;
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheets(); });
@@ -1120,7 +1214,7 @@ async function sync() {
     for (let attempt = 0; attempt < 3; attempt++) {
       const remote = await ghGet();
       if (remote) {
-        if (READONLY) remote.data.items.forEach(i => delete i.notes);
+        if (READONLY) remote.data.items.forEach(i => { if (i.visits && i.visits.length) i.visited = true; delete i.notes; delete i.visits; });
         if (!store.dirty || READONLY) { store.data = remote.data; store.sha = remote.sha; store.dirty = false; persist(); break; }
         store.data = merge(remote.data, store.data); store.sha = remote.sha;
       } else store.sha = null;
@@ -1208,11 +1302,11 @@ function loadXlsx() {
 }
 async function buildXlsx(items, title) {
   const X = await loadXlsx();
-  const head = ["Naam", "Adres", "Website", "Notitie", "Kenmerken", "Geweest", "Telefoon", "Openingstijden", "Google Maps", "Breedtegraad", "Lengtegraad"];
-  const rows = items.map(i => [i.name, i.address || "", safeUrl(i.url) || "", i.notes || "", (i.tags || []).join(", "), i.visited ? "ja" : "",
-    i.phone || "", i.hours || "", mapsUrl(i), i.lat ?? "", i.lng ?? ""]);
+  const head = ["Naam", "Adres", "Website", "Notitie", "Kenmerken", "Geweest", "Telefoon", "Openingstijden", "Google Maps", "Breedtegraad", "Lengtegraad", "Aantal bezoeken", "Laatste bezoek", "Gem. waardering"];
+  const rows = items.map(i => [i.name, i.address || "", safeUrl(i.url) || "", i.notes || "", (i.tags || []).join(", "), isVisited(i) ? "ja" : "",
+    i.phone || "", i.hours || "", mapsUrl(i), i.lat ?? "", i.lng ?? "", (i.visits || []).length || "", lastVisit(i), avgRating(i) ? +avgRating(i).toFixed(1) : ""]);
   const ws = X.utils.aoa_to_sheet([head, ...rows]);
-  ws["!cols"] = [28, 38, 34, 50, 26, 9, 16, 30, 16, 12, 12].map(w => ({ wch: w }));
+  ws["!cols"] = [28, 38, 34, 50, 26, 9, 16, 30, 16, 12, 12, 10, 13, 10].map(w => ({ wch: w }));
   ws["!autofilter"] = { ref: X.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: rows.length, c: head.length - 1 } }) };
   rows.forEach((r, k) => {
     const web = X.utils.encode_cell({ r: k + 1, c: 2 }), gm = X.utils.encode_cell({ r: k + 1, c: 8 });
@@ -1221,6 +1315,13 @@ async function buildXlsx(items, title) {
   });
   const wb = X.utils.book_new();
   X.utils.book_append_sheet(wb, ws, title.slice(0, 31));
+  const vrows = [];
+  items.forEach(i => visitsOf(i).forEach(v => vrows.push([i.name, v.date, v.with || "", v.occasion || "", v.rating || "", v.note || ""])));
+  if (vrows.length) {
+    const vs = X.utils.aoa_to_sheet([["Restaurant", "Datum", "Met wie", "Gelegenheid", "Waardering", "Notitie"], ...vrows]);
+    vs["!cols"] = [28, 12, 24, 14, 10, 50].map(w => ({ wch: w }));
+    X.utils.book_append_sheet(wb, vs, "Bezoeken");
+  }
   const out = X.write(wb, { bookType: "xlsx", type: "array" });
   return new Blob([out], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
 }
@@ -1302,7 +1403,7 @@ function addClearButton(input) {
   });
   wrap.append(b);
 }
-document.querySelectorAll('#q, #form input:not([type=checkbox]):not([type=radio]), #form textarea').forEach(addClearButton);
+document.querySelectorAll('#q, #form input:not([type=checkbox]):not([type=radio]), #form textarea, #vWith, #vNote').forEach(addClearButton);
 
 /* ---------------- start ---------------- */
 async function boot() {
@@ -1312,7 +1413,7 @@ async function boot() {
     document.querySelector(".app").classList.add("readonly");
     $("addBtn").hidden = true; $("syncBtn").hidden = true;
     const mf = document.querySelector('link[rel="manifest"]'); if (mf) mf.href = "manifest-bekijk.webmanifest";
-    store.data.items.forEach(i => delete i.notes);
+    store.data.items.forEach(i => { if (i.visits && i.visits.length) i.visited = true; delete i.notes; delete i.visits; });
   }
   render();
   setView("map");

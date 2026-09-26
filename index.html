@@ -59,6 +59,8 @@
             <option value="az">Sorteer: A–Z</option>
             <option value="open">Sorteer: open eerst</option>
             <option value="new">Sorteer: nieuwste</option>
+            <option value="lastvisit">Sorteer: laatst bezocht</option>
+            <option value="rating">Sorteer: hoogste waardering</option>
           </select>
         </label>
         <button type="button" class="tool-btn" id="exportOpen" aria-label="Exporteren">
@@ -170,6 +172,31 @@
         <button type="button" id="exportBtn">Download back-up</button>
         <label class="filebtn">Zet back-up terug<input type="file" id="importFile" accept="application/json,.json" hidden></label>
       </div>
+    </div>
+  </form>
+</div>
+
+<!-- Bezoek -->
+<div class="sheet" id="visitSheet" role="dialog" aria-modal="true" aria-labelledby="visitTitle" hidden>
+  <div class="grab"></div>
+  <div class="sheet-head">
+    <h2 id="visitTitle">Bezoek toevoegen</h2>
+    <button class="x" type="button" data-close aria-label="Sluiten">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <form id="visitForm" novalidate>
+    <p class="visit-for" id="visitFor"></p>
+    <label class="f">Datum<input type="date" id="vDate" required></label>
+    <label class="f">Met wie<input id="vWith" list="withList" autocomplete="off" placeholder="Bijv. Heleen, of Colin (zakelijk)"></label>
+    <datalist id="withList"></datalist>
+    <div class="group"><span class="lbl">Gelegenheid</span><div class="tagpick" id="vOcc"></div></div>
+    <div class="group"><span class="lbl">Jouw waardering</span><div class="stars" id="vStars" role="radiogroup" aria-label="Waardering"></div></div>
+    <label class="f">Notitie<textarea id="vNote" rows="3" placeholder="Wat at je, hoe was het?"></textarea></label>
+    <p class="err" id="vErr" hidden></p>
+    <div class="actions">
+      <button type="button" class="del" id="vDel" hidden>Verwijderen</button>
+      <button type="submit" class="primary">Opslaan</button>
     </div>
   </form>
 </div>
