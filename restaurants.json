@@ -1773,15 +1773,18 @@
    "address": "Cattenhagestraat 12, 1411CT Naarden",
    "phone": "+31 35 694 8055",
    "hours": "Mo-Su 12:00-23:00",
-   "tags": [],
-   "visited": false,
+   "tags": [
+    "Eetcafe"
+   ],
+   "visited": true,
    "lat": 52.296371,
    "lng": 5.161379,
    "geo": "osm",
-   "updatedAt": 1790540704995,
-   "addrChecked": true,
+   "updatedAt": 1790540739175,
    "osmChecked": 1790540704995
   }
  ],
- "tagGroups": {}
+ "tagGroups": {
+  "Eetcafe": "Keuken"
+ }
 }
