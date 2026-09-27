@@ -1821,12 +1821,11 @@
    "tags": [
     "Steak"
    ],
-   "visited": false,
+   "visited": true,
    "lat": 52.253765,
    "lng": 5.22808,
    "geo": "osm",
-   "updatedAt": 1790540984120,
-   "addrChecked": true,
+   "updatedAt": 1790541002122,
    "osmChecked": 1790540984120
   }
  ],
