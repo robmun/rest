@@ -1719,13 +1719,16 @@
    "city": "Blaricum",
    "notes": "",
    "address": "Oude Naarderweg 2, 1261DS Blaricum",
-   "tags": [],
+   "tags": [
+    "Terras",
+    "Lunch",
+    "Borrel"
+   ],
    "visited": true,
    "lat": 52.275661,
    "lng": 5.225403,
    "geo": "osm",
-   "updatedAt": 1790522925931,
-   "addrChecked": true,
+   "updatedAt": 1790522963729,
    "osmChecked": 1790496615088,
    "visits": [
     {
