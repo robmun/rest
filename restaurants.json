@@ -1720,13 +1720,20 @@
    "notes": "",
    "address": "Oude Naarderweg 2, 1261DS Blaricum",
    "tags": [],
-   "visited": false,
+   "visited": true,
    "lat": 52.275661,
    "lng": 5.225403,
    "geo": "osm",
-   "updatedAt": 1790496615088,
+   "updatedAt": 1790522925931,
    "addrChecked": true,
-   "osmChecked": 1790496615088
+   "osmChecked": 1790496615088,
+   "visits": [
+    {
+     "id": "vmujz4bqi",
+     "date": "2026-09-27",
+     "note": "Koffie met de MTB mannen"
+    }
+   ]
   }
  ],
  "tagGroups": {}
