@@ -1901,9 +1901,17 @@
    "lat": 52.180088,
    "lng": 5.221989,
    "geo": "osm",
-   "updatedAt": 1790541470506,
+   "updatedAt": 1790541847367,
    "addrChecked": true,
-   "osmChecked": 1790541470506
+   "osmChecked": 1790541470506,
+   "visits": [
+    {
+     "id": "vmukadvlz",
+     "date": "2026-06-20",
+     "with": "Gezin",
+     "note": "Lunch voor verjaardag van Jasmijn"
+    }
+   ]
   }
  ],
  "tagGroups": {
