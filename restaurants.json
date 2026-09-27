@@ -8,7 +8,8 @@
   "Laren",
   "Blaricum",
   "Hilversum",
-  "Naarden"
+  "Naarden",
+  "Lage Vuursche"
  ],
  "inspiration": [
   {
@@ -1883,6 +1884,24 @@
    "updatedAt": 1790541338823,
    "addrChecked": true,
    "osmChecked": 1790541338823
+  },
+  {
+   "id": "de-laage-vuursche-muka5pgn",
+   "createdAt": 1790541466151,
+   "name": "De Laage Vuursche",
+   "url": "https://www.vuursche.nl/",
+   "city": "Lage Vuursche",
+   "notes": "",
+   "address": "Dorpsstraat 2, 3749AD Lage Vuursche",
+   "hours": "Mo-Fr 11:00-22:00; Sa, Su 10:00-22:00",
+   "tags": [
+    "Terras"
+   ],
+   "visited": true,
+   "lat": 52.180088,
+   "lng": 5.221989,
+   "geo": "osm",
+   "updatedAt": 1790541466151
   }
  ],
  "tagGroups": {
