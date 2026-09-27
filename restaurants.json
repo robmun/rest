@@ -1866,6 +1866,21 @@
    "updatedAt": 1790541330027,
    "osmChecked": 1790541166926,
    "addrChecked": true
+  },
+  {
+   "id": "restaurant-vuur-muka2w8n",
+   "createdAt": 1790541334967,
+   "name": "Restaurant Vuur",
+   "url": "https://www.restaurantvuur.nl/",
+   "city": "Utrecht",
+   "notes": "",
+   "address": "Hilversumsestraatweg 4, 3744 KC Baarn",
+   "tags": [],
+   "visited": false,
+   "lat": 52.202259,
+   "lng": 5.247691,
+   "geo": "osm",
+   "updatedAt": 1790541334967
   }
  ],
  "tagGroups": {
