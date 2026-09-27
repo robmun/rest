@@ -1828,6 +1828,23 @@
    "updatedAt": 1790541005798,
    "osmChecked": 1790540984120,
    "addrChecked": true
+  },
+  {
+   "id": "a-fusion-muk9y184",
+   "createdAt": 1790541108148,
+   "name": "A-Fusion",
+   "url": "",
+   "city": "Naarden",
+   "notes": "",
+   "address": "Marktstraat 30-2, 1411EA Naarden",
+   "tags": [
+    "Aziatisch"
+   ],
+   "visited": false,
+   "lat": 52.296067,
+   "lng": 5.163215,
+   "geo": "osm",
+   "updatedAt": 1790541108148
   }
  ],
  "tagGroups": {
