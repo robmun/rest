@@ -1923,13 +1923,20 @@
    "notes": "",
    "address": "Voorstad Sint Jacob 32, 6041LM Roermond",
    "tags": [],
-   "visited": false,
+   "visited": true,
    "lat": 51.194356,
    "lng": 5.982194,
    "geo": "osm",
-   "updatedAt": 1790542083782,
+   "updatedAt": 1790542133214,
    "addrChecked": true,
-   "osmChecked": 1790542083782
+   "osmChecked": 1790542083782,
+   "visits": [
+    {
+     "id": "vmukak066",
+     "date": "2026-09-17",
+     "with": "Melicker jongens en aanhang"
+    }
+   ]
   }
  ],
  "tagGroups": {
