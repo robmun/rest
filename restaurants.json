@@ -1847,6 +1847,23 @@
    "updatedAt": 1790541113773,
    "addrChecked": true,
    "osmChecked": 1790541113773
+  },
+  {
+   "id": "the-red-sun-muk9z6ql",
+   "createdAt": 1790541161949,
+   "name": "The Red Sun",
+   "url": "https://theredsun.nl/",
+   "city": "Blaricum",
+   "notes": "",
+   "address": "Huizerweg 3, 1261AR Blaricum",
+   "tags": [
+    "Aziatisch"
+   ],
+   "visited": false,
+   "lat": 52.273151,
+   "lng": 5.243162,
+   "geo": "osm",
+   "updatedAt": 1790541161949
   }
  ],
  "tagGroups": {
