@@ -1728,7 +1728,7 @@
    "lat": 52.275661,
    "lng": 5.225403,
    "geo": "osm",
-   "updatedAt": 1790522963729,
+   "updatedAt": 1790522966713,
    "osmChecked": 1790496615088,
    "visits": [
     {
@@ -1736,7 +1736,8 @@
      "date": "2026-09-27",
      "note": "Koffie met de MTB mannen"
     }
-   ]
+   ],
+   "addrChecked": true
   }
  ],
  "tagGroups": {}
