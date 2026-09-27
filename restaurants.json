@@ -1807,6 +1807,25 @@
    "updatedAt": 1790540937548,
    "addrChecked": true,
    "osmChecked": 1790540937548
+  },
+  {
+   "id": "loetje-muk9va7w",
+   "createdAt": 1790540979836,
+   "name": "Loetje",
+   "url": "https://www.loetje.nl/locaties/laren/",
+   "city": "Laren",
+   "notes": "",
+   "address": "Zevenend 23, 1251RK Laren",
+   "phone": "+31 35 6218774",
+   "hours": "Mo-We,Su 10:00-22:00; Th-Sa 10:00-22:30",
+   "tags": [
+    "Steak"
+   ],
+   "visited": false,
+   "lat": 52.253765,
+   "lng": 5.22808,
+   "geo": "osm",
+   "updatedAt": 1790540979836
   }
  ],
  "tagGroups": {
