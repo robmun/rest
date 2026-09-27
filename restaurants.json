@@ -5,7 +5,8 @@
   "Utrecht",
   "Kantoor",
   "Bussum",
-  "Laren"
+  "Laren",
+  "Blaricum"
  ],
  "inspiration": [
   {
@@ -1709,6 +1710,22 @@
    "updatedAt": 1790399981736,
    "addrChecked": true,
    "osmChecked": 1790399981736
+  },
+  {
+   "id": "de-eendracht-mujjgal2",
+   "createdAt": 1790496610454,
+   "name": "De Eendracht",
+   "url": "https://www.deeendracht-blaricum.nl",
+   "city": "Blaricum",
+   "notes": "",
+   "address": "Oude Naarderweg 2, 1261DS Blaricum",
+   "tags": [],
+   "visited": false,
+   "lat": 52.275661,
+   "lng": 5.225403,
+   "geo": "osm",
+   "updatedAt": 1790496610454
   }
- ]
+ ],
+ "tagGroups": {}
 }
