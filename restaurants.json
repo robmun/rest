@@ -9,7 +9,8 @@
   "Blaricum",
   "Hilversum",
   "Naarden",
-  "Lage Vuursche"
+  "Lage Vuursche",
+  "Roermond"
  ],
  "inspiration": [
   {
@@ -1912,6 +1913,21 @@
      "note": "Lunch voor verjaardag van Jasmijn"
     }
    ]
+  },
+  {
+   "id": "toff-eten-drinken-mukaiusm",
+   "createdAt": 1790542079590,
+   "name": "TOFF eten & drinken",
+   "url": "",
+   "city": "Roermond",
+   "notes": "",
+   "address": "Voorstad Sint Jacob 32, 6041LM Roermond",
+   "tags": [],
+   "visited": false,
+   "lat": 51.194356,
+   "lng": 5.982194,
+   "geo": "osm",
+   "updatedAt": 1790542079591
   }
  ],
  "tagGroups": {
