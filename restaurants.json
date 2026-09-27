@@ -1790,6 +1790,21 @@
      "with": "Heleen"
     }
    ]
+  },
+  {
+   "id": "nick-vollebregt-muk9ua1w",
+   "createdAt": 1790540932964,
+   "name": "Nick Vollebregt",
+   "url": "https://nickvollebregt.nl",
+   "city": "Laren",
+   "notes": "",
+   "address": "Naarderstraat 40, 1251 BD Laren",
+   "tags": [],
+   "visited": false,
+   "lat": 52.259357,
+   "lng": 5.223158,
+   "geo": "osm",
+   "updatedAt": 1790540932964
   }
  ],
  "tagGroups": {
