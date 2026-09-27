@@ -1473,11 +1473,12 @@
    "name": "Zuiver",
    "notes": "",
    "tags": [
-    "Lunch"
+    "Lunch",
+    "Zakelijk"
    ],
    "url": "https://restaurantzuiver.nl/utrecht/",
-   "visited": false,
-   "updatedAt": 1790350795199,
+   "visited": true,
+   "updatedAt": 1790533249511,
    "address": "Krommewetering 51, 3543 AM Utrecht",
    "lat": 52.108951,
    "lng": 5.045072,
