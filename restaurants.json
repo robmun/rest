@@ -1825,7 +1825,9 @@
    "lat": 52.253765,
    "lng": 5.22808,
    "geo": "osm",
-   "updatedAt": 1790540979836
+   "updatedAt": 1790540984120,
+   "addrChecked": true,
+   "osmChecked": 1790540984120
   }
  ],
  "tagGroups": {
