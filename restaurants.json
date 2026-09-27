@@ -6,7 +6,8 @@
   "Kantoor",
   "Bussum",
   "Laren",
-  "Blaricum"
+  "Blaricum",
+  "Hilversum"
  ],
  "inspiration": [
   {
@@ -1739,6 +1740,25 @@
     }
    ],
    "addrChecked": true
+  },
+  {
+   "id": "mout-muk9lvtj",
+   "createdAt": 1790540541271,
+   "name": "Mout",
+   "url": "https://www.mouthilversum.nl/",
+   "city": "Hilversum",
+   "notes": "Foodcourt",
+   "address": "Marktplein 1, 1211DZ Hilversum",
+   "tags": [
+    "Aziatisch",
+    "Italiaans",
+    "Vis"
+   ],
+   "visited": true,
+   "lat": 52.227313,
+   "lng": 5.177237,
+   "geo": "osm",
+   "updatedAt": 1790540541271
   }
  ],
  "tagGroups": {}
