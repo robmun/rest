@@ -1780,9 +1780,16 @@
    "lat": 52.296371,
    "lng": 5.161379,
    "geo": "osm",
-   "updatedAt": 1790540742226,
+   "updatedAt": 1790540811999,
    "osmChecked": 1790540704995,
-   "addrChecked": true
+   "addrChecked": true,
+   "visits": [
+    {
+     "id": "vmuk9ropr",
+     "date": "2026-09-25",
+     "with": "Heleen"
+    }
+   ]
   }
  ],
  "tagGroups": {
