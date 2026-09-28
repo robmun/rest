@@ -10,7 +10,8 @@
   "Hilversum",
   "Naarden",
   "Lage Vuursche",
-  "Roermond"
+  "Roermond",
+  "Muiden"
  ],
  "inspiration": [
   {
@@ -1957,6 +1958,24 @@
    "lng": 5.026124,
    "geo": "adres",
    "osmChecked": 1790606144582
+  },
+  {
+   "id": "fort-h-mulm9j7f",
+   "createdAt": 1790622266235,
+   "name": "Fort H",
+   "url": "https://www.forth.nl",
+   "city": "Muiden",
+   "notes": "",
+   "address": "Herengracht 119, 1398AE Muiden",
+   "hours": "We-Su 10:30-22:00",
+   "tags": [
+    "Frans"
+   ],
+   "visited": false,
+   "lat": 52.326959,
+   "lng": 5.06675,
+   "geo": "osm",
+   "updatedAt": 1790622266235
   }
  ],
  "tagGroups": {
