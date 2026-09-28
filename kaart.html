@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contactenkaart</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--fg:#1d2330;--mut:#667085;--line:#e3e6ea;--acc:#0a66c2;--acc2:#e8f1fb;--ok:#127a3a;--err:#b42318}
+@media (prefers-color-scheme:dark){:root{--bg:#14171c;--card:#1d2128;--fg:#e8eaed;--mut:#9aa3ae;--line:#2e343d;--acc:#5aa9f5;--acc2:#1c2c3f;--ok:#6fd08f;--err:#ff8a80}}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column}
+header{padding:12px 16px;background:var(--card);border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:24px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+h1 a{font-size:15px;font-weight:400;color:var(--acc)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
+button{font:inherit;border-radius:8px;border:1px solid var(--acc);background:var(--acc);color:#fff;padding:7px 14px;cursor:pointer}
+button.ghost{background:transparent;color:var(--acc)}
+button:disabled{opacity:.45;cursor:default}
+input[type=search],select{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:7px 10px}
+input[type=search]{flex:1;min-width:200px}
+.status{color:var(--mut);font-size:16px}
+.status.ok{color:var(--ok)}.status.err{color:var(--err)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;width:180px}
+.bar div{height:100%;width:0;background:var(--acc)}
+#map{flex:1;min-height:300px}
+.leaflet-popup-content{font-size:16px;line-height:1.45;margin:12px 14px}
+.leaflet-popup-content b{font-size:17px}
+.pm{color:#667085;font-size:14px}
+.leaflet-popup-content a{color:#0a66c2}
+details{font-size:16px}
+details ul{max-height:30vh;overflow:auto;margin:6px 0;padding-left:20px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header>
+  <h1>Contactenkaart <a href="./">← terug naar LinkedIn → Google Contacts</a></h1>
+  <div class="row">
+    <button id="btnLoad">Inloggen en contacten op de kaart zetten</button>
+    <div class="bar" id="barWrap" hidden><div id="bar"></div></div>
+    <span id="status" class="status">Je contacten worden alleen in deze browser geladen.</span>
+  </div>
+  <div class="row" id="filters" hidden>
+    <input type="search" id="q" placeholder="Zoek op naam, bedrijf, plaats of straat">
+    <select id="label"><option value="">Alle labels</option></select>
+    <span id="count" class="status"></span>
+  </div>
+  <details id="failBox" hidden><summary id="failSum"></summary><ul id="failList"></ul></details>
+</header>
+<div id="map"></div>
+
+<script>
+'use strict';
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const DEFAULT_CLIENT_ID = '21208591537-p1ks36o6n09i6pik7m2nua7mtg10u2ru.apps.googleusercontent.com';
+const validId = v => /^\d+-[a-z0-9]+\.apps\.googleusercontent\.com$/i.test((v || '').trim());
+let CLIENT_ID = DEFAULT_CLIENT_ID;
+try { const s = localStorage.getItem('li2g.clientId'); if (validId(s)) CLIENT_ID = s.trim(); } catch (e) {}
+const SCOPE = 'https://www.googleapis.com/auth/contacts';
+const API = 'https://people.googleapis.com/v1/';
+
+/* ---------- kaart ---------- */
+const map = L.map('map', { preferCanvas: true }).setView([52.2, 5.3], 7);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
+map.addLayer(cluster);
+
+/* ---------- Google-inlog ---------- */
+let token = null, tokenExp = 0, tokenClient = null, pending = null;
+function getToken() {
+  if (token && Date.now() < tokenExp - 60000) return Promise.resolve(token);
+  if (!window.google?.accounts?.oauth2) return Promise.reject(new Error('Het Google-inlogscript is nog niet geladen. Wacht een paar seconden en probeer opnieuw.'));
+  if (!tokenClient) tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID, scope: SCOPE,
+    callback: r => { const p = pending; pending = null; if (!p) return;
+      if (r.error) return p.rej(new Error('Inloggen mislukt: ' + r.error));
+      if (!google.accounts.oauth2.hasGrantedAllScopes(r, SCOPE)) return p.rej(new Error('Je hebt geen toegang tot je contacten gegeven.'));
+      token = r.access_token; tokenExp = Date.now() + (r.expires_in || 3600) * 1000; p.res(token); },
+    error_callback: e => { const p = pending; pending = null; p && p.rej(new Error(e.type === 'popup_closed' ? 'Inlogvenster gesloten.' : 'Inloggen mislukt (' + e.type + '). Staat je pop-upblokkering uit?')); }
+  });
+  return new Promise((res, rej) => { pending = { res, rej }; tokenClient.requestAccessToken({ prompt: '' }); });
+}
+async function api(path) {
+  const t = await getToken();
+  const r = await fetch(API + path, { headers: { Authorization: 'Bearer ' + t } });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(d.error?.message || 'HTTP ' + r.status);
+  return d;
+}
+
+/* ---------- adressen omzetten naar coördinaten ---------- */
+// Nederlandse adressen: PDOK Locatieserver (Kadaster, gratis). Buitenland: OpenStreetMap Nominatim (max 1 per seconde).
+// Er gaat alleen de adrestekst naartoe, geen naam. Resultaten worden in deze browser onthouden.
+const GEO_KEY = 'li2g.geo';
+let geo = {};
+try { geo = JSON.parse(localStorage.getItem(GEO_KEY) || '{}') || {}; } catch (e) {}
+const saveGeo = () => { try { localStorage.setItem(GEO_KEY, JSON.stringify(geo)); } catch (e) {} };
+const clean = s => (s || '').replace(/\s+/g, ' ').trim();
+function addrText(a) {
+  const parts = [a.streetAddress, a.extendedAddress, [a.postalCode, a.city].filter(Boolean).join(' '), a.region, a.country].map(clean).filter(Boolean);
+  return parts.length ? parts.join(', ') : clean((a.formattedValue || '').replace(/\n/g, ', '));
+}
+function isDutch(a) {
+  const c = (a.countryCode || '').toUpperCase(), n = (a.country || '').toLowerCase();
+  if (c) return c === 'NL';
+  if (n) return /nederland|netherlands|holland|^nl$/.test(n);
+  return /\b\d{4}\s?[a-z]{2}\b/i.test(a.postalCode || a.formattedValue || '');
+}
+async function pdok(q) {
+  const r = await fetch('https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?rows=1&fl=centroide_ll,type,weergavenaam&q=' + encodeURIComponent(q));
+  if (!r.ok) throw new Error('PDOK ' + r.status);
+  const doc = (await r.json()).response?.docs?.[0];
+  const m = doc?.centroide_ll?.match(/POINT\(([-\d.]+) ([-\d.]+)\)/);
+  return m ? { lat: +m[2], lon: +m[1], exact: doc.type === 'adres' } : null;
+}
+let lastNom = 0;
+async function nominatim(q) {
+  const wait = lastNom + 1100 - Date.now(); if (wait > 0) await sleep(wait);
+  lastNom = Date.now();
+  const r = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=' + encodeURIComponent(q), { headers: { 'Accept-Language': 'nl' } });
+  if (!r.ok) throw new Error('Nominatim ' + r.status);
+  const d = (await r.json())[0];
+  return d ? { lat: +d.lat, lon: +d.lon, exact: ['house', 'building'].includes(d.addresstype) || d.type === 'house' } : null;
+}
+async function geocode(a) {
+  const q = addrText(a); if (!q) return null;
+  const key = q.toLowerCase();
+  if (geo[key]) return geo[key].fail ? null : geo[key];
+  let res = null;
+  try {
+    if (isDutch(a)) {
+      res = await pdok([a.streetAddress, a.postalCode, a.city].map(clean).filter(Boolean).join(' ') || q);
+      if (!res) res = await nominatim(q);
+    } else res = await nominatim(q);
+  } catch (e) { return null; } // netwerkfout: niet onthouden, volgende keer opnieuw proberen
+  geo[key] = res || { fail: true }; saveGeo();
+  return res;
+}
+
+/* ---------- laden en tekenen ---------- */
+const state = { points: [], groups: new Map() };
+const gName = p => p.names?.[0]?.displayName || p.organizations?.[0]?.name || p.emailAddresses?.[0]?.value || '(zonder naam)';
+const TYPES = { home: 'thuis', work: 'werk', other: 'overig' };
+function popup(pt) {
+  const p = pt.p, o = p.organizations?.[0];
+  const id = p.resourceName.split('/')[1];
+  const lines = [`<b>${esc(gName(p))}</b>`];
+  if (o) lines.push(esc([o.title, o.name].filter(Boolean).join(' @ ')));
+  lines.push(`${esc(addrText(pt.a))} <span class="pm">(${esc(TYPES[pt.a.type] || pt.a.formattedType || pt.a.type || 'adres')}${pt.g.exact ? '' : ', locatie bij benadering'})</span>`);
+  (p.phoneNumbers || []).slice(0, 2).forEach(t => lines.push(`☎ <a href="tel:${esc(t.canonicalForm || t.value)}">${esc(t.value)}</a>`));
+  (p.emailAddresses || []).slice(0, 2).forEach(e => lines.push(`✉ <a href="mailto:${esc(e.value)}">${esc(e.value)}</a>`));
+  const li = (p.urls || []).find(u => /linkedin\.com\/in\//i.test(u.value || ''));
+  const links = [`<a href="https://contacts.google.com/person/${esc(id)}" target="_blank" rel="noopener">Open in Google Contacts ↗</a>`];
+  if (li) links.push(`<a href="${esc(li.value)}" target="_blank" rel="noopener">LinkedIn ↗</a>`);
+  links.push(`<a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(addrText(pt.a))}" target="_blank" rel="noopener">Route ↗</a>`);
+  lines.push(links.join(' · '));
+  return lines.join('<br>');
+}
+function hay(pt) {
+  const p = pt.p;
+  return [gName(p), ...(p.organizations || []).map(o => o.name + ' ' + o.title), addrText(pt.a)].join(' ').toLowerCase();
+}
+function redraw() {
+  const q = $('#q').value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const lbl = $('#label').value;
+  const shown = state.points.filter(pt =>
+    (!lbl || (pt.p.memberships || []).some(m => m.contactGroupMembership?.contactGroupResourceName === lbl)) &&
+    q.every(w => pt.hay.includes(w)));
+  cluster.clearLayers();
+  cluster.addLayers(shown.map(pt => pt.marker));
+  const people = new Set(shown.map(pt => pt.p.resourceName)).size;
+  $('#count').textContent = `${people} ${people === 1 ? 'contact' : 'contacten'} op de kaart`;
+  return shown;
+}
+let redrawTimer = null;
+const redrawSoon = () => { clearTimeout(redrawTimer); redrawTimer = setTimeout(redraw, 150); };
+$('#q').addEventListener('input', () => { const s = redraw(); fitTo(s); });
+$('#label').addEventListener('change', () => { const s = redraw(); fitTo(s); });
+function fitTo(pts) {
+  if (!pts.length) return;
+  if (pts.length === 1) map.setView(pts[0].marker.getLatLng(), 15);
+  else map.fitBounds(L.latLngBounds(pts.map(pt => pt.marker.getLatLng())), { padding: [30, 30], maxZoom: 15 });
+}
+
+$('#btnLoad').addEventListener('click', async () => {
+  const st = $('#status'); $('#btnLoad').disabled = true;
+  try {
+    st.className = 'status'; st.textContent = 'Inloggen…';
+    await getToken();
+    const people = []; let pt = '';
+    do {
+      st.textContent = `Contacten ophalen… (${people.length})`;
+      const d = await api(`people/me/connections?personFields=names,addresses,organizations,phoneNumbers,emailAddresses,urls,memberships&pageSize=1000${pt ? '&pageToken=' + encodeURIComponent(pt) : ''}`);
+      people.push(...(d.connections || [])); pt = d.nextPageToken;
+    } while (pt);
+    try {
+      const g = await api('contactGroups?pageSize=1000');
+      const opts = (g.contactGroups || []).filter(x => x.groupType === 'USER_CONTACT_GROUP')
+        .sort((a, b) => (a.name || '').localeCompare(b.name || ''))
+        .map(x => `<option value="${esc(x.resourceName)}">${esc(x.formattedName || x.name)}</option>`).join('');
+      $('#label').innerHTML = '<option value="">Alle labels</option>' + opts;
+    } catch (e) { /* labels zijn optioneel */ }
+
+    const todo = [];
+    people.forEach(p => (p.addresses || []).forEach(a => { if (addrText(a)) todo.push({ p, a }); }));
+    const withAddr = new Set(todo.map(t => t.p.resourceName)).size;
+    if (!todo.length) { st.textContent = `${people.length} contacten opgehaald, maar geen enkel contact heeft een adres.`; return; }
+    $('#filters').hidden = false; $('#barWrap').hidden = false;
+    state.points = []; cluster.clearLayers();
+    const fails = [];
+    let first = true;
+    for (let i = 0; i < todo.length; i++) {
+      const t = todo[i];
+      st.textContent = `Adressen op de kaart zetten: ${i + 1} van ${todo.length}`;
+      $('#bar').style.width = ((i + 1) / todo.length * 100) + '%';
+      const g = await geocode(t.a);
+      if (!g) { fails.push(t); continue; }
+      const point = { ...t, g };
+      point.marker = L.marker([g.lat, g.lon], { title: gName(t.p) }).bindPopup(() => popup(point), { maxWidth: 340 });
+      point.hay = hay(point);
+      state.points.push(point);
+      redrawSoon();
+      if (first && state.points.length >= 20) { first = false; fitTo(state.points); }
+    }
+    redraw(); fitTo(state.points);
+    $('#barWrap').hidden = true;
+    st.className = 'status ok';
+    st.textContent = `${people.length} contacten opgehaald, ${withAddr} met een adres. ${state.points.length} adressen staan op de kaart.`;
+    if (fails.length) {
+      $('#failBox').hidden = false;
+      $('#failSum').textContent = `${fails.length} adres(sen) niet gevonden — klik om te zien welke`;
+      $('#failList').innerHTML = fails.map(f => `<li>${esc(gName(f.p))}: ${esc(addrText(f.a))} — <a href="https://contacts.google.com/person/${esc(f.p.resourceName.split('/')[1])}" target="_blank" rel="noopener">aanpassen ↗</a></li>`).join('');
+    }
+  } catch (e) { st.className = 'status err'; st.textContent = e.message; }
+  finally { $('#btnLoad').disabled = false; }
+});
+</script>
+</body>
+</html>
