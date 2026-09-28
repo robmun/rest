@@ -11,7 +11,8 @@
   "Naarden",
   "Lage Vuursche",
   "Roermond",
-  "Muiden"
+  "Muiden",
+  "Muiderberg"
  ],
  "inspiration": [
   {
@@ -1997,6 +1998,22 @@
    "updatedAt": 1790622392418,
    "addrChecked": true,
    "osmChecked": 1790622392418
+  },
+  {
+   "id": "de-zeemeeuw-mulmd2cn",
+   "createdAt": 1790622431015,
+   "name": "De Zeemeeuw",
+   "url": "https://www.zeemeeuw.net/",
+   "city": "Muiderberg",
+   "notes": "",
+   "address": "Zeeweg 1a, 1399GP Muiderberg",
+   "phone": "+31 294261234",
+   "tags": [],
+   "visited": false,
+   "lat": 52.329441,
+   "lng": 5.119186,
+   "geo": "osm",
+   "updatedAt": 1790622431015
   }
  ],
  "tagGroups": {
