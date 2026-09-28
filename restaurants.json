@@ -1975,8 +1975,10 @@
    "lat": 52.326959,
    "lng": 5.06675,
    "geo": "osm",
-   "updatedAt": 1790622300304,
-   "phone": "0294261385"
+   "updatedAt": 1790622305137,
+   "phone": "0294261385",
+   "addrChecked": true,
+   "osmChecked": 1790622305137
   }
  ],
  "tagGroups": {
