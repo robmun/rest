@@ -2036,6 +2036,23 @@
    "updatedAt": 1790630247278,
    "osmChecked": 1790630208908,
    "addrChecked": true
+  },
+  {
+   "id": "spandershoeve-mulr3t6x",
+   "createdAt": 1790630397321,
+   "name": "Spandershoeve",
+   "url": "https://www.spandershoeve.nl",
+   "city": "Hilversum",
+   "notes": "",
+   "address": "Bussumergrintweg 46, 1217BS Hilversum",
+   "tags": [
+    "Indonesisch"
+   ],
+   "visited": false,
+   "lat": 52.239124,
+   "lng": 5.161274,
+   "geo": "osm",
+   "updatedAt": 1790630397322
   }
  ],
  "tagGroups": {
