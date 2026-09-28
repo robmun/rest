@@ -2055,6 +2055,21 @@
    "updatedAt": 1790630443725,
    "osmChecked": 1790630402084,
    "addrChecked": true
+  },
+  {
+   "id": "theehuis-t-bluk-mulr7buv",
+   "createdAt": 1790630561479,
+   "name": "Theehuis 't Bluk",
+   "url": "https://www.bluk.nl/",
+   "city": "Laren",
+   "notes": "",
+   "address": "Zuiderheide 2, 1251SE Laren",
+   "tags": [],
+   "visited": false,
+   "lat": 52.235121,
+   "lng": 5.22107,
+   "geo": "osm",
+   "updatedAt": 1790630561479
   }
  ],
  "tagGroups": {
