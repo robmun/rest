@@ -1971,13 +1971,12 @@
    "tags": [
     "Frans"
    ],
-   "visited": false,
+   "visited": true,
    "lat": 52.326959,
    "lng": 5.06675,
    "geo": "osm",
-   "updatedAt": 1790622270714,
-   "addrChecked": true,
-   "osmChecked": 1790622270714
+   "updatedAt": 1790622300304,
+   "phone": "0294261385"
   }
  ],
  "tagGroups": {
