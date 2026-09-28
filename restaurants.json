@@ -1979,6 +1979,22 @@
    "phone": "0294261385",
    "addrChecked": true,
    "osmChecked": 1790622305137
+  },
+  {
+   "id": "ome-ko-mulmc4pz",
+   "createdAt": 1790622387431,
+   "name": "Ome Ko",
+   "url": "https://omekomuiden.nl",
+   "city": "Muiden",
+   "notes": "Cafe",
+   "address": "Herengracht 71, 1398AD Muiden",
+   "phone": "0294262333",
+   "tags": [],
+   "visited": true,
+   "lat": 52.329943,
+   "lng": 5.069528,
+   "geo": "osm",
+   "updatedAt": 1790622387431
   }
  ],
  "tagGroups": {
