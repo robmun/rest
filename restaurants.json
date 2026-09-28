@@ -2062,15 +2062,17 @@
    "name": "Theehuis 't Bluk",
    "url": "https://www.bluk.nl/",
    "city": "Laren",
-   "notes": "",
+   "notes": "MTB koffie",
    "address": "Zuiderheide 2, 1251SE Laren",
-   "tags": [],
-   "visited": false,
+   "tags": [
+    "Eetcafe",
+    "Terras"
+   ],
+   "visited": true,
    "lat": 52.235121,
    "lng": 5.22107,
    "geo": "osm",
-   "updatedAt": 1790630565939,
-   "addrChecked": true,
+   "updatedAt": 1790630594772,
    "osmChecked": 1790630565939
   }
  ],
