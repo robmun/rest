@@ -1947,7 +1947,8 @@
    "notes": "",
    "tags": [],
    "visited": false,
-   "updatedAt": 1790605948881
+   "updatedAt": 1790605957329,
+   "geoFailed": true
   }
  ],
  "tagGroups": {
