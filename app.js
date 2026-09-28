@@ -300,7 +300,7 @@ function render() {
     ...tagList.map(t => el("button", { type: "button", class: "chip", "aria-pressed": String(activeTags.has(t)), onclick: () => { activeTags.has(t) ? activeTags.delete(t) : activeTags.add(t); render(); } }, t))
   ].filter(Boolean));
   $("legend").replaceChildren(
-    ...[...CATS.map(([k, label]) => [k, label]), ["x", "Overig"]].map(([k, label]) => el("span", { class: "lg" }, el("i", { class: "dot c-" + k }), label)),
+    ...[["x", "Restaurant"]].map(([k, label]) => el("span", { class: "lg" }, el("i", { class: "dot c-" + k }), label)),
     el("span", { class: "lg" }, el("i", { class: "dot been-dot" }), "Geweest"));
   const n = activeFilterCount();
   $("filterBadge").hidden = !n; $("filterBadge").textContent = String(n);

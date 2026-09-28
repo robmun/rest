@@ -167,11 +167,11 @@ label.f{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:60
 
 /* ===== Categorie-kleuren ===== */
 :root{
-  --c-it:#B4563F; --c-fr:#44619A; --c-as:#C08A2E; --c-vis:#1E6B52; --c-fine:#1E6B52; --c-lunch:#1E6B52; --c-x:#1E6B52;
+  --c-it:#1E6B52; --c-fr:#1E6B52; --c-as:#1E6B52; --c-vis:#1E6B52; --c-fine:#1E6B52; --c-lunch:#1E6B52; --c-x:#1E6B52;
   --open:#2E8B57; --closed:#686A62;
 }
 @media (prefers-color-scheme: dark){
-  :root{ --c-it:#D98068; --c-fr:#8199CC; --c-as:#D9AE5C; --c-vis:#5CC49E; --c-fine:#5CC49E; --c-lunch:#5CC49E; --c-x:#5CC49E; --open:#5CC49E; --closed:#A09F96; }
+  :root{ --c-it:#5CC49E; --c-fr:#5CC49E; --c-as:#5CC49E; --c-vis:#5CC49E; --c-fine:#5CC49E; --c-lunch:#5CC49E; --c-x:#5CC49E; --open:#5CC49E; --closed:#A09F96; }
 }
 .c-it{--c:var(--c-it)} .c-fr{--c:var(--c-fr)} .c-as{--c:var(--c-as)} .c-vis{--c:var(--c-vis)}
 .c-fine{--c:var(--c-fine)} .c-lunch{--c:var(--c-lunch)} .c-x{--c:var(--c-x)}
@@ -477,3 +477,4 @@ ul.list{gap:10px}
 .wordmark .wm-pin{flex:none;color:var(--accent);transform:translateY(1px)}
 .wordmark span{white-space:nowrap}
 @media (max-width:360px){ .title-row h1.wordmark{font-size:22px} }
+
