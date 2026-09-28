@@ -2008,13 +2008,14 @@
    "notes": "",
    "address": "Zeeweg 1a, 1399GP Muiderberg",
    "phone": "+31 294261234",
-   "tags": [],
-   "visited": false,
+   "tags": [
+    "Aan het water"
+   ],
+   "visited": true,
    "lat": 52.329441,
    "lng": 5.119186,
    "geo": "osm",
-   "updatedAt": 1790622435498,
-   "addrChecked": true,
+   "updatedAt": 1790622452279,
    "osmChecked": 1790622435498
   }
  ],
