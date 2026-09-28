@@ -1941,14 +1941,22 @@
   {
    "id": "brisa-strandboulevard-222-utrecht-mulcjsnl",
    "createdAt": 1790605948881,
-   "name": "Brisa, Strandboulevard 222 - Utrecht",
-   "url": "",
+   "name": "Brisa",
+   "url": "https://brisa.nl/",
    "city": "Utrecht",
-   "notes": "",
-   "tags": [],
+   "notes": "strandtent",
+   "tags": [
+    "Lunch",
+    "Strandtent"
+   ],
    "visited": false,
-   "updatedAt": 1790605957329,
-   "geoFailed": true
+   "updatedAt": 1790606144582,
+   "address": "Strandboulevard 222, 3543 MA Utrecht",
+   "phone": "030 3030629",
+   "lat": 52.117765,
+   "lng": 5.026124,
+   "geo": "adres",
+   "osmChecked": 1790606144582
   }
  ],
  "tagGroups": {
