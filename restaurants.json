@@ -2018,6 +2018,22 @@
    "updatedAt": 1790622455476,
    "osmChecked": 1790622435498,
    "addrChecked": true
+  },
+  {
+   "id": "faubourg-sint-jacques-mulqzob0",
+   "createdAt": 1790630204364,
+   "name": "Faubourg Sint Jacques",
+   "url": "http://faubourgremunj.nl",
+   "city": "Roermond",
+   "notes": "",
+   "address": "Voorstad Sint Jacob 2, 6041LM Roermond",
+   "phone": "+31 475 330 092",
+   "tags": [],
+   "visited": false,
+   "lat": 51.194829,
+   "lng": 5.983145,
+   "geo": "osm",
+   "updatedAt": 1790630204364
   }
  ],
  "tagGroups": {
