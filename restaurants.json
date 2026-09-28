@@ -2043,17 +2043,16 @@
    "name": "Spandershoeve",
    "url": "https://www.spandershoeve.nl",
    "city": "Hilversum",
-   "notes": "",
+   "notes": "Met Cecile, Con en Jaap gegeten",
    "address": "Bussumergrintweg 46, 1217BS Hilversum",
    "tags": [
     "Indonesisch"
    ],
-   "visited": false,
+   "visited": true,
    "lat": 52.239124,
    "lng": 5.161274,
    "geo": "osm",
-   "updatedAt": 1790630402084,
-   "addrChecked": true,
+   "updatedAt": 1790630440519,
    "osmChecked": 1790630402084
   }
  ],
