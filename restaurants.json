@@ -2029,12 +2029,11 @@
    "address": "Voorstad Sint Jacob 2, 6041LM Roermond",
    "phone": "+31 475 330 092",
    "tags": [],
-   "visited": false,
+   "visited": true,
    "lat": 51.194829,
    "lng": 5.983145,
    "geo": "osm",
-   "updatedAt": 1790630208908,
-   "addrChecked": true,
+   "updatedAt": 1790630244367,
    "osmChecked": 1790630208908
   }
  ],
