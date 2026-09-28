@@ -1138,14 +1138,14 @@
    "id": "utr-cafe-olivier",
    "city": "Utrecht",
    "createdAt": 1790310000013,
-   "name": "Café Olivier",
+   "name": "Belgisch bier Café Olivier",
    "notes": "Belgisch biercafé in een oude kerk.",
    "tags": [
     "Belgisch"
    ],
    "url": "https://www.cafe-olivier.be/nl/",
    "visited": false,
-   "updatedAt": 1790351480502,
+   "updatedAt": 1790630045081,
    "address": "Achter Clarenburg 6A, 3511 JJ Utrecht",
    "lat": 52.090465,
    "lng": 5.115674,
