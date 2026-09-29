@@ -498,3 +498,13 @@ ul.list{gap:10px}
 .visit{font-size:15.5px}
 .visit-note{font-size:16.5px;color:var(--sub)}
 .version{margin:14px 0 0;text-align:center;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* ===== Tekstgrootte (instelbaar onder Instellingen) ===== */
+:root{ --ts:1.08; }
+#list,.place,.sheet form,.inspo,.list-tools,.empty{zoom:var(--ts)}
+html,body{overflow-x:hidden}
+.ts-row{display:flex;align-items:center;gap:12px}
+.ts-btn{width:52px;height:44px;border:1px solid var(--line);background:var(--surface);border-radius:12px;font:700 16px var(--display);color:var(--accent)}
+.ts-btn.big{font-size:21px}
+.ts-btn:disabled{opacity:.35}
+.ts-label{flex:1;text-align:center;font-weight:600}

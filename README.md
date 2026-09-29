@@ -29,4 +29,5 @@ Het versienummer staat in `app.js` (`APP_VERSION`) en in `sw.js` (`CACHE`), en i
 
 | Versie | Datum | Wat |
 |---|---|---|
+| 26.9.2 | 29-09-2026 | Tekst één stap groter; tekstgrootte instelbaar onder Instellingen |
 | 26.9.1 | 29-09-2026 | Eerste genummerde versie: kaart en lijst, bezoekhistorie, snel toevoegen, export, bekijkversie, leesbaardere tekst |

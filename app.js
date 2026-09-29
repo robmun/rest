@@ -1,7 +1,7 @@
 /* Tafels — persoonlijke restaurantlijst met kaart en GitHub-sync */
 // Versie: jaar.maand.volgnummer binnen die maand (26.9.1 = eerste versie van september 2026).
 // Bij elke nieuwe versie ook CACHE in sw.js aanpassen.
-const APP_VERSION = "26.9.1", APP_DATE = "2026-09-29";
+const APP_VERSION = "26.9.2", APP_DATE = "2026-09-29";
 "use strict";
 
 // Kenmerken per groep; eigen kenmerken krijgen een groep via store.data.tagGroups
@@ -1517,6 +1517,19 @@ function addClearButton(input) {
   wrap.append(b);
 }
 document.querySelectorAll('#q, #form input:not([type=checkbox]):not([type=radio]), #form textarea, #vWith, #vNote').forEach(addClearButton);
+
+/* ---------------- tekstgrootte ---------------- */
+const TEXT_STEPS = [1, 1.08, 1.16, 1.25, 1.35];
+function applyTextSize() {
+  let k = ui.textStep; if (k == null || k < 0 || k >= TEXT_STEPS.length) k = 1;   // standaard: één stap groter
+  ui.textStep = k;
+  document.documentElement.style.setProperty("--ts", TEXT_STEPS[k]);
+  const lab = $("tsLabel"); if (lab) lab.textContent = ["Normaal", "Groot", "Groter", "Extra groot", "Maximaal"][k];
+  $("tsDown").disabled = k === 0; $("tsUp").disabled = k === TEXT_STEPS.length - 1;
+}
+$("tsDown").onclick = () => { ui.textStep = Math.max(0, (ui.textStep ?? 1) - 1); lsSet(LS_UI, ui); applyTextSize(); };
+$("tsUp").onclick = () => { ui.textStep = Math.min(TEXT_STEPS.length - 1, (ui.textStep ?? 1) + 1); lsSet(LS_UI, ui); applyTextSize(); };
+applyTextSize();
 
 $("appVersion").textContent = `Versie ${APP_VERSION} · ${new Date(APP_DATE + "T12:00:00").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric" })}`;
 
