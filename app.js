@@ -1,7 +1,7 @@
 /* Tafels — persoonlijke restaurantlijst met kaart en GitHub-sync */
 // Versie: jaar.maand.volgnummer binnen die maand (26.9.1 = eerste versie van september 2026).
 // Bij elke nieuwe versie ook CACHE in sw.js aanpassen.
-const APP_VERSION = "26.9.2", APP_DATE = "2026-09-29";
+const APP_VERSION = "26.9.3", APP_DATE = "2026-09-29";
 "use strict";
 
 // Kenmerken per groep; eigen kenmerken krijgen een groep via store.data.tagGroups
@@ -640,7 +640,7 @@ function setView(v) {
   $("tabList").setAttribute("aria-pressed", String(v === "list"));
   $("tabMap").setAttribute("aria-pressed", String(v === "map"));
   if (v === "map") {
-    if (!map) { initMap(); map.on("locationfound", onLocated); map.on("locationerror", () => toast("Je locatie is niet beschikbaar. Sta locatie toe in je instellingen.")); }
+    if (!map) { initMap(); if (map) map.on("locationfound", onLocated); if (map) map.on("locationerror", () => toast("Je locatie is niet beschikbaar. Sta locatie toe in je instellingen.")); }
     setTimeout(() => map && map.invalidateSize(), 30);
   } else closePlace();
 }
@@ -1527,8 +1527,12 @@ function applyTextSize() {
   const lab = $("tsLabel"); if (lab) lab.textContent = ["Normaal", "Groot", "Groter", "Extra groot", "Maximaal"][k];
   $("tsDown").disabled = k === 0; $("tsUp").disabled = k === TEXT_STEPS.length - 1;
 }
-$("tsDown").onclick = () => { ui.textStep = Math.max(0, (ui.textStep ?? 1) - 1); lsSet(LS_UI, ui); applyTextSize(); };
-$("tsUp").onclick = () => { ui.textStep = Math.min(TEXT_STEPS.length - 1, (ui.textStep ?? 1) + 1); lsSet(LS_UI, ui); applyTextSize(); };
+function stepText(d) {
+  ui.textStep = Math.max(0, Math.min(TEXT_STEPS.length - 1, (ui.textStep ?? 1) + d));
+  lsSet(LS_UI, ui); applyTextSize(); toast("Tekstgrootte: " + $("tsLabel").textContent);
+}
+$("tsDown").addEventListener("click", () => stepText(-1));
+$("tsUp").addEventListener("click", () => stepText(1));
 applyTextSize();
 
 $("appVersion").textContent = `Versie ${APP_VERSION} · ${new Date(APP_DATE + "T12:00:00").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric" })}`;
@@ -1551,5 +1555,9 @@ async function boot() {
 boot();
 
 if ("serviceWorker" in navigator) {
+  // Nieuwe versie actief geworden: één keer herladen zodat alle bestanden van dezelfde versie zijn
+  const hadController = !!navigator.serviceWorker.controller;
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => { if (hadController && !reloaded) { reloaded = true; location.reload(); } });
   window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
 }

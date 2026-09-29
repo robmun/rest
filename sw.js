@@ -1,5 +1,5 @@
 // Tafels service worker: app werkt ook offline; je lijst zelf staat in localStorage/GitHub.
-const CACHE = "tafels-26.9.2";
+const CACHE = "tafels-26.9.3";
 const SHELL = ["./", "index.html", "app.css", "app.js", "manifest.webmanifest",
   "apple-touch-icon.png", "icon-192.png", "icon-512.png"];
 const CDN = ["https://cdnjs.cloudflare.com/", "https://fonts.googleapis.com/", "https://fonts.gstatic.com/"];
@@ -17,10 +17,11 @@ self.addEventListener("fetch", e => {
   // Eigen bestanden: eerst netwerk (zodat updates meteen binnenkomen), anders cache
   if (url.origin === location.origin) {
     if (url.pathname.endsWith("/data/restaurants.json")) return;
-    e.respondWith(fetch(req).then(res => {
+    // Altijd bij de server controleren op een nieuwere versie (niet uit de browsercache)
+    e.respondWith(fetch(req.mode === "navigate" ? req.url : req, { cache: "no-cache" }).then(res => {
       if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); }
       return res;
-    }).catch(() => caches.match(req).then(r => r || caches.match("index.html"))));
+    }).catch(() => caches.match(req, { ignoreSearch: true }).then(r => r || caches.match("index.html"))));
     return;
   }
   // Bibliotheken en lettertypes: cache eerst
