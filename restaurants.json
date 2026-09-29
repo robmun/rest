@@ -1804,12 +1804,11 @@
    "notes": "",
    "address": "Naarderstraat 40, 1251 BD Laren",
    "tags": [],
-   "visited": false,
+   "visited": true,
    "lat": 52.259357,
    "lng": 5.223158,
    "geo": "osm",
-   "updatedAt": 1790540937548,
-   "addrChecked": true,
+   "updatedAt": 1790686187198,
    "osmChecked": 1790540937548
   },
   {
