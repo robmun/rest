@@ -21,3 +21,12 @@ Open https://robmun.github.io/rest/ in Safari op de iPhone → deel-knop → **Z
 | `sw.js`, `manifest.webmanifest`, `*.png` | Installeerbaar en offline bruikbaar |
 
 Formaat van `restaurants.json`: `{ version, cities[], inspiration[], items[] }`, waarbij elk item `id, name, url, city, notes, tags[], visited, address?, lat?, lng?, updatedAt` heeft. Verwijderde items blijven als `{ id, deleted: true }` staan, zodat twee apparaten elkaars wijzigingen goed samenvoegen.
+
+## Versies
+
+Nummering `jaar.maand.volgnummer`, bijvoorbeeld `26.9.1` = eerste versie van september 2026.
+Het versienummer staat in `app.js` (`APP_VERSION`) en in `sw.js` (`CACHE`), en is te zien onder Instellingen.
+
+| Versie | Datum | Wat |
+|---|---|---|
+| 26.9.1 | 29-09-2026 | Eerste genummerde versie: kaart en lijst, bezoekhistorie, snel toevoegen, export, bekijkversie, leesbaardere tekst |

@@ -1,4 +1,7 @@
 /* Tafels — persoonlijke restaurantlijst met kaart en GitHub-sync */
+// Versie: jaar.maand.volgnummer binnen die maand (26.9.1 = eerste versie van september 2026).
+// Bij elke nieuwe versie ook CACHE in sw.js aanpassen.
+const APP_VERSION = "26.9.1", APP_DATE = "2026-09-29";
 "use strict";
 
 // Kenmerken per groep; eigen kenmerken krijgen een groep via store.data.tagGroups
@@ -1514,6 +1517,8 @@ function addClearButton(input) {
   wrap.append(b);
 }
 document.querySelectorAll('#q, #form input:not([type=checkbox]):not([type=radio]), #form textarea, #vWith, #vNote').forEach(addClearButton);
+
+$("appVersion").textContent = `Versie ${APP_VERSION} · ${new Date(APP_DATE + "T12:00:00").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric" })}`;
 
 /* ---------------- start ---------------- */
 async function boot() {

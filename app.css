@@ -497,3 +497,4 @@ ul.list{gap:10px}
 .visits-sum{font-size:14px;color:var(--sub)}
 .visit{font-size:15.5px}
 .visit-note{font-size:16.5px;color:var(--sub)}
+.version{margin:14px 0 0;text-align:center;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
