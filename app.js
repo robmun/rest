@@ -1,7 +1,7 @@
 /* Tafels — persoonlijke restaurantlijst met kaart en GitHub-sync */
 // Versie: jaar.maand.volgnummer binnen die maand (26.9.1 = eerste versie van september 2026).
 // Bij elke nieuwe versie ook CACHE in sw.js aanpassen.
-const APP_VERSION = "26.9.3", APP_DATE = "2026-09-29";
+const APP_VERSION = "26.9.4", APP_DATE = "2026-09-29";
 "use strict";
 
 // Kenmerken per groep; eigen kenmerken krijgen een groep via store.data.tagGroups
@@ -82,7 +82,13 @@ function el(tag, props = {}, ...kids) {
   return e;
 }
 const ARROW = () => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("width", "12"); s.setAttribute("height", "12"); s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("fill", "none"); s.setAttribute("stroke", "currentColor"); s.setAttribute("stroke-width", "2.5"); s.innerHTML = '<path d="M7 17 17 7M8 7h9v9"/>'; return s; };
-function toast(msg) { const t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => (t.hidden = true), 2400); }
+function toast(msg, undo) {
+  const t = $("toast");
+  t.replaceChildren(el("span", { text: msg }));
+  if (undo) t.append(el("button", { type: "button", class: "undo", onclick: () => { t.hidden = true; clearTimeout(toast._t); undo(); } }, "Ongedaan maken"));
+  t.classList.toggle("has-undo", !!undo);
+  t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => (t.hidden = true), undo ? 6000 : 2400);
+}
 
 /* ---------------- openingstijden (OpenStreetMap-notatie, ook Nederlandse dagen) ---------------- */
 const DAY_KEYS = ["mo", "tu", "we", "th", "fr", "sa", "su"];
@@ -231,11 +237,11 @@ $("visitForm").addEventListener("submit", e => {
   toast(isNew ? "Bezoek bewaard" : "Bezoek bijgewerkt");
 });
 $("vDel").onclick = () => {
-  const d = $("vDel");
-  if (!d.dataset.armed) { d.dataset.armed = "1"; d.textContent = "Zeker weten?"; d.classList.add("confirm"); return; }
   const it = byId(visitCtx.itemId); if (!it) return closeSheets();
+  const before = JSON.parse(JSON.stringify(it));
   const item = { ...it, visits: (it.visits || []).filter(x => x.id !== visitCtx.visitId) };
-  closeSheets(); upsert(item); toast("Bezoek verwijderd");
+  closeSheets(); upsert(item);
+  toast("Bezoek verwijderd", () => { upsert({ ...before }); toast("Bezoek teruggezet"); });
 };
 function visitsSection(i) {
   const list = visitsOf(i);
@@ -313,7 +319,7 @@ function render() {
   if (!inspoAdding) renderInspo();   // niet verversen terwijl je een link aan het invoeren bent
 
   renderNotice();
-  renderSync();
+  renderSync(); renderOffline();
   if (map) renderMarkers();
   if (placeId) { const p = byId(placeId); if (p && !p.deleted) renderPlace(p); else closePlace(); }
 }
@@ -363,6 +369,10 @@ function renderList() {
   iv.replaceChildren(partial
     ? el("span", {}, `${shown.length} in kaartbeeld · `, el("button", { type: "button", class: "linkbtn", onclick: showAll }, "Toon alles"))
     : el("span", { text: query.trim() ? `${shown.length} gevonden` : `${shown.length} restaurants` }));
+  if (!total && syncing) {   // eerste keer laden: plaatshouders
+    $("list").replaceChildren(...[0, 1, 2, 3, 4].map(() => el("li", { class: "row skel", "aria-hidden": "true" }, el("div", { class: "row-main" }, el("i", { class: "sk sk1" }), el("i", { class: "sk sk2" }), el("i", { class: "sk sk3" })))));
+    $("empty").hidden = true; return;
+  }
   $("list").replaceChildren(...listRows(shown));
   $("sortSel").value = ui.sort || "az";
   $("sortLabel").textContent = $("sortSel").selectedOptions[0]?.textContent || "A–Z";
@@ -410,7 +420,7 @@ function statusLine(i, withHours = true) {
 }
 function row(i) {
   return el("li", { class: "row" + (i.id === placeId ? " active" : ""), "data-id": i.id },
-    el("button", { type: "button", class: "row-main", onclick: () => openPlace(i.id), "aria-label": i.name },
+    el("button", { type: "button", class: "row-main", onclick: () => openPlace(i.id) },
       ...[el("div", { class: "row-top" }, el("span", { class: "name", text: i.name })),
       metaLine(i, false),
       i.notes ? el("p", { class: "row-note", text: i.notes }) : null,
@@ -429,11 +439,8 @@ function renderInspo() {
   box.hidden = READONLY && !list.length;
   const rows = list.map((x, k) => el("div", { class: "inspo-row" },
     el("a", { href: x.url, target: "_blank", rel: "noopener" }, x.label || hostOf(x.url)),
-    READONLY ? null : el("button", { type: "button", class: "inspo-del" + (inspoArmed === k ? " armed" : ""), "aria-label": "Verwijder " + (x.label || x.url),
-      onclick: () => {
-        if (inspoArmed !== k) { inspoArmed = k; renderInspo(); return; }
-        inspoArmed = null; saveInspo(list.filter((_, n) => n !== k)); toast("Link verwijderd");
-      } }, inspoArmed === k ? "Verwijder" : svgIcon("close", 12))));
+    READONLY ? null : el("button", { type: "button", class: "inspo-del", "aria-label": "Verwijder " + (x.label || x.url),
+      onclick: () => { saveInspo(list.filter((_, n) => n !== k)); toast("Link verwijderd", () => { saveInspo(list); toast("Link teruggezet"); }); } }, svgIcon("close", 12))));
   let adder = null;
   if (!READONLY) {
     if (!inspoAdding) adder = el("button", { type: "button", class: "linkbtn inspo-add", onclick: () => { inspoAdding = true; renderInspo(); setTimeout(() => $("inspoUrl") && $("inspoUrl").focus(), 50); } }, "+ Link toevoegen");
@@ -523,7 +530,11 @@ function renderPlace(i) {
   } else if (i.hours) hoursEl = el("span", { class: "hours-raw", text: i.hours });
   const status = statusLine(i, false) || el("div", { class: "status" });
   if (hoursEl) { if (status.children.length) status.append(el("span", { class: "sep", text: " · " })); status.append(hoursEl); }
+  if (box.dataset.id !== i.id) setDetent("half");
+  box.dataset.id = i.id;
+  box.setAttribute("aria-label", i.name);
   box.replaceChildren(...[
+    el("div", { class: "grab", "aria-hidden": "true" }),
     el("div", { class: "place-head" },
       el("h3", { text: i.name }),
       el("button", { type: "button", class: "x", "aria-label": "Sluiten", onclick: closePlace }, svgIcon("close", 16))),
@@ -543,7 +554,7 @@ function openPlace(id) {
   markers.forEach((m, mid) => { const e = m.getElement(); if (e) e.classList.toggle("selected", mid === id); });
 }
 function closePlace() {
-  placeId = null; tapSeq++; clearTap();
+  placeId = null; $("place").dataset.id = ""; tapSeq++; clearTap();
   document.querySelectorAll("#list .row.active").forEach(r => r.classList.remove("active"));
   $("place").hidden = true; $("main").classList.remove("card-open");
   markers.forEach(m => { const e = m.getElement(); if (e) e.classList.remove("selected"); });
@@ -603,6 +614,7 @@ function renderMarkers() {
   np.hidden = !missing;
   if (missing) np.textContent = geoQueue.length ? `Locaties zoeken… ${missing} nog niet op de kaart` : `${missing} restaurant${missing > 1 ? "s" : ""} zonder locatie. Open ze om de pin te zetten.`;
   if (lastFitCity !== ui.city || (lastFitCount < 3 && withPos.length >= 3)) fitCity();
+  if (pendingFocus) setTimeout(tryFocusPin, 50);
 }
 let lastFitCount = 0;
 function fitCity() {
@@ -611,6 +623,27 @@ function fitCity() {
   if (pts.length) map.fitBounds(pts, { paddingTopLeft: [30, 90], paddingBottomRight: [30, 40], maxZoom: 15 });
   else { const a = area(ui.city); map.setView(a.center, a.zoom); }
   lastFitCity = ui.city; lastFitCount = pts.length;
+}
+let pendingFocus = null;
+function focusNew(id) {
+  pendingFocus = id;
+  if (ui.view === "list") {
+    setTimeout(() => {
+      const r = document.querySelector(`#list .row[data-id="${id}"]`);
+      if (r) { r.scrollIntoView({ block: "center", behavior: "smooth" }); r.classList.add("flash"); setTimeout(() => r.classList.remove("flash"), 2200); pendingFocus = null; }
+    }, 150);
+  } else tryFocusPin();
+}
+function tryFocusPin() {
+  if (!pendingFocus || !map) return;
+  const id = pendingFocus, m = markers.get(id), i = byId(id);
+  if (!m || !i || i.lat == null) return;          // nog geen locatie: later opnieuw (na het zoeken)
+  pendingFocus = null;
+  cluster.zoomToShowLayer(m, () => {
+    if (map.getZoom() < LABEL_ZOOM) map.setView([i.lat, i.lng], LABEL_ZOOM);
+    const e = m.getElement(); if (e) { e.classList.add("pulse"); setTimeout(() => e.classList.remove("pulse"), 2600); }
+    openPlace(id);
+  });
 }
 function showOnMap(id) {
   setView("map");
@@ -887,7 +920,7 @@ function openSheet(item) {
   const defCity = nearestArea();
   fillCities(item ? item.city : defCity);
   renderTagPick();
-  const d = $("delBtn"); d.hidden = !item; d.textContent = "Verwijderen"; d.classList.remove("confirm"); d.disabled = false;
+  const d = $("delBtn"); d.hidden = !item; d.textContent = "Verwijderen"; d.disabled = false;
   $("fErr").hidden = true;
   $("pinHint").textContent = !item || item.lat == null ? "Tik op de kaart om de pin te zetten of te verplaatsen."
     : item.geo === "manual" ? "Pin zelf gezet. Tik op de kaart om hem te verplaatsen."
@@ -1048,7 +1081,9 @@ function renderCandidates(state, list) {
   const msg = state === "loading" ? "Zoeken wat hier zit…"
     : state === "error" ? "Opzoeken lukt nu niet. Probeer het zo nog eens, of voeg het toe met +."
     : !rows.length ? "Geen restaurant gevonden op deze plek. Tik precies op het restaurant, of voeg het toe met +." : null;
+  box.dataset.id = ""; setDetent("half");
   box.replaceChildren(...[
+    el("div", { class: "grab", "aria-hidden": "true" }),
     el("div", { class: "place-head" },
       el("div", { class: "place-title" }, el("h3", { text: rows.length > 1 ? "Welk restaurant?" : "Restaurant op de kaart" })),
       el("button", { type: "button", class: "x", "aria-label": "Sluiten", onclick: closePlace }, svgIcon("close", 16))),
@@ -1257,13 +1292,14 @@ $("form").addEventListener("submit", e => {
   if (ui.city !== ALL) { ui.city = c; lsSet(LS_UI, ui); }
   upsert(item); closeSheets();
   toast(isNew ? `${name} toegevoegd` : "Opgeslagen");
+  if (isNew) focusNew(item.id);
   if (item.lat == null) queueGeocoding();
 });
 $("delBtn").onclick = () => {
-  const d = $("delBtn");
-  if (!delArmed) { delArmed = true; d.textContent = "Zeker weten?"; d.classList.add("confirm"); return; }
   if (!editing) return;
-  const n = editing.name; removeItem(editing.id); closeSheets(); toast(`${n} verwijderd`);
+  const before = JSON.parse(JSON.stringify(byId(editing.id) || editing));
+  removeItem(editing.id); closeSheets(); closePlace();
+  toast(`${before.name} verwijderd`, () => { upsert({ ...before }); toast(`${before.name} teruggezet`); });
 };
 $("q").addEventListener("input", e => { query = e.target.value; render(); });
 
@@ -1336,6 +1372,7 @@ async function sync() {
       if (res.conflict) continue;
       store.sha = res.sha; store.dirty = false; persist(); break;
     }
+    if (!store.dirty) { store.lastSync = now(); persist(); }
     setSync(store.dirty ? "warn" : "ok", store.dirty ? "Nog niet opgeslagen op GitHub" : "Opgeslagen op GitHub");
     render(); queueGeocoding();
   } catch (e) {
@@ -1346,14 +1383,27 @@ async function sync() {
     if (syncAgain) { syncAgain = false; scheduleSync(); }
   }
 }
-window.addEventListener("online", () => scheduleSync());
+function renderOffline() { $("offline").hidden = navigator.onLine; }
+window.addEventListener("online", () => { renderOffline(); scheduleSync(); toast("Weer online"); });
+window.addEventListener("offline", renderOffline);
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") { render(); if (connected()) sync(); } });
 setInterval(() => { if (document.visibilityState === "visible" && (openFilter || placeId)) render(); }, 60000);
 
 /* ---------------- settings ---------------- */
+function fmtWhen(ts) {
+  if (!ts) return "nog niet";
+  const d = new Date(ts), t = d.toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" });
+  const days = Math.round((new Date().setHours(0, 0, 0, 0) - new Date(ts).setHours(0, 0, 0, 0)) / 864e5);
+  return days === 0 ? `vandaag ${t}` : days === 1 ? `gisteren ${t}` : `${d.toLocaleDateString("nl-NL", { day: "numeric", month: "short" })} ${t}`;
+}
+function syncSummary() {
+  const n = visible().length;
+  if (!navigator.onLine) return `Offline · ${n} restaurants op dit toestel, wijzigingen worden bewaard`;
+  return (store.dirty ? "Wijzigingen nog niet opgeslagen" : `Laatst opgeslagen: ${fmtWhen(store.lastSync)}`) + ` · ${n} restaurants`;
+}
 function openSettings() {
   $("sErr").hidden = true;
-  $("sOk").hidden = false; $("sOk").textContent = syncState.text + ` · ${visible().length} restaurants`;
+  $("sOk").hidden = false; $("sOk").textContent = syncSummary();
   showSheet("settings");
 }
 $("syncBtn").onclick = openSettings;
@@ -1518,12 +1568,60 @@ function addClearButton(input) {
 }
 document.querySelectorAll('#q, #form input:not([type=checkbox]):not([type=radio]), #form textarea, #vWith, #vNote').forEach(addClearButton);
 
+/* ---------------- vegen: restaurantkaart met drie standen, schermen omlaag vegen om te sluiten ---------------- */
+function setDetent(d) {
+  const p = $("place");
+  p.classList.remove("peek", "half", "full"); p.classList.add(d);
+  if (d !== "full") p.scrollTop = 0;
+}
+function attachDrag(box, handleSel, onEnd) {
+  let startY = 0, lastY = 0, t0 = 0, active = false;
+  box.addEventListener("pointerdown", e => {
+    const h = e.target.closest(handleSel);
+    if (!h || !box.contains(h) || e.target.closest("button, a, input, textarea, select, summary")) return;
+    active = true; startY = lastY = e.clientY; t0 = performance.now();
+    box.style.transition = "none";
+    box.setPointerCapture?.(e.pointerId);
+  });
+  box.addEventListener("pointermove", e => {
+    if (!active) return;
+    lastY = e.clientY;
+    const dy = lastY - startY;
+    box.style.transform = `translateY(${dy < 0 ? Math.max(dy, -60) / 2 : dy}px)`;
+  });
+  const end = () => {
+    if (!active) return; active = false;
+    const dy = lastY - startY, v = dy / Math.max(1, performance.now() - t0);
+    box.style.transition = ""; box.style.transform = "";
+    onEnd(dy, v);
+  };
+  box.addEventListener("pointerup", end);
+  box.addEventListener("pointercancel", end);
+}
+attachDrag($("place"), ".grab, .place-head", (dy, v) => {
+  const p = $("place"), cur = p.classList.contains("peek") ? "peek" : p.classList.contains("full") ? "full" : "half";
+  const down = dy > 60 || v > 0.6, up = dy < -30 || v < -0.5;
+  if (Math.abs(dy) < 6) { if (cur === "peek") setDetent("half"); return; }   // tik op de greep
+  if (down) { if (cur === "full") setDetent("half"); else if (cur === "half") setDetent("peek"); else closePlace(); }
+  else if (up) { if (cur === "peek") setDetent("half"); else setDetent("full"); }
+});
+document.querySelectorAll(".sheet").forEach(s => attachDrag(s, ".grab, .sheet-head", (dy, v) => { if (dy > 90 || (dy > 30 && v > 0.6)) closeSheets(); }));
+
 /* ---------------- tekstgrootte ---------------- */
 const TEXT_STEPS = [1, 1.08, 1.16, 1.25, 1.35];
+// Volg de tekstgrootte uit iOS (Instellingen > Beeldscherm > Tekstgrootte): standaard is 17 pt
+function iosTextScale() {
+  try {
+    if (!CSS.supports("font", "-apple-system-body")) return 1;
+    const s = el("span", { style: "font:-apple-system-body;position:absolute;visibility:hidden" }, "x");
+    document.body.append(s); const px = parseFloat(getComputedStyle(s).fontSize); s.remove();
+    return px ? Math.min(1.6, Math.max(0.85, px / 17)) : 1;
+  } catch (e) { return 1; }
+}
 function applyTextSize() {
   let k = ui.textStep; if (k == null || k < 0 || k >= TEXT_STEPS.length) k = 1;   // standaard: één stap groter
   ui.textStep = k;
-  document.documentElement.style.setProperty("--ts", TEXT_STEPS[k]);
+  document.documentElement.style.setProperty("--ts", (TEXT_STEPS[k] * iosTextScale()).toFixed(3));
   const lab = $("tsLabel"); if (lab) lab.textContent = ["Normaal", "Groot", "Groter", "Extra groot", "Maximaal"][k];
   $("tsDown").disabled = k === 0; $("tsUp").disabled = k === TEXT_STEPS.length - 1;
 }
