@@ -478,3 +478,22 @@ ul.list{gap:10px}
 .wordmark span{white-space:nowrap}
 @media (max-width:360px){ .title-row h1.wordmark{font-size:22px} }
 
+
+/* ===== Leesbaarheid: tekst onder de naam groter en donkerder ===== */
+:root{ --muted:#55574F; --sub:color-mix(in srgb,var(--ink) 86%,var(--bg)); }
+@media (prefers-color-scheme: dark){ :root{ --muted:#B4B3AA; --sub:color-mix(in srgb,var(--ink) 88%,var(--bg)); } }
+/* Lijst */
+.meta{font-size:15.5px;color:var(--sub);opacity:1;font-weight:500}
+.row-note{font-size:17px;color:var(--sub)}
+.status{font-size:14.5px;color:var(--sub)}
+.st-been,.open-text.is-closed,.status .sep{color:var(--sub)}
+/* Restaurantkaart */
+.place .meta{font-size:17px}
+.place .addr{font-size:16px;color:var(--sub)}
+.place .notes{font-size:18.5px;color:var(--sub)}
+.place .status{font-size:16px}
+.place .hours,.place .hours summary{font-size:16px}
+.place .hours .more{font-size:15px}
+.visits-sum{font-size:14px;color:var(--sub)}
+.visit{font-size:15.5px}
+.visit-note{font-size:16.5px;color:var(--sub)}
