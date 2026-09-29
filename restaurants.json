@@ -1808,8 +1808,9 @@
    "lat": 52.259357,
    "lng": 5.223158,
    "geo": "osm",
-   "updatedAt": 1790686187198,
-   "osmChecked": 1790540937548
+   "updatedAt": 1790686190444,
+   "osmChecked": 1790540937548,
+   "addrChecked": true
   },
   {
    "id": "loetje-muk9va7w",
