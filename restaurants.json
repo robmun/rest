@@ -2084,15 +2084,13 @@
    "city": "Amsterdam",
    "notes": "",
    "address": "Noorderstraat 19h, 1017 TR Amsterdam",
-   "hours": "Th-Mo 17:30-22:00",
    "tags": [],
    "visited": false,
    "lat": 52.361473,
    "lng": 4.892418,
    "geo": "osm",
-   "updatedAt": 1790910633334,
-   "osmChecked": 1790910436101,
-   "addrChecked": true
+   "updatedAt": 1790910687440,
+   "osmChecked": 1790910436101
   }
  ],
  "tagGroups": {
