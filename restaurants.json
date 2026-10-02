@@ -2079,22 +2079,18 @@
   {
    "id": "sukhothai-thanee-muqdtx8v",
    "createdAt": 1790910431887,
-   "name": "Sukhothai Thanee",
-   "url": "https://sukhothaithanee.nl",
+   "name": "Amice Amsterdam",
+   "url": "https://amiceamsterdam.nl",
    "city": "Amsterdam",
    "notes": "",
-   "address": "Noorderstraat 19-H, 1017TR Amsterdam",
-   "phone": "+31 20 786 6419",
+   "address": "Noorderstraat 19h, 1017 TR Amsterdam",
    "hours": "Th-Mo 17:30-22:00",
-   "tags": [
-    "Thais"
-   ],
+   "tags": [],
    "visited": false,
    "lat": 52.361473,
    "lng": 4.892418,
    "geo": "osm",
-   "updatedAt": 1790910436101,
-   "addrChecked": true,
+   "updatedAt": 1790910630209,
    "osmChecked": 1790910436101
   }
  ],
