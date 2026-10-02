@@ -2082,16 +2082,15 @@
    "name": "Amice Amsterdam",
    "url": "https://amiceamsterdam.nl",
    "city": "Amsterdam",
-   "notes": "",
+   "notes": "Getipt aan Heleen",
    "address": "Noorderstraat 19h, 1017 TR Amsterdam",
    "tags": [],
    "visited": false,
    "lat": 52.361473,
    "lng": 4.892418,
    "geo": "osm",
-   "updatedAt": 1790910690442,
-   "osmChecked": 1790910436101,
-   "addrChecked": true
+   "updatedAt": 1790910717641,
+   "osmChecked": 1790910436101
   }
  ],
  "tagGroups": {
