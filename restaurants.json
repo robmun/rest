@@ -2089,9 +2089,10 @@
    "lat": 52.361473,
    "lng": 4.892418,
    "geo": "osm",
-   "updatedAt": 1790910753739,
+   "updatedAt": 1790910756773,
    "osmChecked": 1790910436101,
-   "phone": "020 705 2339"
+   "phone": "020 705 2339",
+   "addrChecked": true
   }
  ],
  "tagGroups": {
