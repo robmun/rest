@@ -2093,6 +2093,26 @@
    "osmChecked": 1790910436101,
    "phone": "020 705 2339",
    "addrChecked": true
+  },
+  {
+   "id": "chao-muscle3r",
+   "createdAt": 1791029286567,
+   "name": "CHÀO",
+   "url": "https://www.chaopizza.nl",
+   "city": "Bussum",
+   "notes": "",
+   "address": "Kapelstraat 9, 1404HT Bussum",
+   "phone": "+31 35 3030106",
+   "hours": "Tu-Su 16:00-23:30",
+   "tags": [
+    "Italiaans",
+    "Aziatisch"
+   ],
+   "visited": false,
+   "lat": 52.27468,
+   "lng": 5.164716,
+   "geo": "osm",
+   "updatedAt": 1791029286568
   }
  ],
  "tagGroups": {
