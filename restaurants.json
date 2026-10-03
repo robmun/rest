@@ -1848,8 +1848,9 @@
    "lat": 52.296067,
    "lng": 5.163215,
    "geo": "osm",
-   "updatedAt": 1791029380283,
-   "osmChecked": 1790541113773
+   "updatedAt": 1791029382936,
+   "osmChecked": 1790541113773,
+   "addrChecked": true
   },
   {
    "id": "the-red-sun-muk9z6ql",
