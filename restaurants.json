@@ -1844,12 +1844,11 @@
    "tags": [
     "Aziatisch"
    ],
-   "visited": false,
+   "visited": true,
    "lat": 52.296067,
    "lng": 5.163215,
    "geo": "osm",
-   "updatedAt": 1790541113773,
-   "addrChecked": true,
+   "updatedAt": 1791029380283,
    "osmChecked": 1790541113773
   },
   {
