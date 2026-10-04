@@ -2154,6 +2154,23 @@
    "updatedAt": 1791144081284,
    "addrChecked": true,
    "osmChecked": 1791144081284
+  },
+  {
+   "id": "visaandeschelde-muu8y5no",
+   "createdAt": 1791144096036,
+   "name": "Visaandeschelde",
+   "url": "https://www.visaandeschelde.nl",
+   "city": "Amsterdam",
+   "notes": "",
+   "address": "Scheldeplein 4, 1078GR Amsterdam",
+   "tags": [
+    "Vis"
+   ],
+   "visited": false,
+   "lat": 52.344671,
+   "lng": 4.890382,
+   "geo": "osm",
+   "updatedAt": 1791144096036
   }
  ],
  "tagGroups": {
