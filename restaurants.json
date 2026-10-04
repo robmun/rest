@@ -2133,6 +2133,22 @@
    "updatedAt": 1791116369832,
    "addrChecked": true,
    "osmChecked": 1791116369832
+  },
+  {
+   "id": "t-vliegertje-muu8x2kv",
+   "createdAt": 1791144045391,
+   "name": "'t Vliegertje",
+   "url": "https://www.vliegertje.nl/",
+   "city": "Amsterdam",
+   "notes": "",
+   "address": "Scheldestraat 79, 1078 GH Amsterdam",
+   "hours": "Mo-Th,Su 16:00-24:00; Fr-Sa 16:00-01:00",
+   "tags": [],
+   "visited": false,
+   "lat": 52.345355,
+   "lng": 4.891127,
+   "geo": "osm",
+   "updatedAt": 1791144045392
   }
  ],
  "tagGroups": {
