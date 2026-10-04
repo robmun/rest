@@ -2143,14 +2143,15 @@
    "notes": "",
    "address": "Scheldestraat 79, 1078 GH Amsterdam",
    "hours": "Mo-Th,Su 16:00-24:00; Fr-Sa 16:00-01:00",
-   "tags": [],
-   "visited": false,
+   "tags": [
+    "Betaalbaar",
+    "Eetcafe"
+   ],
+   "visited": true,
    "lat": 52.345355,
    "lng": 4.891127,
    "geo": "osm",
-   "updatedAt": 1791144049566,
-   "addrChecked": true,
-   "osmChecked": 1791144049566
+   "updatedAt": 1791144075981
   }
  ],
  "tagGroups": {
