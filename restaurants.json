@@ -2115,6 +2115,22 @@
    "updatedAt": 1791029354687,
    "osmChecked": 1791029291473,
    "addrChecked": true
+  },
+  {
+   "id": "brasserie-bon-mutsfsa9",
+   "createdAt": 1791116365041,
+   "name": "Brasserie Bon",
+   "url": "",
+   "city": "Naarden",
+   "notes": "",
+   "address": "Nieuwe Haven, 1411 SH Naarden",
+   "hours": "Mo-Su 10:00-24:00",
+   "tags": [],
+   "visited": false,
+   "lat": 52.296063,
+   "lng": 5.159574,
+   "geo": "osm",
+   "updatedAt": 1791116365041
   }
  ],
  "tagGroups": {
