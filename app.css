@@ -554,3 +554,15 @@ html,body{overflow-x:hidden}
 .pin-wrap.pulse .pin{animation:pinPulse .7s ease-in-out 3}
 @keyframes pinPulse{50%{transform:rotate(-45deg) scale(1.45)}}
 .app.mapmode .place.full{max-height:calc(100% - 84px);height:calc(100% - 84px)}
+
+/* 26.10.1 — soort plek */
+.pin i.k{width:auto;height:auto;background:none;border-radius:0;color:#fff;display:grid;place-items:center}
+.pin i.k svg{display:block}
+.legend .kdot{width:16px;height:16px;display:inline-grid;place-items:center;color:#fff}
+.legend .kdot svg{display:block}
+#kinds{margin-bottom:2px}
+.kind-pick{display:grid;grid-template-columns:repeat(6,1fr);overflow:visible}
+.kind-pick button{grid-column:span 2;padding:9px 6px;min-height:40px}
+.kind-pick button:nth-child(n+4){grid-column:span 3}
+.kind-pick button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.sheet.qmode .kind-group{margin-top:2px}

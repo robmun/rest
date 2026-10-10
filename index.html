@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
-<link rel="stylesheet" href="app.css?v=26.9.4">
+<link rel="stylesheet" href="app.css?v=26.10.1">
 </head>
 <body>
 <div class="app">
@@ -42,6 +42,7 @@
       </button>
     </div>
     <div class="filter-panel" id="filterPanel">
+      <div class="seg" id="kinds" role="group" aria-label="Soort" hidden></div>
       <div class="seg" id="cities" role="group" aria-label="Lijst" hidden></div>
       <div class="chips" id="filters" role="group" aria-label="Filter op kenmerk"></div>
       <div class="legend" id="legend" aria-label="Kleuren op de kaart"></div>
@@ -87,7 +88,7 @@
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>
       Lijst
     </button>
-    <button type="button" class="add" id="addBtn" aria-label="Restaurant toevoegen">
+    <button type="button" class="add" id="addBtn" aria-label="Toevoegen">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
     </button>
     <button type="button" class="tab" id="tabMap" aria-pressed="false">
@@ -102,7 +103,7 @@
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
   <div class="grab"></div>
   <div class="sheet-head">
-    <h2 id="sheetTitle">Restaurant toevoegen</h2>
+    <h2 id="sheetTitle">Toevoegen</h2>
     <button class="x" type="button" data-close aria-label="Sluiten">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
     </button>
@@ -110,7 +111,7 @@
   <form id="form" novalidate>
     <div class="group quick q-keep" id="quickWrap">
       <div class="inline">
-        <input id="fLink" autocomplete="off" autocapitalize="off" autocorrect="off" enterkeyhint="search" placeholder="Link of naam van restaurant" aria-label="Link of naam">
+        <input id="fLink" autocomplete="off" autocapitalize="off" autocorrect="off" enterkeyhint="search" placeholder="Link of naam" aria-label="Link of naam">
         <button type="button" id="linkBtn">Plak</button>
       </div>
       <div class="suggest" id="suggest" role="listbox" aria-label="Suggesties" hidden></div>
@@ -119,6 +120,10 @@
     <div class="q-summary q-keep" id="qSummary" hidden></div>
     <div class="group">
       <label class="f">Naam<input id="fName" required autocomplete="off" autocorrect="off" placeholder="Typ een naam, bijv. Rakang"></label>
+    </div>
+    <div class="group q-keep kind-group">
+      <span class="lbl">Soort</span>
+      <div class="seg kind-pick" id="fKind" role="radiogroup" aria-label="Soort"></div>
     </div>
     <label class="f">Adres<input id="fAddress" autocomplete="off" placeholder="Bijv. Elandsgracht 29, Amsterdam (mag leeg, dan zoekt de app zelf)"></label>
     <label class="f">Website<input id="fUrl" type="url" inputmode="url" autocomplete="off" placeholder="https://"></label>
@@ -246,6 +251,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=26.9.4"></script>
+<script src="app.js?v=26.10.1"></script>
 </body>
 </html>

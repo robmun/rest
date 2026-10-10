@@ -1,7 +1,7 @@
 /* Tafels — persoonlijke restaurantlijst met kaart en GitHub-sync */
 // Versie: jaar.maand.volgnummer binnen die maand (26.9.1 = eerste versie van september 2026).
 // Bij elke nieuwe versie ook CACHE in sw.js aanpassen.
-const APP_VERSION = "26.9.4", APP_DATE = "2026-09-29";
+const APP_VERSION = "26.10.1", APP_DATE = "2026-10-10";
 "use strict";
 
 // Kenmerken per groep; eigen kenmerken krijgen een groep via store.data.tagGroups
@@ -39,6 +39,7 @@ const settings = { owner: "robmun", repo: "rest", branch: "data", path: "restaur
   token: atob(["SWFiN2wzSmlTWEZFQVROVG1l", "NHhOUlNMUkI2WXBXTmJCV2h5", "aUw1WHk0WUZZdWY2UGtZc3Mz", "NnRiQWRfaDh3dmE2YXl3Q2Z2", "MElaTldKREMxMV90YXBfYnVo", "dGln"].join("")).split("").reverse().join("") };
 let ui = { city: null, view: "list" };
 let query = "", activeTags = new Set(), visitFilter = null;
+let formKind = "restaurant";
 let editing = null, formTags = new Set(), delArmed = false, draftPos = null;
 let syncState = { kind: "local", text: "Alleen op dit toestel" };
 
@@ -178,6 +179,44 @@ const CATS = [
 ];
 function catOf(i) { const t = i.tags || []; const c = CATS.find(([, , f]) => f(t)); return c ? c[0] : "x"; }
 
+/* ---------------- soort plek (restaurant, café, verblijf, …) ---------------- */
+const KINDS = [
+  ["restaurant", "Restaurant", "Restaurants"],
+  ["cafe", "Café", "Cafés"],
+  ["bar", "Bar", "Bars"],
+  ["verblijf", "Verblijf", "Verblijven"],
+  ["todo", "Te doen", "Te doen"],
+];
+const KIND_KEYS = KINDS.map(k => k[0]);
+function kindOf(i) { return KIND_KEYS.includes(i && i.category) ? i.category : "restaurant"; }
+const kindLabel = k => (KINDS.find(x => x[0] === k) || KINDS[0])[1];
+const kindPlural = k => (KINDS.find(x => x[0] === k) || KINDS[0])[2];
+function kindsInUse() { const s = new Set(visible().map(kindOf)); return KIND_KEYS.filter(k => s.has(k)); }
+// Woord voor de getoonde plekken: "restaurants" zolang er alleen restaurants zijn
+function placesWord() {
+  if (ui.kind) return kindPlural(ui.kind).toLowerCase();
+  const used = kindsInUse();
+  return used.length > 1 ? "plekken" : kindPlural(used[0] || "restaurant").toLowerCase();
+}
+function kindFromOsm(t) {
+  const a = (t && t.amenity) || "", tr = (t && t.tourism) || "";
+  if (/^(hotel|guest_house|hostel|motel|apartment|chalet|camp_site|caravan_site)$/.test(tr)) return "verblijf";
+  if (/^(cafe|ice_cream)$/.test(a)) return "cafe";
+  if (/^(bar|pub|biergarten|nightclub)$/.test(a)) return "bar";
+  if (/^(restaurant|fast_food|food_court)$/.test(a)) return "restaurant";
+  if (/^(attraction|museum|gallery|viewpoint|zoo|theme_park)$/.test(tr)) return "todo";
+  return null;
+}
+const KIND_SVG = {
+  cafe: '<path d="M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5V9Z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16"/>',
+  bar: '<path d="M5 4h14l-7 8-7-8Z"/><path d="M12 12v8M8 20h8"/>',
+  verblijf: '<path d="M3 19V7M3 15h18v4M21 15v-3a3 3 0 0 0-3-3h-7v6"/><circle cx="7" cy="11.5" r="1.8"/>',
+  todo: '<path d="m12 3 2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7L12 3Z"/>',
+};
+function kindSvg(k, size) {
+  return KIND_SVG[k] ? `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${KIND_SVG[k]}</svg>` : "";
+}
+
 /* ---------------- bezoekhistorie ---------------- */
 const OCCASIONS = ["Diner", "Lunch", "Zakelijk", "Borrel", "Ontbijt", "Verjaardag"];
 function visitsOf(i) { return (i.visits || []).slice().sort((a, b) => (b.date || "").localeCompare(a.date || "")); }
@@ -275,17 +314,18 @@ function filtered() {
   const nowD = new Date();
   return visible().filter(i => {
     if (!inCityOf(i)) return false;
+    if (ui.kind && kindOf(i) !== ui.kind) return false;
     if (visitFilter === "yes" && !isVisited(i)) return false;
     if (visitFilter === "no" && isVisited(i)) return false;
     if (visitFilter === "often" && (i.visits || []).length < 2) return false;
     if (visitFilter === "top" && maxRating(i) < 5) return false;
     if (openFilter) { const st = hoursStatus(i, nowD); if (!st || !st.open) return false; }
     for (const t of activeTags) if (!(i.tags || []).includes(t)) return false;
-    if (q && !norm([i.name, i.notes, i.address, (i.tags || []).join(" "), visitSearchText(i)].join(" ")).includes(q)) return false;
+    if (q && !norm([i.name, i.notes, i.address, kindLabel(kindOf(i)), (i.tags || []).join(" "), visitSearchText(i)].join(" ")).includes(q)) return false;
     return true;
   }).sort((a, b) => a.name.localeCompare(b.name, "nl", { sensitivity: "base" }));
 }
-function activeFilterCount() { return activeTags.size + (visitFilter ? 1 : 0) + (openFilter ? 1 : 0); }
+function activeFilterCount() { return activeTags.size + (visitFilter ? 1 : 0) + (openFilter ? 1 : 0) + (ui.kind ? 1 : 0); }
 
 function render() {
   const cities = allCities();
@@ -297,7 +337,16 @@ function render() {
     onclick: () => { ui.city = c; lsSet(LS_UI, ui); activeTags.clear(); closePlace(); render(); fitCity(); $("listView").scrollTop = 0; }
   }, c, el("span", { text: String(c === ALL ? vis.length : vis.filter(i => i.city === c).length) }))));
 
-  const inCity = vis.filter(inCityOf);
+  const usedKinds = kindsInUse();
+  if (ui.kind && !usedKinds.includes(ui.kind)) ui.kind = null;
+  const kindsBox = $("kinds");
+  kindsBox.hidden = usedKinds.length < 2;
+  kindsBox.replaceChildren(...[null, ...usedKinds].map(k => el("button", {
+    type: "button", "aria-pressed": String((ui.kind || null) === k),
+    onclick: () => { ui.kind = k; lsSet(LS_UI, ui); activeTags.clear(); closePlace(); render(); $("listView").scrollTop = 0; }
+  }, k ? kindPlural(k) : "Alles", el("span", { text: String(k ? vis.filter(i => kindOf(i) === k).length : vis.length) }))));
+
+  const inCity = vis.filter(i => inCityOf(i) && (!ui.kind || kindOf(i) === ui.kind));
   const used = new Map(); inCity.forEach(i => (i.tags || []).forEach(t => used.set(t, (used.get(t) || 0) + 1)));
   const tagList = [...used.keys()].sort((a, b) => tagOrder(a, b) || used.get(b) - used.get(a) || a.localeCompare(b, "nl"));
   $("filters").replaceChildren(...[
@@ -309,7 +358,7 @@ function render() {
     ...tagList.map(t => el("button", { type: "button", class: "chip", "aria-pressed": String(activeTags.has(t)), onclick: () => { activeTags.has(t) ? activeTags.delete(t) : activeTags.add(t); render(); } }, t))
   ].filter(Boolean));
   $("legend").replaceChildren(
-    ...[["x", "Restaurant"]].map(([k, label]) => el("span", { class: "lg" }, el("i", { class: "dot c-" + k }), label)),
+    ...(usedKinds.length ? usedKinds : ["restaurant"]).map(k => { const d = el("i", { class: "dot c-x kdot" }); d.innerHTML = kindSvg(k, 9); return el("span", { class: "lg" }, d, kindLabel(k)); }),
     el("span", { class: "lg" }, el("i", { class: "dot been-dot" }), "Geweest"));
   const n = activeFilterCount();
   $("filterBadge").hidden = !n; $("filterBadge").textContent = String(n);
@@ -368,7 +417,7 @@ function renderList() {
   const iv = $("inView");
   iv.replaceChildren(partial
     ? el("span", {}, `${shown.length} in kaartbeeld · `, el("button", { type: "button", class: "linkbtn", onclick: showAll }, "Toon alles"))
-    : el("span", { text: query.trim() ? `${shown.length} gevonden` : `${shown.length} restaurants` }));
+    : el("span", { text: query.trim() ? `${shown.length} gevonden` : `${shown.length} ${placesWord()}` }));
   if (!total && syncing) {   // eerste keer laden: plaatshouders
     $("list").replaceChildren(...[0, 1, 2, 3, 4].map(() => el("li", { class: "row skel", "aria-hidden": "true" }, el("div", { class: "row-main" }, el("i", { class: "sk sk1" }), el("i", { class: "sk sk2" }), el("i", { class: "sk sk3" })))));
     $("empty").hidden = true; return;
@@ -378,9 +427,10 @@ function renderList() {
   $("sortLabel").textContent = $("sortSel").selectedOptions[0]?.textContent || "A–Z";
   const empty = $("empty");
   empty.hidden = !!shown.length;
+  const w = placesWord();
   if (!shown.length) empty.textContent = !total ? "Nog geen restaurants. Tik op + om er een toe te voegen."
-    : partial && all.length ? "Geen restaurants in dit deel van de kaart. Zoom uit of tik op Toon alles."
-    : openFilter ? "Geen restaurants die nu open zijn (van de restaurants met bekende openingstijden)." : "Niets gevonden met deze filters.";
+    : partial && all.length ? `Geen ${w} in dit deel van de kaart. Zoom uit of tik op Toon alles.`
+    : openFilter ? `Geen ${w} die nu open zijn (van de ${w} met bekende openingstijden).` : "Niets gevonden met deze filters.";
 }
 function showAll() {
   if (!map) return;
@@ -399,7 +449,8 @@ function metaParts(i) {
 }
 function metaLine(i, expandable) {
   const { shown, price, rest } = metaParts(i);
-  const parts = [...shown, price].filter(Boolean);
+  const k = kindOf(i);
+  const parts = [k !== "restaurant" ? kindLabel(k) : null, ...shown, price].filter(Boolean);
   if (!parts.length && !rest.length) return null;
   const line = el("div", { class: "meta" }, el("span", { text: parts.join(" · ") }));
   if (rest.length) {
@@ -571,8 +622,9 @@ function tileLayer() {
   });
 }
 const CHECK = '<svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>';
-function pinIcon(cls, been) {
-  return L.divIcon({ className: "pin-wrap", html: `<div class="pin ${cls}"><i></i></div>${been ? `<b class="pin-been">${CHECK}</b>` : ""}`, iconSize: [28, 28], iconAnchor: [14, 28], tooltipAnchor: [12, -16] });
+function pinIcon(cls, been, kind) {
+  const inner = kind && KIND_SVG[kind] ? `<i class="k">${kindSvg(kind, 13)}</i>` : "<i></i>";
+  return L.divIcon({ className: "pin-wrap", html: `<div class="pin ${cls}">${inner}</div>${been ? `<b class="pin-been">${CHECK}</b>` : ""}`, iconSize: [28, 28], iconAnchor: [14, 28], tooltipAnchor: [12, -16] });
 }
 const LABEL_ZOOM = 15;
 function updateLabels() { if (map) map.getContainer().classList.toggle("labels", map.getZoom() >= LABEL_ZOOM); }
@@ -603,7 +655,7 @@ function renderMarkers() {
   const shown = filtered();
   const withPos = shown.filter(i => i.lat != null && i.lng != null);
   withPos.forEach(i => {
-    const m = L.marker([i.lat, i.lng], { icon: pinIcon("c-" + catOf(i), isVisited(i)), title: i.name, riseOnHover: true });
+    const m = L.marker([i.lat, i.lng], { icon: pinIcon("c-" + catOf(i), isVisited(i), kindOf(i)), title: i.name, riseOnHover: true });
     m.bindTooltip(i.name, { permanent: true, direction: "right", className: "pin-label", interactive: false });
     m.on("click", () => openPlace(i.id));
     m.on("add", () => { if (i.id === placeId) { const e = m.getElement(); if (e) e.classList.add("selected"); } });
@@ -907,7 +959,8 @@ function nearestArea() {
 }
 function openSheet(item) {
   editing = item ? { ...item } : null; delArmed = false;
-  $("sheetTitle").textContent = item ? "Bewerken" : "Restaurant toevoegen";
+  $("sheetTitle").textContent = item ? "Bewerken" : "Toevoegen";
+  formKind = item ? kindOf(item) : (ui.kind || "restaurant"); renderKindPick();
   $("fName").value = item ? item.name : "";
   $("fUrl").value = item ? item.url || "" : "";
   $("fPhone").value = item ? item.phone || "" : "";
@@ -947,6 +1000,13 @@ function openSheet(item) {
   renderQuickSummary();
   if (!item) $("fLink").focus();
 }
+function renderKindPick() {
+  $("fKind").replaceChildren(...KINDS.map(([k, label]) => el("button", {
+    type: "button", role: "radio", "aria-checked": String(formKind === k), "aria-pressed": String(formKind === k),
+    onclick: () => { formKind = k; renderKindPick(); }
+  }, label)));
+}
+function setKindFromOsm(t) { const k = kindFromOsm(t); if (k) { formKind = k; renderKindPick(); } }
 function showSheet(id) { $("scrim").hidden = false; $(id).hidden = false; $(id).scrollTop = 0; }
 function closeSheets() { $("scrim").hidden = true; $("sheet").hidden = true; $("settings").hidden = true; $("exportSheet").hidden = true; $("visitSheet").hidden = true; editing = null; }
 document.querySelectorAll("[data-close]").forEach(b => (b.onclick = closeSheets));
@@ -980,7 +1040,7 @@ $("findBtn").onclick = async () => {
 const CUISINE = { italian: "Italiaans", pizza: "Italiaans", french: "Frans", thai: "Thais", asian: "Aziatisch", chinese: "Aziatisch",
   japanese: "Aziatisch", sushi: "Aziatisch", vietnamese: "Aziatisch", korean: "Aziatisch", indonesian: "Indonesisch",
   peruvian: "Peruaans", steak_house: "Steak", seafood: "Vis", fish: "Vis", vegan: "Vegan", belgian: "Belgisch" };
-const FOOD = /^(restaurant|cafe|bar|pub|fast_food|biergarten|food_court|ice_cream|bistro)$/;
+const FOOD = /^(restaurant|cafe|bar|pub|fast_food|biergarten|food_court|ice_cream|bistro|hotel|guest_house|hostel|motel|apartment)$/;
 let sugTimer = null, sugSeq = 0;
 function hideSuggest() { clearTimeout(sugTimer); sugSeq++; $("suggest").hidden = true; $("suggest").replaceChildren(); }
 function fmtAddress(p) {
@@ -1017,6 +1077,7 @@ async function pickSuggestion(f) {
   const pr = f.properties, [lng, lat] = f.geometry.coordinates;
   hideSuggest();
   $("fName").value = pr.name;
+  if (pr.osm_key === "amenity" || pr.osm_key === "tourism") setKindFromOsm({ [pr.osm_key]: pr.osm_value });
   const addr = fmtAddress(pr); if (addr) $("fAddress").value = addr;
   const town = pr.city || pr.town || pr.village || "";
   setTown(town);
@@ -1050,7 +1111,7 @@ $("fName").addEventListener("focus", () => { if ($("suggest").children.length &&
 /* ---------------- tik op de kaart: restaurant op die plek toevoegen ---------------- */
 let tapMarker = null, tapSeq = 0, zoomHintShown = false;
 async function overpassAround(lat, lng, r = 45) {
-  const q = `[out:json][timeout:12];nwr(around:${r},${lat},${lng})["amenity"~"^(restaurant|cafe|bar|pub|fast_food|biergarten|food_court|ice_cream)$"]["name"];out center tags 10;`;
+  const q = `[out:json][timeout:12];(nwr(around:${r},${lat},${lng})["amenity"~"^(restaurant|cafe|bar|pub|fast_food|biergarten|food_court|ice_cream)$"]["name"];nwr(around:${r},${lat},${lng})["tourism"~"^(hotel|guest_house|hostel|motel|apartment)$"]["name"];);out center tags 10;`;
   for (const base of ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]) {
     try {
       const r2 = await fetch(base, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "Content-Type": "application/x-www-form-urlencoded" } });
@@ -1072,7 +1133,7 @@ function renderCandidates(state, list) {
     const t = c.tags, cc = c.center || { lat: c.lat, lon: c.lon };
     const have = existingNear(t.name, cc.lat, cc.lon);
     const adr = [[t["addr:street"], t["addr:housenumber"]].filter(Boolean).join(" "), t["addr:city"]].filter(Boolean).join(", ");
-    const kind = { restaurant: "Restaurant", cafe: "Café", bar: "Bar", pub: "Kroeg", fast_food: "Snackbar", biergarten: "Biertuin", food_court: "Foodhal", ice_cream: "IJssalon" }[t.amenity] || "";
+    const kind = { restaurant: "Restaurant", cafe: "Café", bar: "Bar", pub: "Kroeg", fast_food: "Snackbar", biergarten: "Biertuin", food_court: "Foodhal", ice_cream: "IJssalon" }[t.amenity] || ({ hotel: "Hotel", guest_house: "B&B", hostel: "Hostel", motel: "Motel", apartment: "Appartement" }[t.tourism]) || "";
     return el("button", { type: "button", class: "cand" + (have ? " have" : ""), onclick: () => have ? (clearTap(), openPlace(have.id)) : addFromOsm(c) },
       el("span", { class: "cand-name", text: t.name }),
       el("span", { class: "cand-sub", text: have ? "Staat al in je lijst" : [kind, adr].filter(Boolean).join(" · ") }),
@@ -1080,12 +1141,12 @@ function renderCandidates(state, list) {
   });
   const msg = state === "loading" ? "Zoeken wat hier zit…"
     : state === "error" ? "Opzoeken lukt nu niet. Probeer het zo nog eens, of voeg het toe met +."
-    : !rows.length ? "Geen restaurant gevonden op deze plek. Tik precies op het restaurant, of voeg het toe met +." : null;
+    : !rows.length ? "Niets gevonden op deze plek. Tik precies op de zaak, of voeg hem toe met +." : null;
   box.dataset.id = ""; setDetent("half");
   box.replaceChildren(...[
     el("div", { class: "grab", "aria-hidden": "true" }),
     el("div", { class: "place-head" },
-      el("div", { class: "place-title" }, el("h3", { text: rows.length > 1 ? "Welk restaurant?" : "Restaurant op de kaart" })),
+      el("div", { class: "place-title" }, el("h3", { text: rows.length > 1 ? "Welke plek?" : "Op deze plek" })),
       el("button", { type: "button", class: "x", "aria-label": "Sluiten", onclick: closePlace }, svgIcon("close", 16))),
     msg ? el("p", { class: "addr", text: msg }) : null,
     rows.length ? el("div", { class: "cands" }, ...rows) : null].filter(Boolean));
@@ -1137,6 +1198,7 @@ function setTown(town) {
 }
 async function applyOsm(tags, lat, lng) {
   if (tags.name) $("fName").value = tags.name;
+  setKindFromOsm(tags);
   const addr = [[tags["addr:street"], tags["addr:housenumber"]].filter(Boolean).join(" "),
     [tags["addr:postcode"], tags["addr:city"]].filter(Boolean).join(" ")].filter(Boolean).join(", ");
   if (addr) $("fAddress").value = addr;
@@ -1278,7 +1340,7 @@ $("form").addEventListener("submit", e => {
   if (c === "__new") { c = $("fNewCity").value.trim(); if (!c) { showErr("Geef de nieuwe lijst een naam."); return; } }
   if ($("fNewTag").value.trim()) addTagFromInput();
   const base = editing || { id: slug(name) + "-" + now().toString(36), createdAt: now() };
-  const item = { ...base, name, url: fixUrl($("fUrl").value), city: c, notes: $("fNotes").value.trim(), address: $("fAddress").value.trim(), phone: $("fPhone").value.trim(), hours: $("fHours").value.trim(), tags: [...formTags], visited: $("fVisited").checked };
+  const item = { ...base, name, url: fixUrl($("fUrl").value), city: c, notes: $("fNotes").value.trim(), address: $("fAddress").value.trim(), phone: $("fPhone").value.trim(), hours: $("fHours").value.trim(), tags: [...formTags], visited: $("fVisited").checked, category: formKind };
   const hoursText = item.hours;
   if (hoursText && !parseHours(hoursText)) { showErr("Openingstijden niet begrepen. Schrijf ze zo: di-za 17:30-22:00; zo 12:00-21:00"); $("fHours").focus(); return; }
   delete item.geoFailed; delete item.addrChecked;
@@ -1465,16 +1527,16 @@ function loadXlsx() {
 }
 async function buildXlsx(items, title) {
   const X = await loadXlsx();
-  const head = ["Naam", "Adres", "Website", "Notitie", "Kenmerken", "Geweest", "Telefoon", "Openingstijden", "Google Maps", "Breedtegraad", "Lengtegraad", "Aantal bezoeken", "Laatste bezoek", "Gem. waardering"];
-  const rows = items.map(i => [i.name, i.address || "", safeUrl(i.url) || "", i.notes || "", (i.tags || []).join(", "), isVisited(i) ? "ja" : "",
+  const head = ["Naam", "Soort", "Adres", "Website", "Notitie", "Kenmerken", "Geweest", "Telefoon", "Openingstijden", "Google Maps", "Breedtegraad", "Lengtegraad", "Aantal bezoeken", "Laatste bezoek", "Gem. waardering"];
+  const rows = items.map(i => [i.name, kindLabel(kindOf(i)), i.address || "", safeUrl(i.url) || "", i.notes || "", (i.tags || []).join(", "), isVisited(i) ? "ja" : "",
     i.phone || "", i.hours || "", mapsUrl(i), i.lat ?? "", i.lng ?? "", (i.visits || []).length || "", lastVisit(i), avgRating(i) ? +avgRating(i).toFixed(1) : ""]);
   const ws = X.utils.aoa_to_sheet([head, ...rows]);
-  ws["!cols"] = [28, 38, 34, 50, 26, 9, 16, 30, 16, 12, 12, 10, 13, 10].map(w => ({ wch: w }));
+  ws["!cols"] = [28, 12, 38, 34, 50, 26, 9, 16, 30, 16, 12, 12, 10, 13, 10].map(w => ({ wch: w }));
   ws["!autofilter"] = { ref: X.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: rows.length, c: head.length - 1 } }) };
   rows.forEach((r, k) => {
-    const web = X.utils.encode_cell({ r: k + 1, c: 2 }), gm = X.utils.encode_cell({ r: k + 1, c: 8 });
-    if (r[2]) ws[web].l = { Target: r[2] };
-    ws[gm].l = { Target: r[8] }; ws[gm].v = "Open in Google Maps";
+    const web = X.utils.encode_cell({ r: k + 1, c: 3 }), gm = X.utils.encode_cell({ r: k + 1, c: 9 });
+    if (r[3]) ws[web].l = { Target: r[3] };
+    ws[gm].l = { Target: r[9] }; ws[gm].v = "Open in Google Maps";
   });
   const wb = X.utils.book_new();
   X.utils.book_append_sheet(wb, ws, title.slice(0, 31));
@@ -1491,7 +1553,7 @@ async function buildXlsx(items, title) {
 function xmlEsc(s) { return String(s).replace(/[<>&'"]/g, c => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", "'": "&apos;", '"': "&quot;" }[c])); }
 function buildKml(items, title) {
   const pm = items.filter(i => i.lat != null).map(i => {
-    const desc = [i.address, (i.tags || []).join(", "), i.notes, safeUrl(i.url), i.phone].filter(Boolean).join("\n");
+    const desc = [kindOf(i) !== "restaurant" ? kindLabel(kindOf(i)) : null, i.address, (i.tags || []).join(", "), i.notes, safeUrl(i.url), i.phone].filter(Boolean).join("\n");
     return `    <Placemark>\n      <name>${xmlEsc(i.name)}</name>\n      <description>${xmlEsc(desc)}</description>\n` +
       (i.address ? `      <address>${xmlEsc(i.address)}</address>\n` : "") +
       `      <Point><coordinates>${i.lng},${i.lat},0</coordinates></Point>\n    </Placemark>`;
@@ -1500,8 +1562,8 @@ function buildKml(items, title) {
   return new Blob([kml], { type: "application/vnd.google-earth.kml+xml" });
 }
 function buildMessage(items, scope) {
-  const head = `*my fav rest's* – ${scope === "view" ? "selectie van de kaart" : "alle restaurants"} (${items.length})`;
-  const blocks = items.map(i => [`*${i.name}*`, i.address, safeUrl(i.url) || mapsUrl(i)].filter(Boolean).join("\n"));
+  const head = `*my fav rest's* – ${scope === "view" ? "selectie van de kaart" : "alle " + placesWord()} (${items.length})`;
+  const blocks = items.map(i => [`*${i.name}*` + (kindOf(i) !== "restaurant" ? ` (${kindLabel(kindOf(i)).toLowerCase()})` : ""), i.address, safeUrl(i.url) || mapsUrl(i)].filter(Boolean).join("\n"));
   return [head, ...blocks].join("\n\n");
 }
 async function shareText(text) {
