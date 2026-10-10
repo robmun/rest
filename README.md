@@ -29,6 +29,7 @@ Het versienummer staat in `app.js` (`APP_VERSION`) en in `sw.js` (`CACHE`), en i
 
 | Versie | Datum | Wat |
 |---|---|---|
+| 26.10.2 | 10-10-2026 | Soorten als vaste rij onder de zoekbalk, op de kaart en in de lijst |
 | 26.10.1 | 10-10-2026 | Soort per plek (Restaurant, Café, Bar, Verblijf, Te doen): filter, keuze bij toevoegen, eigen pictogram op de kaart, kolom in Excel-export; hotels herkennen bij tikken op de kaart |
 | 26.9.4 | 29-09-2026 | Vegen (restaurantkaart met 3 standen, schermen omlaag vegen), Ongedaan maken bij verwijderen, grotere tikdoelen en iOS-tekstgrootte, offline-melding, laatst opgeslagen, plaatshouders, nieuw restaurant oplichten |
 | 26.9.3 | 29-09-2026 | Nieuwe versies worden altijd volledig geladen (knoppen tekstgrootte werkten niet door oude code in de cache) |

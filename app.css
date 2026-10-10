@@ -566,3 +566,9 @@ html,body{overflow-x:hidden}
 .kind-pick button:nth-child(n+4){grid-column:span 3}
 .kind-pick button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
 .sheet.qmode .kind-group{margin-top:2px}
+
+/* 26.10.2 — soorten als vaste rij onder de zoekbalk */
+.kinds-bar{flex:none}
+.app.mapmode .kinds-bar{background:transparent;border:0;border-radius:0;padding:2px 12px 6px;margin-inline:-12px;gap:6px}
+.app.mapmode .kinds-bar button{flex:none;background:var(--surface);box-shadow:0 1px 4px rgba(0,0,0,.18);border-radius:999px;padding:8px 14px;color:var(--ink)}
+.app.mapmode .kinds-bar button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}

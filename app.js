@@ -1,7 +1,7 @@
 /* Tafels — persoonlijke restaurantlijst met kaart en GitHub-sync */
 // Versie: jaar.maand.volgnummer binnen die maand (26.9.1 = eerste versie van september 2026).
 // Bij elke nieuwe versie ook CACHE in sw.js aanpassen.
-const APP_VERSION = "26.10.1", APP_DATE = "2026-10-10";
+const APP_VERSION = "26.10.2", APP_DATE = "2026-10-10";
 "use strict";
 
 // Kenmerken per groep; eigen kenmerken krijgen een groep via store.data.tagGroups
@@ -193,10 +193,13 @@ const kindLabel = k => (KINDS.find(x => x[0] === k) || KINDS[0])[1];
 const kindPlural = k => (KINDS.find(x => x[0] === k) || KINDS[0])[2];
 function kindsInUse() { const s = new Set(visible().map(kindOf)); return KIND_KEYS.filter(k => s.has(k)); }
 // Woord voor de getoonde plekken: "restaurants" zolang er alleen restaurants zijn
-function placesWord() {
-  if (ui.kind) return kindPlural(ui.kind).toLowerCase();
+function placesWord(n) {
+  const one = n === 1;
+  if (ui.kind) return (one ? kindLabel(ui.kind) : kindPlural(ui.kind)).toLowerCase();
   const used = kindsInUse();
-  return used.length > 1 ? "plekken" : kindPlural(used[0] || "restaurant").toLowerCase();
+  if (used.length > 1) return one ? "plek" : "plekken";
+  const k = used[0] || "restaurant";
+  return (one ? kindLabel(k) : kindPlural(k)).toLowerCase();
 }
 function kindFromOsm(t) {
   const a = (t && t.amenity) || "", tr = (t && t.tourism) || "";
@@ -325,7 +328,7 @@ function filtered() {
     return true;
   }).sort((a, b) => a.name.localeCompare(b.name, "nl", { sensitivity: "base" }));
 }
-function activeFilterCount() { return activeTags.size + (visitFilter ? 1 : 0) + (openFilter ? 1 : 0) + (ui.kind ? 1 : 0); }
+function activeFilterCount() { return activeTags.size + (visitFilter ? 1 : 0) + (openFilter ? 1 : 0) ; }
 
 function render() {
   const cities = allCities();
@@ -340,7 +343,7 @@ function render() {
   const usedKinds = kindsInUse();
   if (ui.kind && !usedKinds.includes(ui.kind)) ui.kind = null;
   const kindsBox = $("kinds");
-  kindsBox.hidden = usedKinds.length < 2;
+  kindsBox.hidden = !usedKinds.length;
   kindsBox.replaceChildren(...[null, ...usedKinds].map(k => el("button", {
     type: "button", "aria-pressed": String((ui.kind || null) === k),
     onclick: () => { ui.kind = k; lsSet(LS_UI, ui); activeTags.clear(); closePlace(); render(); $("listView").scrollTop = 0; }
@@ -417,7 +420,7 @@ function renderList() {
   const iv = $("inView");
   iv.replaceChildren(partial
     ? el("span", {}, `${shown.length} in kaartbeeld · `, el("button", { type: "button", class: "linkbtn", onclick: showAll }, "Toon alles"))
-    : el("span", { text: query.trim() ? `${shown.length} gevonden` : `${shown.length} ${placesWord()}` }));
+    : el("span", { text: query.trim() ? `${shown.length} gevonden` : `${shown.length} ${placesWord(shown.length)}` }));
   if (!total && syncing) {   // eerste keer laden: plaatshouders
     $("list").replaceChildren(...[0, 1, 2, 3, 4].map(() => el("li", { class: "row skel", "aria-hidden": "true" }, el("div", { class: "row-main" }, el("i", { class: "sk sk1" }), el("i", { class: "sk sk2" }), el("i", { class: "sk sk3" })))));
     $("empty").hidden = true; return;
